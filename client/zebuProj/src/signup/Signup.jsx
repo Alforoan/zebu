@@ -1,6 +1,7 @@
 import React from 'react'
 import './Signup.css'
 import Navigation from '../navigation/Navigation';
+import { BASE_URL } from '../constants';
 
 const Signup = () => {
 
@@ -27,9 +28,33 @@ const Signup = () => {
   }
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
+
+    
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/user/signup`, {
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email, password})
+      });
+      console.log({response});
+      if(!response.ok){
+        throw new Error('Failed to create user');
+      }else{
+        //show a success message from react modal
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log({email});
+    console.log({password});
   }
 
   return (
