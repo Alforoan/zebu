@@ -2,8 +2,16 @@ import React from 'react'
 import './Signup.css'
 import Navigation from '../navigation/Navigation';
 import { BASE_URL } from '../constants';
+import { useState } from 'react';
+import bcrypt from 'bcryptjs';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+  const [success, setSuccess] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState('');
+
+  const navigate = useNavigate();
 
   window.onload = function () {
     document.getElementById('email').focus();
@@ -27,34 +35,57 @@ const Signup = () => {
     }
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     
     const email = e.target[0].value;
     const password = e.target[1].value;
+    if (!email || !password) {
+      switch (true) {
+        case !email && !password:
+          setSuccess(false);
+          setShowErrorMessage('Please provide your email and password!');
+          break;
+        case !email:
+          setSuccess(false);
+          setShowErrorMessage('Please provide your email!');
+          break;
+        case !password:
+          setSuccess(false);
+          setShowErrorMessage('Please provide your password!');
+          break;
+        default:
+          break;
+      }
+      return;
+    }
 
     try {
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       const response = await fetch(`${BASE_URL}/api/user/signup`, {
         method:'POST',
         headers:{
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify({email, password:hashedPassword})
       });
       console.log({response});
       if(!response.ok){
+        setSuccess(false);
+        setShowErrorMessage('Error')
         throw new Error('Failed to create user');
       }else{
-        //show a success message from react modal
-      }
+        setSuccess(true);
+        setShowSuccessMessage('Successfully registered!');
+        setTimeout(() => {
+          navigate('/signin');
+        }, 2000);
+      } 
     } catch (error) {
       console.log(error);
     }
-
-    console.log({email});
-    console.log({password});
   }
 
   return (
@@ -66,9 +97,10 @@ const Signup = () => {
           <label htmlFor="email" id='email-label'>Email</label>
         </div>
         <div className='input-container'>
-          <input className='form-control' id='password' type='text' onChange={handleChangePassword}/>
+          <input className='form-control' id='password' type='password' onChange={handleChangePassword}/>
           <label htmlFor='password' id='password-label'>Password</label>
         </div>
+        {!success ?<div className='error-msg'> {showErrorMessage}</div> : <div className='success-msg'>{showSuccessMessage}</div>}
         <button type='submit'>Signup</button>
       </form>
     </>

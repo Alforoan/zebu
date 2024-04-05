@@ -9,7 +9,6 @@
   position:relative;
 }
 
-
 input::placeholder{
   color: black;
   font-weight: 500;
@@ -27,8 +26,6 @@ input::placeholder{
 .input-container>.form-control:focus{
   color: gray;
 }
-
-
 
 .input-container>.form-control:focus~label{
   color: gray;
@@ -66,7 +63,15 @@ input::placeholder{
     transform: translate(0, -170%);
 } */
 
+.error-msg{
+  color: red;
+  margin-bottom: .5rem;
+}
 
+.success-msg{
+  color: green;
+  margin-bottom: .5rem;
+}
 
 button {
   padding: 10px 20px;
