@@ -1,8 +1,8 @@
 import React from 'react'
-import './Register.css'
+import './Signup.css'
 import Navigation from '../navigation/Navigation';
 
-const Register = () => {
+const Signup = () => {
 
   window.onload = function () {
     document.getElementById('email').focus();
@@ -16,7 +16,7 @@ const Register = () => {
   return (
     <>
       <Navigation />
-      <form className='register-container' onSubmit={handleSubmit}>
+      <form className='signup-container' onSubmit={handleSubmit}>
         <div className='input-container'>
           <input className='form-control'  id='email' type='text'/>
           <label htmlFor="email">Email</label>
@@ -25,10 +25,10 @@ const Register = () => {
           <input className='form-control' id='password' type='text' />
           <label htmlFor='password'>Password</label>
         </div>
-        <button type='submit'>Register</button>
+        <button type='submit'>Signup</button>
       </form>
     </>
   );
 }
 
-export default Register
+export default Signup

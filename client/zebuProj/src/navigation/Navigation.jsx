@@ -7,7 +7,7 @@ const Navigation = () => {
     <div className='navigation-container'>
       <h2>Zebu</h2>
 
-      <Link to='/register'>
+      <Link to='/signup'>
         <button>Sign Up</button>
       </Link>
     

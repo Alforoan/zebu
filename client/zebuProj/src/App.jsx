@@ -1,5 +1,5 @@
 import react from 'react'
-import Register from './register/Register'
+import Signup from './signup/Signup'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from './navigation/Navigation'
 
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Navigation />} />
-        <Route path='/register' element={<Register/>}/>
+        <Route path='/signup' element={<Signup/>}/>
       
       </Routes>
     </BrowserRouter>
