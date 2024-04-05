@@ -34,7 +34,12 @@ input::placeholder{
   color: gray;
   transform: scale(.85) translateY(-8px) translate(.3rem);
   font-size: 12px;
+}
 
+.has-value{
+  color: gray;
+  transform: scale(.85) translateY(-8px) translate(.3rem);
+  font-size: 12px;
 }
 
 .input-container>label{
