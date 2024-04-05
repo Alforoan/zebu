@@ -1,0 +1,20 @@
+.navigation-container{
+  display: flex;
+  flex-direciton: row;
+  align-items: center;
+  justify-content: space-around;
+  
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited{
+  color: black;
+}
+
+button {
+
+}
