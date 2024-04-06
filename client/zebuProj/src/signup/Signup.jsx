@@ -81,7 +81,7 @@ const Signup = () => {
         setSuccess(true);
         setShowSuccessMessage('Successfully registered!');
         setTimeout(() => {
-          navigate('/signin');
+          navigate('/login');
         }, 2000);
       } 
     } catch (error) {
@@ -104,7 +104,7 @@ const Signup = () => {
         {!success ?<div className='error-msg'> {showErrorMessage}</div> : <div className='success-msg'>{showSuccessMessage}</div>}
         <div style={{display:'flex'}}>
           <button type='submit' style={{marginRight:'1rem'}}>Signup</button>
-          <button type='button'><Link to='/signin'>Signin</Link></button>
+          <button type='button'><Link to='/login'>Login</Link></button>
         </div>
       </form>
     </>

@@ -11,7 +11,7 @@ const Navigation = ({success, setSuccess}) => {
         <button>Sign Up</button>
       </Link>
       {
-        success ? <Link to='/signin'>
+        success ? <Link to='/login'>
         <button>Log out</button>
       </Link> : ''
       }

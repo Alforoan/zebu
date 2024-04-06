@@ -1,12 +1,12 @@
 import React from 'react';
-import './Signin.css';
+import './Login.css';
 import Navigation from '../navigation/Navigation';
 import { BASE_URL } from '../constants';
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Signin = () => {
+const Login = () => {
   const [success, setSuccess] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState('');
@@ -61,7 +61,7 @@ const Signin = () => {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/api/user/signin`, {
+      const response = await fetch(`${BASE_URL}/api/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const Signin = () => {
         return 
       } else {
         setSuccess(true);
-        setShowSuccessMessage('Signin successful!');
+        setShowSuccessMessage('Login successful!');
         setTimeout(() => {
           navigate('/');
         }, 2000);
@@ -119,7 +119,7 @@ const Signin = () => {
         )}
     
         <button type='submit'>
-          Signin
+          Login
         </button>
  
       </form>
@@ -127,4 +127,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Login;

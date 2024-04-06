@@ -54,7 +54,7 @@ app.post('/api/user/signup', async (req,res) => {
   }
 })
 
-app.post('/api/user/signin', async (req,res) => {
+app.post('/api/user/login', async (req,res) => {
   try {
     const { email, password } = req.body;
     const client = await pool.connect();
