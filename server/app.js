@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import pg from 'pg';
 import cors from 'cors';
+import bcrypt from 'bcryptjs'
 config();
 const app = express();
 
@@ -28,7 +29,17 @@ app.use(cors({
 app.post('/api/user/signup', async (req,res) => {
   try {
      const { email, password } = req.body; 
+     
      const client = await pool.connect();
+     const { rowCount } = await client.query(
+       'SELECT * FROM users WHERE email = $1',
+       [email]
+     );
+
+     if (rowCount > 0) {
+       return res.status(400).json({error: 'Email already exists'})
+     }
+
      const result = await client.query(
        'INSERT INTO users (email, password) VALUES ($1, $2)',
        [email, password]
@@ -40,6 +51,33 @@ app.post('/api/user/signup', async (req,res) => {
   } catch (error) {
       console.error('Error inserting data into PostgreSQL:', error);
       res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+app.post('/api/user/signin', async (req,res) => {
+  try {
+    const { email, password } = req.body;
+    const client = await pool.connect();
+    const { rowCount, rows } = await client.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    );
+    if(rowCount < 1){
+      return res.status(400).json({ error: 'Email does not exist, please sign up' });
+    }else{
+      const hashedPasswordFromDB = rows[0].password;
+      console.log({hashedPasswordFromDB});
+      const passwordMatches = await bcrypt.compare(
+        password,
+        hashedPasswordFromDB
+      );
+      if (!passwordMatches) {
+        return res.status(400).json({ error: 'Incorrect email or password' });
+      }
+      res.status(200).json({ message: 'Sign-in successful' });
+    }
+  } catch (error) {
+    console.log(error);
   }
 })
 

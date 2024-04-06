@@ -4,7 +4,7 @@ import Navigation from '../navigation/Navigation';
 import { BASE_URL } from '../constants';
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [success, setSuccess] = useState(false);
@@ -73,9 +73,10 @@ const Signup = () => {
       });
       console.log({response});
       if(!response.ok){
-        setSuccess(false);
-        setShowErrorMessage('Error')
-        throw new Error('Failed to create user');
+         const data = await response.json();
+         setSuccess(false);
+         setShowErrorMessage(data.error || 'Error');
+         throw new Error('Failed to create user');
       }else{
         setSuccess(true);
         setShowSuccessMessage('Successfully registered!');
@@ -101,7 +102,10 @@ const Signup = () => {
           <label htmlFor='password' id='password-label'>Password</label>
         </div>
         {!success ?<div className='error-msg'> {showErrorMessage}</div> : <div className='success-msg'>{showSuccessMessage}</div>}
-        <button type='submit'>Signup</button>
+        <div style={{display:'flex'}}>
+          <button type='submit' style={{marginRight:'1rem'}}>Signup</button>
+          <button type='button'><Link to='/signin'>Signin</Link></button>
+        </div>
       </form>
     </>
   );
