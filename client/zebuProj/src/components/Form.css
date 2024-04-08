@@ -65,12 +65,14 @@ input::placeholder{
 
 .error-msg{
   color: red;
-  margin-bottom: .5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .success-msg{
   color: green;
-  margin-bottom: .5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 button {
@@ -84,6 +86,15 @@ button {
 
 .btn{
   width: 250px;
+}
+
+.btn[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn[disabled]:hover {
+  background-color: #007BFF;
 }
 
 .btn2{

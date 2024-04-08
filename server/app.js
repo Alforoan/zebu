@@ -28,13 +28,13 @@ app.use(cors({
 
 app.post('/api/user/signup', async (req,res) => {
   try {
-     const { email, password } = req.body; 
-     console.log("EMAIL",email);
-     console.log("PASSWORD",password);
+     const { curEmail, curPassword } = req.body; 
+     console.log('EMAIL', curEmail);
+     console.log('PASSWORD', curPassword);
      const client = await pool.connect();
      const { rowCount } = await client.query(
        'SELECT * FROM users WHERE email = $1',
-       [email]
+       [curEmail]
      );
 
      if (rowCount > 0) {
@@ -43,7 +43,7 @@ app.post('/api/user/signup', async (req,res) => {
 
      const result = await client.query(
        'INSERT INTO users (email, password) VALUES ($1, $2)',
-       [email, password]
+       [curEmail, curPassword]
      );
      const users = await client.query('SELECT * FROM users');
      console.log({users});
@@ -57,13 +57,13 @@ app.post('/api/user/signup', async (req,res) => {
 
 app.post('/api/user/login', async (req,res) => {
   try {
-    const { email, password } = req.body;
-    console.log('EMAIL', email);
-    console.log('PASSWORD', password);
+    const { curEmail, curPassword } = req.body;
+    console.log('EMAIL', curEmail);
+    console.log('PASSWORD', curPassword);
     const client = await pool.connect();
     const { rowCount, rows } = await client.query(
       'SELECT * FROM users WHERE email = $1',
-      [email]
+      [curEmail]
     );
     console.log({rows});
     console.log({rowCount});
@@ -73,7 +73,7 @@ app.post('/api/user/login', async (req,res) => {
       const hashedPasswordFromDB = rows[0].password;
       console.log({hashedPasswordFromDB});
       const passwordMatches = await bcrypt.compare(
-        password,
+        curPassword,
         hashedPasswordFromDB
       );
       if (!passwordMatches) {
