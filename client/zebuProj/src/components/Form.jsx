@@ -118,7 +118,7 @@ const Form = ({route, method}) => {
       
       const url = BASE_URL + route;
   
-      response = await api.post(url, {curEmail, curPassword})
+      response = await api.post(url, {email: curEmail, password: curPassword})
       if(response?.error){
         setErrorMessage(response.error);
         return;
@@ -126,11 +126,13 @@ const Form = ({route, method}) => {
   
       if(method === 'login'){
         setSuccess(true);
+        console.log("success boolean",success);
+        setSuccessMessage('Welcome!');
         setTimeout(() => {
           navigate('/');
         }, 2000);
-        localStorage.setItem(ACCESS_TOKEN, response.data.access)
-        localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
+        // localStorage.setItem(ACCESS_TOKEN, response.data.access)
+        // localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
         return;
       }else{
         setSuccess(true);
@@ -141,7 +143,9 @@ const Form = ({route, method}) => {
         
       }
     } catch (error) {
+      console.log("LOGGING THE ERRRO", error);
         console.log("ERROR IS HAPPENING");
+        console.log("response inside error",response);
         setSuccess(false);
         setErrorMessage(response?.error);
         throw new Error('Failed to create user');
