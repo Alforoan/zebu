@@ -1,0 +1,111 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-container {
+  margin-bottom: 10px;
+  position:relative;
+}
+
+input::placeholder{
+  color: black;
+  font-weight: 500;
+}
+
+.form-control{
+  width: 250px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid lightblue;
+  text-indent: 5px;
+  padding-top: 10px;
+}
+
+.input-container>.form-control:focus{
+  color: gray;
+}
+
+.input-container>.form-control:focus~label{
+  color: gray;
+  transform: scale(.85) translateY(-8px) translate(.3rem);
+  font-size: 12px;
+}
+
+.has-value{
+  color: gray;
+  transform: scale(.85) translateY(-8px) translate(.3rem);
+  font-size: 12px;
+}
+
+.input-container>label{
+  position: absolute;
+  top: 25%;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  padding-left:5px;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  border: var(--bs-border-width) solid rgba(0, 0, 0, 0);
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+}
+
+/* input:focus + .placeholder-text .text, :not(input[value=""]) + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -170%);
+} */
+
+.error-msg{
+  color: red;
+  margin-bottom: .5rem;
+}
+
+.success-msg{
+  color: green;
+  margin-bottom: .5rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn{
+  width: 250px;
+}
+
+.btn2{
+  background: transparent;
+  color: #007BFF;
+  padding: 0;
+  margin-left: .5rem;
+}
+
+.btn2:hover{
+  background: transparent;
+}
+.btn2-container{
+  display: flex;
+}
+
+.signin-login-container{
+  display: flex;
+  justify-content: center;
+}
+
+button:hover {
+  background-color: #0056b3;
+  
+}

@@ -29,7 +29,8 @@ app.use(cors({
 app.post('/api/user/signup', async (req,res) => {
   try {
      const { email, password } = req.body; 
-     
+     console.log("EMAIL",email);
+     console.log("PASSWORD",password);
      const client = await pool.connect();
      const { rowCount } = await client.query(
        'SELECT * FROM users WHERE email = $1',
@@ -57,11 +58,15 @@ app.post('/api/user/signup', async (req,res) => {
 app.post('/api/user/login', async (req,res) => {
   try {
     const { email, password } = req.body;
+    console.log('EMAIL', email);
+    console.log('PASSWORD', password);
     const client = await pool.connect();
     const { rowCount, rows } = await client.query(
       'SELECT * FROM users WHERE email = $1',
       [email]
     );
+    console.log({rows});
+    console.log({rowCount});
     if(rowCount < 1){
       return res.status(400).json({ error: 'Email does not exist, please sign up' });
     }else{
