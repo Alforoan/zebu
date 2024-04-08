@@ -48,7 +48,7 @@ app.post('/api/user/signup', async (req,res) => {
      const users = await client.query('SELECT * FROM users');
      console.log({users});
      client.release(); 
-     res.status(201).json({ message: 'User created successfully' });
+     res.status(201).json({ message: 'Sign-up successful' });
   } catch (error) {
       console.error('Error inserting data into PostgreSQL:', error);
       res.status(500).json({ error: 'Internal server error' });

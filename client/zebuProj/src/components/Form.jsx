@@ -5,6 +5,7 @@ import { ACCESS_TOKEN, BASE_URL, REFRESH_TOKEN } from '../constants';
 import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
+import axios from 'axios';
 
 const Form = ({route, method}) => {
 
@@ -113,43 +114,75 @@ const Form = ({route, method}) => {
     let curPassword = e.target[1].value;
     
     let response;
+    const url = BASE_URL + route;
     try {
-      curPassword = method === 'login' ? curPassword : await bcrypt.hash(curPassword, 10);
+      curPassword =
+        method === 'login' ? curPassword : await bcrypt.hash(curPassword, 10);
+      response = await axios.post(url, JSON.stringify({email:curEmail, password: curPassword}), 
+      {
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true
+      });
+      let msg = response?.data?.message;
+      if(msg.toLowerCase().includes('sign-up')){
+        setSuccess(true);
+        setSuccessMessage(msg);
+        setEmail('');
+        setPassword('');
+        setMatchPassword('');
+        setTimeout(() => {
+          navigate('/login')
+        }, 1500);
+      }else {
+        setSuccess(true);
+        setSuccessMessage(msg);
+        setTimeout(() => {
+          navigate('/')
+        }, 1500);
+      }
       
-      const url = BASE_URL + route;
-  
-      response = await api.post(url, {email: curEmail, password: curPassword})
-      if(response?.error){
-        setErrorMessage(response.error);
-        return;
-      }
-  
-      if(method === 'login'){
-        setSuccess(true);
-        console.log("success boolean",success);
-        setSuccessMessage('Welcome!');
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-        // localStorage.setItem(ACCESS_TOKEN, response.data.access)
-        // localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
-        return;
-      }else{
-        setSuccess(true);
-        setSuccessMessage('Successfully registered!');
-        setTimeout(() => {
-          navigate('/login');
-        }, (1500));
-        
-      }
+      console.log("response thing",response);
     } catch (error) {
-      console.log("LOGGING THE ERRRO", error);
-        console.log("ERROR IS HAPPENING");
-        console.log("response inside error",response);
         setSuccess(false);
-        setErrorMessage(response?.error);
-        throw new Error('Failed to create user');
+        setErrorMessage(error?.response?.data?.error);
+        errRef.current.focus();
     }
+    // try {
+    //   curPassword = method === 'login' ? curPassword : await bcrypt.hash(curPassword, 10);
+      
+    //   const url = BASE_URL + route;
+  
+    //   response = await api.post(url, {email: curEmail, password: curPassword})
+    //   if(response?.error){
+    //     setErrorMessage(response.error);
+    //     return;
+    //   }
+  
+    //   if(method === 'login'){
+    //     setSuccess(true);
+    //     console.log("success boolean",success);
+    //     setSuccessMessage('Welcome!');
+    //     setTimeout(() => {
+    //       navigate('/');
+    //     }, 2000);
+     
+    //     return;
+    //   }else{
+    //     setSuccess(true);
+    //     setSuccessMessage('Successfully registered!');
+    //     setTimeout(() => {
+    //       navigate('/login');
+    //     }, (1500));
+        
+    //   }
+    // } catch (error) {
+    //   console.log("LOGGING THE ERRRO", error);
+    //     console.log("ERROR IS HAPPENING");
+    //     console.log("response inside error",response);
+    //     setSuccess(false);
+    //     setErrorMessage(response?.error);
+    //     throw new Error('Failed to create user');
+    // }
   };
 
   return (
