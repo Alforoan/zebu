@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import AuthContext from '../context/AuthProvider';
 import './Form.css';
 import Navigation from '../navigation/Navigation';
 import { ACCESS_TOKEN, BASE_URL, REFRESH_TOKEN } from '../constants';
@@ -8,6 +9,8 @@ import api from '../api';
 import axios from 'axios';
 
 const Form = ({route, method}) => {
+
+  const {setAuth} = useContext(AuthContext);
 
   const emailRef = useRef();
   const errRef = useRef();
