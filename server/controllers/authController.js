@@ -73,7 +73,12 @@ async function login(req, res) {
         `;
 
       await client.query(updateRefreshTokenQuery, [refreshToken, email]);
-      res.status(200).json({ message: 'Sign-in successful' });
+      res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+      res.json({
+        accessToken,
+        message: 'Sign-in successful',
+      });
+
     }
   } catch (error) {
     console.log(error);
