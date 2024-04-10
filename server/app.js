@@ -2,9 +2,8 @@ import express from 'express';
 import { config } from 'dotenv';
 import pg from 'pg';
 import cors from 'cors';
-import bcrypt from 'bcryptjs'
-import  {login}  from './controllers/authController.js';
-import  {signUp}  from './controllers/signupController.js';
+import userRoutes from './routes/userRoutes.js'
+import { login } from './controllers/authController.js';
 
 config();
 const app = express();
@@ -29,8 +28,8 @@ app.use(cors({
   credentials: true,
 }));
 
-app.post('/api/user/signup', signUp)
-app.post('/api/user/login', login)
+app.use('/api/user/', userRoutes);
+
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
