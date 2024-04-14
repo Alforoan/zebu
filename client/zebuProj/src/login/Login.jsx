@@ -7,9 +7,9 @@ import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 
-const Login = () => {
+const Login = ({setIsLoggedIn}) => {
  
-  return <Form route='/api/user/login' method='login' />;
+  return <Form route='/api/user/login' method='login' setIsLoggedIn={setIsLoggedIn}/>;
 };
 
 export default Login;

@@ -9,8 +9,6 @@ config();
 async function login(req, res) {
   try {
     const { email, password } = req.body;
-    console.log('EMAIL', email);
-    console.log('PASSWORD', password);
     const client = await pool.connect();
     const { rowCount, rows } = await client.query(
       'SELECT * FROM users WHERE email = $1',
@@ -22,7 +20,7 @@ async function login(req, res) {
         .json({ error: 'Email does not exist, please sign up' });
     } else {
       const hashedPasswordFromDB = rows[0].password;
-      console.log({ hashedPasswordFromDB });
+
       const passwordMatches = await bcrypt.compare(
         password,
         hashedPasswordFromDB
@@ -34,12 +32,12 @@ async function login(req, res) {
       const accessToken = jwt.sign(
         { email: foundEmail },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '10s' }
+        { expiresIn: '20s' }
       );
       const refreshToken = jwt.sign(
         { email: foundEmail },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1d' }
+        { expiresIn: '5m' }
       );
       const otherUsersQuery = {
         text: 'SELECT * FROM users WHERE email <> $1',
@@ -73,11 +71,14 @@ async function login(req, res) {
         `;
 
       await client.query(updateRefreshTokenQuery, [refreshToken, email]);
-      res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+      res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 20 * 1000});
+      res.cookie('accessToken', accessToken, {maxAge: 20 * 1000});
+   
       res.json({
         accessToken,
         message: 'Sign-in successful',
       });
+
 
     }
   } catch (error) {

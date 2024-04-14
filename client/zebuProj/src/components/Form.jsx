@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import axios from 'axios';
 
-const Form = ({route, method}) => {
+const Form = ({route, method, setIsLoggedIn}) => {
 
   const {setAuth} = useContext(AuthContext);
 
@@ -40,7 +40,25 @@ const Form = ({route, method}) => {
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-
+  useEffect(() => {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    const fetchData = async() => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/user/login', config);
+        console.log("HAHA RESPONSE",response);
+        const data = response.data.message;
+        if(data === 'success'){
+          navigate('/decks');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
 
   useEffect(() => {
     if(method === 'signup'){
@@ -139,8 +157,10 @@ const Form = ({route, method}) => {
       }else {
         setSuccess(true);
         setSuccessMessage(msg);
+        setIsLoggedIn(true);
+        console.log("navigate to decks");
         setTimeout(() => {
-          navigate('/')
+          navigate('/decks')
         }, 1500);
       }
       

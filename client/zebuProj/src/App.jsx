@@ -1,22 +1,35 @@
 import react from 'react'
 import Signup from './signup/Signup'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Home/Home'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Decks from './decks/Decks'
 import Login from './login/Login'
+import { useState } from 'react'
 
 function App() {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<Signup/>}/>
-        <Route path='/login' element={<Login/>}/>
-        
+        <Route
+          path='/'
+          //element={isLoggedIn ? <Decks /> : <Navigate to='/login' />}
+          element={<Navigate to='/login' />}
+        />
+        <Route
+          path='/decks'
+          // element={isLoggedIn ? <Decks /> : <Navigate to='/login' />}
+          element={<Decks />}
+        />
+        <Route path='/signup' element={<Signup />} />
+        <Route
+          path='/login'
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App
