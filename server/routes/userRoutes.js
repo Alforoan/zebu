@@ -7,6 +7,12 @@ const router = express.Router();
 
 router.post('/signup', signUp);
 router.post('/login', login);
+router.get('/login', verifyJWT, (req,res) => {
+  res.json({message:'success'})
+});
+router.get('/decks', verifyJWT,(req,res) => {
+  res.json({message:'success'})
+});
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {
 //   res.json({req});

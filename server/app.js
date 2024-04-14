@@ -29,12 +29,12 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/user/', userRoutes);
-app.get('/api/user/login', verifyJWT, (req,res) => {
-  res.json({message: 'success'})
-});
-app.get('/api/user/decks', verifyJWT, (req,res) => {
-  res.json({message:'success'})
-})
+// app.get('/api/user/login', verifyJWT, (req,res) => {
+//   res.json({message: 'success'})
+// });
+// app.get('/api/user/decks', verifyJWT, (req,res) => {
+//   res.json({message:'success'})
+// })
 //app.get('/decks', verifyJWT);
 // app.use(verifyJWT);
 
