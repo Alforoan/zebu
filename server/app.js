@@ -29,14 +29,6 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/user/', userRoutes);
-// app.get('/api/user/login', verifyJWT, (req,res) => {
-//   res.json({message: 'success'})
-// });
-// app.get('/api/user/decks', verifyJWT, (req,res) => {
-//   res.json({message:'success'})
-// })
-//app.get('/decks', verifyJWT);
-// app.use(verifyJWT);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');

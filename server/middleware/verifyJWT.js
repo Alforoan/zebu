@@ -14,13 +14,16 @@ const verifyJWT = (req, res, next) => {
       if(err){
         console.log('err.message',err.message);
       }else{
+        req.email = decoded.email;
         console.log(decoded);
         next();
       }
     });
   }
   else{
-    res.json({message:'No access token'})
+    renewToken(req,res, () => {
+      next();
+    })
   }
   // if (!accesstoken) {
   //   // if (renewToken(req, res)) {
