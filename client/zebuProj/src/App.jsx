@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Decks from './decks/Decks'
 import Login from './login/Login'
 import { useState } from 'react'
-
+import ProtectedRoute from './components/ProtectedRoute'
+import Add from './add/Add'
 
 function App() {
 
-  
+  const protectedPaths = ['/decks', '/add', '/search'];
 
   return (
     <BrowserRouter>
@@ -20,14 +21,27 @@ function App() {
         />
         <Route
           path='/decks'
+          element={
+            <ProtectedRoute path='/decks'>
+              <Decks />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/add'
+          element={
+            <ProtectedRoute path='/add'>
+              <Add />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route
+          path='/decks'
           // element={isLoggedIn ? <Decks /> : <Navigate to='/login' />}
           element={<Decks />}
-        />
+        /> */}
         <Route path='/signup' element={<Signup />} />
-        <Route
-          path='/login'
-          element={<Login />}
-        />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
