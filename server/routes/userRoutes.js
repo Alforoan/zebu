@@ -1,6 +1,6 @@
 import express from 'express';
 import { signUp } from '../controllers/signupController.js'; 
-import { login } from '../controllers/authController.js'; 
+import { login, logout } from '../controllers/authController.js'; 
 import { verifyJWT } from '../middleware/verifyJWT.js';
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.post('/login', login);
 router.get('/login', verifyJWT, (req,res) => {
   res.json({message:'success'})
 });
+router.get('/logout', logout);
 router.get('/decks', verifyJWT,(req,res) => {
   res.json({message:'success'})
 });

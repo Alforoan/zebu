@@ -7,10 +7,11 @@ import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import axios from 'axios';
+import IsLoggedInContext from '../context/IsLoggedInProvider';
 
-const Form = ({route, method, setIsLoggedIn}) => {
+const Form = ({route, method}) => {
 
-  const {setAuth} = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(IsLoggedInContext);
 
   const emailRef = useRef();
   const errRef = useRef();

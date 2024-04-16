@@ -4,7 +4,7 @@ const IsLoggedInContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
 export const IsLoggedInProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <IsLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}

@@ -87,4 +87,11 @@ async function login(req, res) {
   }
 }
 
-export { login };
+async function logout (req,res) {
+  console.log('RESPONSE PLEASE', res);
+    res.cookie('refreshToken', '', {maxAge: 10});
+    res.cookie('accessToken', '', { maxAge: 10 });
+    res.json({message: 'cookie erased'});
+}
+
+export { login, logout };
