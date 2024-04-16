@@ -32,12 +32,12 @@ async function login(req, res) {
       const accessToken = jwt.sign(
         { email: foundEmail },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '20s' }
+        { expiresIn: '50m' }
       );
       const refreshToken = jwt.sign(
         { email: foundEmail },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '5m' }
+        { expiresIn: '50m' }
       );
       const otherUsersQuery = {
         text: 'SELECT * FROM users WHERE email <> $1',
@@ -71,8 +71,11 @@ async function login(req, res) {
         `;
 
       await client.query(updateRefreshTokenQuery, [refreshToken, email]);
-      res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 60 * 1000});
-      res.cookie('accessToken', accessToken, {httpOnly:true, maxAge:60 * 20 * 1000});
+      res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge:60 * 60 * 1000});
+      res.cookie('accessToken', accessToken, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      });
    
       res.json({
         accessToken,

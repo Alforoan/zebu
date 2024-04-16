@@ -19,7 +19,7 @@ const ProtectedRoute = ({children, path}) => {
           `http://localhost:3000/api/user/decks`,
           config
         );
-
+        console.log("GETTING RESPONSE",response);
         const data = response.data.message;
         console.log('DATA FROM DECKS', data);
         if (data === 'success') {

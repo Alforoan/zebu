@@ -6,6 +6,10 @@ import Login from './login/Login'
 import { useState } from 'react'
 import ProtectedRoute from './components/ProtectedRoute'
 import Add from './add/Add'
+import Modal from 'react-modal'
+
+
+Modal.setAppElement('#root');
 
 function App() {
 

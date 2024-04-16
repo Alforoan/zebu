@@ -19,9 +19,9 @@ const renewToken = (req, res, callback) => {
           const accessToken = jwt.sign(
             { email },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1m' }
+            { expiresIn: '1d' }
           );
-          res.cookie('accessToken', accessToken, { maxAge: 20 * 1000 });
+          res.cookie('accessToken', accessToken, { maxAge: 60 * 60 * 1000 });
           callback();
         }
       }

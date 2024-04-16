@@ -1,17 +1,37 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navigation from '../navigation/Navigation'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import IsLoggedInContext from '../context/IsLoggedInProvider';
+import CreateDeck from '../createdeck/CreateDeck';
+import ReactDOMServer from 'react-dom/server';
+import Modal from 'react-modal';
 
 const Decks = () => {
- 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <div>
-      <Navigation/>
+      <Navigation />
       <h1>Decks</h1>
+      <button onClick={openModal}>Create Deck</button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel='Create Deck Modal'
+      >
+        <CreateDeck setModalIsOpen={setModalIsOpen}/>
+      </Modal>
     </div>
-  )
-}
+  );
+};
 
 export default Decks

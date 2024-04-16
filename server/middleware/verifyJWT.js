@@ -9,9 +9,10 @@ config();
 const verifyJWT = (req, res, next) => {
   const accesstoken = req.cookies.accessToken;
   if(accesstoken){
-    
+    console.log("CHECKING ACCESS TOKEN",accesstoken);
     jwt.verify(accesstoken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if(err){
+        console.log("ERROR", err);
         console.log('err.message',err.message);
       }else{
         req.email = decoded.email;
