@@ -1,9 +1,13 @@
 import React from 'react'
+import Navigation from '../navigation/Navigation';
 
 const Add = () => {
   console.log("HAHAHAHAHAH");
   return (
-    <div>Add</div>
+    <div>
+      <Navigation/> 
+      Add
+    </div>
   )
 }
 

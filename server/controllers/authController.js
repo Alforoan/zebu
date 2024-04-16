@@ -72,7 +72,7 @@ async function login(req, res) {
 
       await client.query(updateRefreshTokenQuery, [refreshToken, email]);
       res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 60 * 1000});
-      res.cookie('accessToken', accessToken, {httpOnly:true, maxAge: 20 * 1000});
+      res.cookie('accessToken', accessToken, {httpOnly:true, maxAge:60 * 20 * 1000});
    
       res.json({
         accessToken,
