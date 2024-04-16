@@ -5,9 +5,10 @@ import Decks from './decks/Decks'
 import Login from './login/Login'
 import { useState } from 'react'
 
+
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   return (
     <BrowserRouter>
@@ -25,7 +26,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route
           path='/login'
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={<Login />}
         />
       </Routes>
     </BrowserRouter>

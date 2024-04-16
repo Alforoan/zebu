@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../context/IsLoggedInProvider';
 import './Form.css';
 import Navigation from '../navigation/Navigation';
 import { ACCESS_TOKEN, BASE_URL, REFRESH_TOKEN } from '../constants';
