@@ -1,0 +1,10 @@
+
+.deck-container{
+  margin-top: 1rem;
+}
+
+.delete-btn{
+  padding: 4px 6px;
+  font-size: 12px;
+  margin-left: 1rem;
+}

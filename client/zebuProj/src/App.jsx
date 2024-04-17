@@ -1,12 +1,13 @@
 import react from 'react'
 import Signup from './signup/Signup'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Decks from './decks/Decks'
+import Decks from './deckstuff/deckpage/DeckPage'
 import Login from './login/Login'
 import { useState } from 'react'
 import ProtectedRoute from './components/ProtectedRoute'
 import Add from './add/Add'
 import Modal from 'react-modal'
+import DeckPage from './deckstuff/deckpage/DeckPage'
 
 
 Modal.setAppElement('#root');
@@ -27,7 +28,7 @@ function App() {
           path='/decks'
           element={
             <ProtectedRoute path='/decks'>
-              <Decks />
+              <DeckPage />
             </ProtectedRoute>
           }
         />

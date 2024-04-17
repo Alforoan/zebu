@@ -1,14 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Navigation from '../navigation/Navigation'
+import Navigation from '../../navigation/Navigation'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import IsLoggedInContext from '../context/IsLoggedInProvider';
-import CreateDeck from '../createdeck/CreateDeck';
+import IsLoggedInContext from '../../context/IsLoggedInProvider';
+import CreateDeck from '../../createdeck/CreateDeck';
 import ReactDOMServer from 'react-dom/server';
 import Modal from 'react-modal';
+import Decks from '../decks/Decks';
 
-const Decks = () => {
+
+const DeckPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [decks, setDecks] = useState([]);
+  const [deckName, setDeckName] = useState('');
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -17,6 +21,8 @@ const Decks = () => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+
 
   return (
     <div>
@@ -28,10 +34,11 @@ const Decks = () => {
         onRequestClose={closeModal}
         contentLabel='Create Deck Modal'
       >
-        <CreateDeck setModalIsOpen={setModalIsOpen}/>
+        <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName}/>
       </Modal>
+      <Decks decks={decks} setDecks={setDecks}/>
     </div>
   );
 };
 
-export default Decks
+export default DeckPage

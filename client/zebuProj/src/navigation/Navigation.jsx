@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import './Navigation.css'
 import { Link, useNavigate } from 'react-router-dom'
 import IsLoggedInContext from '../context/IsLoggedInProvider'
-import Decks from '../decks/Decks'
+import Decks from '../deckstuff/deckpage/DeckPage'
 import axios from 'axios'
 
 

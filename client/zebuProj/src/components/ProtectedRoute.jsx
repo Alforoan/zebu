@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const ProtectedRoute = ({children, path}) => {
   const navigate = useNavigate();
-  console.log('CHECKING PATH YES', path);
+
   const {isLoggedIn, setIsLoggedIn} = useContext(IsLoggedInContext);
   useEffect(() => {
     const config = {
@@ -19,9 +19,8 @@ const ProtectedRoute = ({children, path}) => {
           `http://localhost:3000/api/user/decks`,
           config
         );
-        console.log("GETTING RESPONSE",response);
         const data = response.data.message;
-        console.log('DATA FROM DECKS', data);
+
         if (data === 'success') {
           setIsLoggedIn(true);
           navigate(`${path}`);
