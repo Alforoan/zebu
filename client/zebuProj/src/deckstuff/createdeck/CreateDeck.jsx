@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) => {
 
+  const [errMsg, setErrMsg] = useState('');
+
   const handleAdd = async() => {
     console.log('DECKNAME',deckName);
     const config = {
@@ -22,6 +24,7 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
       }
     catch (error) {
       console.log(error);
+      setErrMsg('Deck name already exists');
       }
 
   };
@@ -32,12 +35,13 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
       <div>
         <label htmlFor='name'>Name: </label>
         <input id='name' type='text' value={deckName} onChange={(e) => {
-          console.log(e.target.value);
+          setErrMsg('');
           setDeckName(e.target.value)
           }}/>
-          
       </div>
-      
+      {
+        errMsg ? <p className='err-msg'>{errMsg}</p> : ''
+      }
       <div>
         <button onClick={() => handleAdd()}>OK</button>
         <button onClick={() => {setDeckName(''); setModalIsOpen(false);}}>Cancel</button>
