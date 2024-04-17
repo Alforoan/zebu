@@ -19,7 +19,9 @@ async function login(req, res) {
         .status(400)
         .json({ error: 'Email does not exist, please sign up' });
     } else {
-      const hashedPasswordFromDB = rows[0].password;
+      const user = rows[0];
+      const userId = user.id; 
+      const hashedPasswordFromDB = user.password;
 
       const passwordMatches = await bcrypt.compare(
         password,
@@ -30,12 +32,12 @@ async function login(req, res) {
       }
       let foundEmail = rows[0]?.email;
       const accessToken = jwt.sign(
-        { email: foundEmail },
+        { userId, email: foundEmail },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '50m' }
       );
       const refreshToken = jwt.sign(
-        { email: foundEmail },
+        { userId, email: foundEmail },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '50m' }
       );
@@ -79,6 +81,7 @@ async function login(req, res) {
    
       res.json({
         accessToken,
+        userId,
         message: 'Sign-in successful',
       });
 

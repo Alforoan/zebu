@@ -8,6 +8,7 @@ config();
 
 const verifyJWT = (req, res, next) => {
   const accesstoken = req.cookies.accessToken;
+  console.log('ACCESS TOKEN',accesstoken);
   if(accesstoken){
     console.log("CHECKING ACCESS TOKEN",accesstoken);
     jwt.verify(accesstoken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
@@ -15,8 +16,8 @@ const verifyJWT = (req, res, next) => {
         console.log("ERROR", err);
         console.log('err.message',err.message);
       }else{
-        req.email = decoded.email;
-        console.log(decoded);
+        req.userId = decoded.userId;
+        console.log('is this decoded',decoded);
         next();
       }
     });
@@ -26,26 +27,6 @@ const verifyJWT = (req, res, next) => {
       next();
     })
   }
-  // if (!accesstoken) {
-  //   // if (renewToken(req, res)) {
-  //   //   next();
-  //   // }
-  //   console.log("accesstoken not working");
-  //   res.json({message: "something wrong"});
-  //   next();
-  // } else {
-  //   jwt.verify(accesstoken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-  //     if (err) {
-        
-  //       return res.redirect('/login');
-  //     } else {
-  //       console.log("DECODED EMAIL", decoded.email);
-  //       req.email = decoded.email;
-  //       //res.status(200).json({success:true});
-  //       next();
-  //     }
-  //   });
-  // }
 };
 
 export {verifyJWT}

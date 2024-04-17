@@ -3,7 +3,7 @@ import Navigation from '../../navigation/Navigation'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import IsLoggedInContext from '../../context/IsLoggedInProvider';
-import CreateDeck from '../../createdeck/CreateDeck';
+import CreateDeck from '../createdeck/CreateDeck';
 import ReactDOMServer from 'react-dom/server';
 import Modal from 'react-modal';
 import Decks from '../decks/Decks';

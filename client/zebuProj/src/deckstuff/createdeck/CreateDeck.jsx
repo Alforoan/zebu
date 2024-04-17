@@ -1,15 +1,28 @@
 import React, { useState } from 'react'
 import './CreateDeck.css'
+import axios from 'axios';
 
 const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) => {
 
-  const handleAdd = () => {
-    console.log({deckName});
-    if(deckName.length > 0){
-      setDecks(prev => [...prev, deckName]);
+  const handleAdd = async() => {
+    console.log('DECKNAME',deckName);
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    try {
+      if(deckName && deckName.length > 0){
+      const name = {name:deckName};
+      const response = await axios.post('http://localhost:3000/api/user/decks', JSON.stringify(name), config);
+      console.log('NEW DECK', response);
+      } 
+      
       setDeckName('');
       setModalIsOpen(false);
-    }
+      }
+    catch (error) {
+      console.log(error);
+      }
 
   };
   
@@ -22,6 +35,7 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
           console.log(e.target.value);
           setDeckName(e.target.value)
           }}/>
+          
       </div>
       
       <div>
