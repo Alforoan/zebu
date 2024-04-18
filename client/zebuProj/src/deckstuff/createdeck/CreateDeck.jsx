@@ -17,6 +17,7 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
       const name = {name:deckName};
       const response = await axios.post('http://localhost:3000/api/user/decks', JSON.stringify(name), config);
       console.log('NEW DECK', response);
+      setDecks(prev => [...prev, name]);
       } 
       
       setDeckName('');

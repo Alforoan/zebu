@@ -49,7 +49,7 @@ const Form = ({route, method}) => {
     const fetchData = async() => {
       try {
         const response = await axios.get('http://localhost:3000/api/user/login', config);
-        console.log("HAHA RESPONSE",response);
+        //console.log("HAHA RESPONSE",response);
         const data = response.data.message;
         if(data === 'success'){
           navigate('/decks');

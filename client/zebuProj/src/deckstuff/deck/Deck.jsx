@@ -2,15 +2,15 @@
 import React from 'react'
 import './Deck.css'
 
-const Deck = ({deck, handleDelete,id}) => {
+const Deck = ({deck, handleDelete}) => {
 
 
 
 
   return (
     <div className='deck-container'>
-     
-      <button className='delete-btn' onClick={() => handleDelete(id)}>
+      {deck.name}
+      <button className='delete-btn' onClick={() => handleDelete(deck.id)}>
         Delete
       </button>
     </div>

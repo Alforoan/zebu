@@ -4,7 +4,6 @@ config();
 
 const renewToken = (req, res, callback) => {
   const refreshtoken = req.cookies.refreshToken;
-  console.log();
   console.log('REFRESH TOKEN HERE',refreshtoken);
   if (!refreshtoken) {
     return res.json({ valid: false, message: 'No Refresh token' });

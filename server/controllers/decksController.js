@@ -6,7 +6,6 @@ config();
 async function createDeck(req, res) {
   try {
     const userId = req.userId;
-    console.log({userId});
     const {name} = req.body;
     const client = await pool.connect();
 
@@ -35,5 +34,37 @@ async function createDeck(req, res) {
   } 
 }
 
+async function showDecks(req,res) {
+  console.log('showDecks has been used');
+  let client;
+  try {
+    client = await pool.connect();
+    const userId = req.userId;
+    const allDecksQuery = 'SELECT * FROM decks WHERE user_id = $1';
+    const { rows } = await client.query(allDecksQuery, [userId]);
+    res.json({ data: rows, message: 'success' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }finally{
+    client.release();
+  }
+}
 
-export {createDeck};
+async function deleteDeck(req, res) {
+  try {
+    const userId = req.userId;
+    const { name } = req.body;
+    await pool.query('DELETE FROM decks WHERE user_id = $1 AND name = $2', [
+      userId,
+      name,
+    ]);
+
+    res.status(200).json({ message: 'Deck deleted successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+export {createDeck, showDecks, deleteDeck};
