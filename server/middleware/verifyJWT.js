@@ -15,6 +15,7 @@ const verifyJWT = (req, res, next) => {
       if(err){
         console.log("ERROR", err);
         console.log('err.message',err.message);
+        return res.status(401).json({ error: 'Unauthorized' });
       }else{
         req.userId = decoded.userId;
         console.log('is this decoded',decoded);
