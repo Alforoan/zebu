@@ -39,7 +39,7 @@ const ProtectedRoute = ({children, path}) => {
 
   return (
     <>
-      {isLoggedIn ? children : <Navigate to='/login'/>}
+      {isLoggedIn ? children : null}
     </>
   );
 }
