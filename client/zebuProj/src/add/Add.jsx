@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Navigation from '../navigation/Navigation';
 import axios from 'axios';
 import Decks from '../deckstuff/decks/Decks';
@@ -9,6 +9,7 @@ const Add = () => {
   const [decks, setDecks] = useState([]);
   const [isOnFocus, setIsOnFocus] = useState(false);
   const [deckName, setDeckName] = useState('');
+  const inputRef = useRef(null);
   const config = {
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
@@ -30,12 +31,20 @@ const Add = () => {
     fetchDecks();
   }, [])
 
-  const handleInputFocus = () => {
-    setIsOnFocus(true);
-  }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setIsOnFocus(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <main>
+    <main style={{height:'95vh'}}>
       <Navigation />
       <div>
         <label htmlFor='name'>Deck </label>
@@ -43,15 +52,14 @@ const Add = () => {
           autoComplete='off'
           id='name'
           type='text'
-          onFocus={handleInputFocus}
-          onBlur={() => setIsOnFocus(false)}
+          onFocus={() => setIsOnFocus(true)}
+          ref={inputRef}
           placeholder={deckName}
         />
       </div>
       {
         isOnFocus ? <DecksDropdown decks={decks} setDeckName={setDeckName}/> : ''
       }
-      {/* <DecksDropdown decks={decks} setDeckName={setDeckName} /> */}
       <form type='submit'>
         <div>
           <label htmlFor='front'>Front </label>

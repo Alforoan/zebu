@@ -9,5 +9,5 @@
 
 .deck-btn:hover{
   background: lightblue;
-
+  transition: all .2s linear;
 }
