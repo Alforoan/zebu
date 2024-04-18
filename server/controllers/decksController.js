@@ -67,4 +67,16 @@ async function deleteDeck(req, res) {
   }
 }
 
-export {createDeck, showDecks, deleteDeck};
+async function renameDeck(req,res){
+  try {
+    const { id, newName } = req.body;
+    const updateQuery = 'UPDATE decks SET name = $1 WHERE id = $2';
+    await pool.query(updateQuery, [newName, id]);
+    res.json({ message: 'Deck renamed successfully' });
+  } catch (error) {
+    console.error('Error renaming deck:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+} 
+
+export {createDeck, showDecks, deleteDeck, renameDeck};

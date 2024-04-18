@@ -2,7 +2,7 @@ import express from 'express';
 import { signUp } from '../controllers/signupController.js'; 
 import { login, logout } from '../controllers/authController.js'; 
 import { verifyJWT } from '../middleware/verifyJWT.js';
-import { createDeck, deleteDeck, showDecks } from '../controllers/decksController.js';
+import { createDeck, deleteDeck, renameDeck, showDecks } from '../controllers/decksController.js';
 
 const router = express.Router();
 
@@ -12,9 +12,11 @@ router.get('/login', verifyJWT, (req,res) => {
   res.json({message:'success'})
 });
 router.get('/logout', logout);
+
 router.get('/decks', verifyJWT, showDecks);
 router.post('/decks',verifyJWT, createDeck);
 router.post('/decks/delete', verifyJWT, deleteDeck);
+router.put('/decks/rename', renameDeck);
 
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {

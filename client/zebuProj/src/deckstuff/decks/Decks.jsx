@@ -40,10 +40,11 @@ const Decks = ({ decks, setDecks }) => {
     
   }
 
+
   return (
     <div>
       {decks.map((deck, index) => (
-        <Deck key={index} deck={deck} handleDelete={handleDelete} />
+        <Deck key={index} deck={deck} handleDelete={handleDelete}/>
       ))}
     </div>
   );
