@@ -4,25 +4,24 @@ import { config } from 'dotenv';
 config();
 
 async function createDeck(req, res) {
+  let client;
   try {
     const userId = req.userId;
-    const {name} = req.body;
-    const client = await pool.connect();
+    const { name } = req.body;
+    // client = await pool.connect();
 
     const existingDeckQuery =
       'SELECT COUNT(*) FROM decks WHERE name = $1 AND user_id = $2';
-    const { rows } = await client.query(existingDeckQuery, [name, userId]);
+    const { rows } = await pool.query(existingDeckQuery, [name, userId]);
     const existingDeckCount = parseInt(rows[0].count);
 
     if (existingDeckCount > 0) {
-      return res
-        .status(400)
-        .json({
-          error: 'Deck with the same name already exists for this user',
-        });
+      return res.status(400).json({
+        error: 'Deck with the same name already exists for this user',
+      });
     }
 
-    const result = await client.query(
+    pool.query(
       'INSERT INTO decks (name, user_id) VALUES ($1, $2)',
       [name, userId]
     );
@@ -32,6 +31,9 @@ async function createDeck(req, res) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   } 
+  // finally {
+  //   client.release();
+  // }
 }
 
 async function showDecks(req,res) {
@@ -52,6 +54,7 @@ async function showDecks(req,res) {
 }
 
 async function deleteDeck(req, res) {
+
   try {
     const userId = req.userId;
     const { name } = req.body;
@@ -64,7 +67,7 @@ async function deleteDeck(req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
-  }
+  } 
 }
 
 async function renameDeck(req,res){
@@ -76,7 +79,7 @@ async function renameDeck(req,res){
   } catch (error) {
     console.error('Error renaming deck:', error);
     res.status(500).json({ error: 'Internal server error' });
-  }
+  } 
 } 
 
 export {createDeck, showDecks, deleteDeck, renameDeck};

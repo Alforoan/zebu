@@ -1,0 +1,13 @@
+.deck-btn{
+  border: none;
+  background: none;
+  color: black;
+  width: 100%;
+  text-align: left;
+  display: block;
+}
+
+.deck-btn:hover{
+  background: lightblue;
+
+}
