@@ -4,8 +4,9 @@ import './Deckdropdown.css'
 
 const Deckdropdown = ({deck, setDeckName}) => {
 
-  const handleClick = () => {
-    console.log('Button clicked:', deck.name);
+  const handleClick = (e) => {
+  
+    setDeckName(e.target.textContent);
   };
 
   return (

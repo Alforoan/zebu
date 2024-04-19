@@ -8,13 +8,6 @@ const DecksDropdown = ({ decks, setDeckName }) => {
     console.log('something clicked');
   };
 
-  useEffect(() => {
-    document.body.addEventListener('touchstart', handleClick);
-    return () => {
-      document.body.removeEventListener('touchstart', handleClick);
-    };
-  }, []); // Run this effect only once
-
   return (
     <div className='decks-container'>
       {decks.map((deck, index) => (
