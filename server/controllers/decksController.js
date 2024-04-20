@@ -4,11 +4,9 @@ import { config } from 'dotenv';
 config();
 
 async function createDeck(req, res) {
-  let client;
   try {
     const userId = req.userId;
     const { name } = req.body;
-    // client = await pool.connect();
 
     const existingDeckQuery =
       'SELECT COUNT(*) FROM decks WHERE name = $1 AND user_id = $2';
@@ -31,9 +29,6 @@ async function createDeck(req, res) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   } 
-  // finally {
-  //   client.release();
-  // }
 }
 
 async function showDecks(req,res) {

@@ -2,10 +2,11 @@
 import React from 'react'
 import './Deckdropdown.css'
 
-const Deckdropdown = ({deck, setDeckName}) => {
+const Deckdropdown = ({deck,setDeckId, setDeckName}) => {
 
-  const handleClick = (e) => {
+  setDeckId(deck.id);
   
+  const handleClick = (e) => {
     setDeckName(e.target.textContent);
   };
 

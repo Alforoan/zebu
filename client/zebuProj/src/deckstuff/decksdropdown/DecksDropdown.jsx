@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import Deckdropdown from '../deckdropdown/Deckdropdown';
 import './DecksDropdown.css'
 
-const DecksDropdown = ({ decks, setDeckName }) => {
+const DecksDropdown = ({ decks, setDeckName, setDeckId }) => {
   const handleClick = () => {
     console.log('something clicked');
   };
@@ -11,7 +11,7 @@ const DecksDropdown = ({ decks, setDeckName }) => {
   return (
     <div className='decks-container'>
       {decks.map((deck, index) => (
-        <Deckdropdown key={index} deck={deck} setDeckName={setDeckName}/>
+        <Deckdropdown key={index} setDeckId={setDeckId} deck={deck} setDeckName={setDeckName}/>
         // <button key={index} onClick={handleClick}>
         //   {deck.name}
         // </button>
