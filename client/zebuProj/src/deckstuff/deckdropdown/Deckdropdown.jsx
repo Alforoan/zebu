@@ -4,9 +4,11 @@ import './Deckdropdown.css'
 
 const Deckdropdown = ({deck,setDeckId, setDeckName}) => {
 
-  setDeckId(deck.id);
+  
   
   const handleClick = (e) => {
+    
+    setDeckId(deck.id);
     setDeckName(e.target.textContent);
   };
 

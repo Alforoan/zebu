@@ -18,7 +18,6 @@ const verifyJWT = (req, res, next) => {
         return res.status(401).json({ error: 'Unauthorized' });
       }else{
         req.userId = decoded.userId;
-        console.log('is this decoded',decoded);
         next();
       }
     });

@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Add from './add/Add'
 import Modal from 'react-modal'
 import DeckPage from './deckstuff/deckpage/DeckPage'
+import Flashcards from './flashcardsStuff/flashcards/Flashcards'
 
 
 Modal.setAppElement('#root');
@@ -37,6 +38,14 @@ function App() {
           element={
             <ProtectedRoute path='/add'>
               <Add />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/flashcards/:deckId'
+          element={
+            <ProtectedRoute path='/flashcards/:deckId'>
+              <Flashcards />
             </ProtectedRoute>
           }
         />

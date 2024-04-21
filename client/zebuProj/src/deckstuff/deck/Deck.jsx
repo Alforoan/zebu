@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import './Deck.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import IsLoggedInContext from '../../context/IsLoggedInProvider';
 
 const Deck = ({deck, handleDelete}) => {
+
+  const { deckId, setDeckId } = useContext(IsLoggedInContext);
 
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +26,10 @@ const Deck = ({deck, handleDelete}) => {
     }
   };
 
+  const handleClick = () => {
+    setDeckId(deck.id);
+    console.log("button clicked");
+  }
 
   return (
     <div className='deck-container'>
@@ -33,7 +41,18 @@ const Deck = ({deck, handleDelete}) => {
         </>
       ) : (
         <>
-          <span>{deck.name}</span>
+          <Link to={`/flashcards/${deck.id}`}>
+            <button
+              style={{
+                backgroundColor: 'transparent',
+                color: 'lightblue',
+                padding: '0px 2px',
+              }}
+              onClick={handleClick}
+            >
+              {deck.name}
+            </button>
+          </Link>
           <button className='rename-btn' onClick={() => setIsEditing(true)}>
             Rename
           </button>

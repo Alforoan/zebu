@@ -27,6 +27,29 @@ async function createFlashcard(req, res) {
   }
 }
 
+async function getFlashcards(req,res){
+
+  console.log("SOMETHING IS HAPPENINGA");
+  try {
+    const {deckId} = req.params;
+    const userId = req.userId;
+    console.log({deckId});
+    
+
+    const flashcardQuery = 'SELECT * FROM flashcards WHERE deck_id = $1 AND user_id = $2';
+    const flashcardResult = await pool.query(flashcardQuery, [deckId, userId]);
+    const flashcards = flashcardResult.rows;
+    if(flashcards.length > 0){
+       res.status(200).json({ flashcards });
+    }else{
+      res.status(404).json({ message: 'No flashcards found for the given deck' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+}
 
 
-export { createFlashcard };
+
+export { createFlashcard, getFlashcards };
