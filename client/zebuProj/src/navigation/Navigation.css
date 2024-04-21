@@ -1,9 +1,10 @@
+
 .navigation-container{
   display: flex;
   flex-direciton: row;
   align-items: center;
   justify-content: space-around;
-  
+  background-color: #E5E4E2	;
 }
 
 a {
