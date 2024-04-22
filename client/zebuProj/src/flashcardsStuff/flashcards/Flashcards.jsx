@@ -13,6 +13,9 @@ const Flashcards = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [isCardExist, setIsCardExist] = useState(true);
+  const [easy, setEasy] = useState(0);
+  const [medium, setMedium] = useState(0);
+  const [hard, sethard] = useState(0);
 
   const {deckId} = useParams();
 
@@ -94,7 +97,7 @@ const Flashcards = () => {
   return (
     <div>
       <Navigation />
-      <FlashcardPanel/>
+      <FlashcardPanel easy={easy} medium={medium} hard={hard}/>
       {isCardExist ? (
         cards.length > 0 && (
           <Flashcard

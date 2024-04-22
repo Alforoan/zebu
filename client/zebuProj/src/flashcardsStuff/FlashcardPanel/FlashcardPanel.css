@@ -19,6 +19,12 @@
   margin-right: .5rem;
 }
 
+.side-btn:hover{
+  background: #007BFF;
+  color: white;
+  transition: all .15s ease-in;
+}
+
 .difficulty-container{
   display: flex;
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import './FlashcardPanel.css'
 
-const FlashcardPanel = () => {
+const FlashcardPanel = ({easy, medium, hard}) => {
   return (
     <div className='container'>
       <div>
@@ -10,9 +10,9 @@ const FlashcardPanel = () => {
         <button className='side-btn'>-</button>
       </div>
       <div className='difficulty-container'>
-        <p className='difficulty'>E:</p>
-        <p className='difficulty'>M:</p>
-        <p className='difficulty'>H:</p>
+        <p className='difficulty'>E: {easy}</p>
+        <p className='difficulty'>M: {medium}</p>
+        <p className='difficulty'>H: {hard}</p>
       </div>
     </div>
   );
