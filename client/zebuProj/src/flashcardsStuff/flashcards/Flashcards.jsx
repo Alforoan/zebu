@@ -34,7 +34,14 @@ const Flashcards = () => {
 
         console.log('response from flashcards', response.data);
         console.log('response status',response);
-        setCards(response?.data.flashcards);
+        const now = new Date();
+        const flashcards = response?.data?.flashcards;
+        const filteredCards = flashcards.filter((card) => {
+          const nextScheduledTime = new Date(card.next_scheduled);
+          return now > nextScheduledTime;
+        });
+
+        setCards(filteredCards);
       } catch (error) {
         console.log(error);
       }
@@ -42,14 +49,29 @@ const Flashcards = () => {
     fetchData();
   }, [])
 
-  const handleNextCard = async() => {
+  const handleNextCard = async(e, id) => {
     //setIsAnswerShown((prev) => !prev);
     //setCurrentCardIndex((prevIndex) => prevIndex + 1);
-    const utcTime = new Date().toISOString();
-    console.log({utcTime});
-    const date = new Date(utcTime);
-    date.setUTCSeconds(date.getUTCSeconds() + 10);
-    console.log('new time',date.toISOString());
+    let difficulty = e.target.textContent;
+    
+    const timeNowInUtc = new Date().toISOString();
+    const date = new Date(timeNowInUtc);
+    date.setUTCSeconds(date.getUTCSeconds() + 60)
+    const nextScheduled = date.toISOString();
+
+    const data = {cardId: id, deckId: deckId, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
+
+    try {
+      const response = await axios.put(
+        'http://localhost:3000/api/user/flashcards/:deckId',
+        JSON.stringify(data),
+        config
+      );
+      console.log('response from editing flashcard', response);
+    } catch (error) {
+      console.log(error);
+    }
+
 
   };  
 
