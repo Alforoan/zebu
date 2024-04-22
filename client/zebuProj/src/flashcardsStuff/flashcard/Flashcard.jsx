@@ -67,13 +67,19 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;5m</span>
-                  <button onClick={onNextCard} className='difficulty-btn'>
+                  <button
+                    onClick={(e) => onNextCard(e, card.id)}
+                    className='difficulty-btn'
+                  >
                     Medium
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;1m</span>
-                  <button onClick={onNextCard} className='difficulty-btn'>
+                  <button
+                    onClick={(e) => onNextCard(e, card.id)}
+                    className='difficulty-btn'
+                  >
                     Hard
                   </button>
                 </div>
