@@ -4,6 +4,7 @@ import IsLoggedInContext from '../../context/IsLoggedInProvider';
 import Flashcard from '../flashcard/Flashcard';
 import { useParams } from 'react-router-dom';
 import Navigation from '../../navigation/Navigation';
+import FlashcardPanel from '../FlashcardPanel/FlashcardPanel';
 
 const Flashcards = () => {
 
@@ -93,6 +94,7 @@ const Flashcards = () => {
   return (
     <div>
       <Navigation />
+      <FlashcardPanel/>
       {isCardExist ? (
         cards.length > 0 && (
           <Flashcard

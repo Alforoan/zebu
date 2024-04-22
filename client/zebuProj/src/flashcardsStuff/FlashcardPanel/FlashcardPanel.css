@@ -1,0 +1,24 @@
+.container{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -1rem;
+}
+
+.side-btn{
+  margin-left: .2rem;
+  margin-right: .2rem;
+  border: 1px solid lightblue;
+  background: white;
+  color: #007BFF;
+}
+
+.difficulty{
+  font-size: 1rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
+}
+
+.difficulty-container{
+  display: flex;
+}
