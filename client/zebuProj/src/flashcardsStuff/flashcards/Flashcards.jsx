@@ -11,6 +11,8 @@ const Flashcards = () => {
   const [cards, setCards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [isCardExist, setIsCardExist] = useState(true);
+
   const {deckId} = useParams();
 
    const config = {
@@ -39,6 +41,11 @@ const Flashcards = () => {
           return now > nextScheduledTime;
         });
         console.log({filteredCards});
+        if(filteredCards.length > 1){
+          setIsCardExist(true)
+        }else{
+          setIsCardExist(false);
+        }
         setCards(filteredCards);
       } catch (error) {
         console.log(error);
@@ -86,13 +93,20 @@ const Flashcards = () => {
   return (
     <div>
       <Navigation />
-      {cards.length > 0 && (
-        <Flashcard
-          card={cards[currentCardIndex]}
-          onNextCard={handleNextCard}
-          handleClick={handleClick}
-          isAnswerShown={isAnswerShown}
-        />
+      {isCardExist ? (
+        cards.length > 0 && (
+          <Flashcard
+            card={cards[currentCardIndex]}
+            onNextCard={handleNextCard}
+            handleClick={handleClick}
+            isAnswerShown={isAnswerShown}
+          />
+        )
+      ) : (
+        <div>
+          <h2>Congratulations!</h2>
+          <p>Add more cards or refresh the deck to view flashcards again!</p>
+        </div>
       )}
     </div>
   );
