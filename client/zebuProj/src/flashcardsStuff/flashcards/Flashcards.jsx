@@ -15,7 +15,7 @@ const Flashcards = () => {
   const [isCardExist, setIsCardExist] = useState(true);
   const [easy, setEasy] = useState(0);
   const [medium, setMedium] = useState(0);
-  const [hard, sethard] = useState(0);
+  const [hard, setHard] = useState(0);
 
   const {deckId} = useParams();
 
@@ -68,10 +68,29 @@ const Flashcards = () => {
       setCurrentCardIndex((prevIndex) => prevIndex + 1);
     }
     let difficulty = e.target.textContent;
-    
+    let timeIncrementSeconds;
+
+    switch (difficulty) {
+      case 'Easy':
+        timeIncrementSeconds = 15;
+        setEasy((prev) => prev + 1);
+        break;
+      case 'Medium':
+        timeIncrementSeconds = 30; 
+        setMedium((prev) => prev + 1);
+        break;
+      case 'Hard':
+        timeIncrementSeconds = 45; 
+        setHard((prev) => prev + 1);
+        break
+      default:
+        return;
+    }
+
+
     const timeNowInUtc = new Date().toISOString();
     const date = new Date(timeNowInUtc);
-    date.setUTCSeconds(date.getUTCSeconds() + 15)
+    date.setUTCSeconds(date.getUTCSeconds() + timeIncrementSeconds)
     const nextScheduled = date.toISOString();
 
     const data = {cardId: id, deckId: deckId, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }

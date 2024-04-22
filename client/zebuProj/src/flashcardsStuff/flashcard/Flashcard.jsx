@@ -19,7 +19,9 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
     >
       {!isAnswerShown ? (
         <>
-          <p style={{ marginTop: '2rem' }}>{card.front}</p>
+          <p style={{ marginTop: '2rem' }} className='front'>
+            {card.front}
+          </p>
           <div
             style={{
               position: 'fixed',
@@ -36,8 +38,10 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
         </>
       ) : (
         <>
-          <p style={{ marginTop: '2rem' }}>{card.front}</p>
-          <p>{card.back}</p>
+          <p style={{ marginTop: '2rem' }} className='front'>
+            {card.front}
+          </p>
+          <p className='back'>{card.back}</p>
           <div
             style={{
               position: 'fixed',
@@ -54,7 +58,10 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
               <div style={{ display: 'flex', marginTop: '1rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;10m</span>
-                  <button onClick={(e) => onNextCard(e, card.id)} className='difficulty-btn'>
+                  <button
+                    onClick={(e) => onNextCard(e, card.id)}
+                    className='difficulty-btn'
+                  >
                     Easy
                   </button>
                 </div>
