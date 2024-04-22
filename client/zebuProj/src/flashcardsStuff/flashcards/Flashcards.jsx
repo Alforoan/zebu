@@ -16,6 +16,7 @@ const Flashcards = () => {
   const [easy, setEasy] = useState(0);
   const [medium, setMedium] = useState(0);
   const [hard, setHard] = useState(0);
+  const [fontSize, setFontSize] = useState('28px');
 
   const {deckId} = useParams();
 
@@ -109,6 +110,22 @@ const Flashcards = () => {
 
   };  
 
+  const handleEdit = () => {
+
+  }
+
+  const handleEnlargeFont = () => {
+    setFontSize((prev) => parseFloat(prev) + 8 + 'px');
+
+  };
+
+  const handleReduceFont = () => {
+     setFontSize((prev) => parseFloat(prev) - 8 + 'px');
+  };
+
+
+
+
   const handleClick = () => {
     setIsAnswerShown((prev) => !prev);
   };
@@ -116,7 +133,13 @@ const Flashcards = () => {
   return (
     <div>
       <Navigation />
-      <FlashcardPanel easy={easy} medium={medium} hard={hard}/>
+      <FlashcardPanel
+        easy={easy}
+        medium={medium}
+        hard={hard}
+        handleEnlargeFont={handleEnlargeFont}
+        handleReduceFont={handleReduceFont}
+      />
       {isCardExist ? (
         cards.length > 0 && (
           <Flashcard
@@ -124,6 +147,8 @@ const Flashcards = () => {
             onNextCard={handleNextCard}
             handleClick={handleClick}
             isAnswerShown={isAnswerShown}
+            setFontSize={setFontSize}
+            fontSize={fontSize}
           />
         )
       ) : (

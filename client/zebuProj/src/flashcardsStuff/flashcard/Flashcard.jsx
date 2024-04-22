@@ -2,12 +2,14 @@
 import React, { useState } from 'react'
 import './Flashcard.css'
 
-const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
-
-  
-  
-
-
+const Flashcard = ({
+  card,
+  onNextCard,
+  isAnswerShown,
+  handleClick,
+  setFontSize,
+  fontSize
+}) => {
   return (
     <div
       style={{
@@ -19,7 +21,14 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
     >
       {!isAnswerShown ? (
         <>
-          <p style={{ marginTop: '2rem' }} className='front'>
+          <p
+            style={{
+              marginTop: '2rem',
+              maxWidth: '65vw',
+              fontSize: `${fontSize}`,
+            }}
+            className='front'
+          >
             {card.front}
           </p>
           <div
@@ -38,19 +47,36 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
         </>
       ) : (
         <>
-          <p style={{ marginTop: '2rem' }} className='front'>
-            {card.front}
-          </p>
-          <p className='back'>{card.back}</p>
+          <div style={{ marginBottom: '8rem' }}>
+            <p
+              style={{
+                marginTop: '2rem',
+                maxWidth: '65vw',
+                fontSize: `${fontSize}`,
+              }}
+              className='front'
+            >
+              {card.front}
+            </p>
+            <p
+              className='back'
+              style={{ maxWidth: '65vw', fontSize: `${fontSize}` }}
+            >
+              {card.back}
+            </p>
+          </div>
           <div
             style={{
               position: 'fixed',
-              bottom: '2rem',
+              bottom: 0,
+              paddingBottom: '2rem',
+              paddingTop: '1rem',
               left: 0,
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              background: 'white',
             }}
           >
             <button onClick={handleClick}>Hide Answer</button>
@@ -90,6 +116,6 @@ const Flashcard = ({card, onNextCard, isAnswerShown, handleClick}) => {
       )}
     </div>
   );
-}
+};
 
 export default Flashcard

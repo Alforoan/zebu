@@ -5,6 +5,9 @@
   align-items: center;
   justify-content: space-around;
   background-color: #E5E4E2	;
+  position: sticky;
+  top: 0; 
+  z-index: 1000;
 }
 
 a {
