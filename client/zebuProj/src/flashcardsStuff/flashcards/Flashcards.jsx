@@ -12,7 +12,6 @@ const Flashcards = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const {deckId} = useParams();
-  console.log({deckId});
 
    const config = {
      headers: { 'Content-Type': 'application/json' },
@@ -31,32 +30,37 @@ const Flashcards = () => {
             headers: { 'Content-Type': 'application/json' },
           }
         );
-
-        console.log('response from flashcards', response.data);
-        console.log('response status',response);
+        
+       
         const now = new Date();
         const flashcards = response?.data?.flashcards;
         const filteredCards = flashcards.filter((card) => {
           const nextScheduledTime = new Date(card.next_scheduled);
           return now > nextScheduledTime;
         });
-
+        console.log({filteredCards});
         setCards(filteredCards);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [])
+  }, [currentCardIndex])
 
   const handleNextCard = async(e, id) => {
-    //setIsAnswerShown((prev) => !prev);
-    //setCurrentCardIndex((prevIndex) => prevIndex + 1);
+
+
+    setIsAnswerShown((prev) => !prev);
+    if(currentCardIndex === cards.length -1){
+      setCurrentCardIndex(0);
+    }else{
+      setCurrentCardIndex((prevIndex) => prevIndex + 1);
+    }
     let difficulty = e.target.textContent;
     
     const timeNowInUtc = new Date().toISOString();
     const date = new Date(timeNowInUtc);
-    date.setUTCSeconds(date.getUTCSeconds() + 60)
+    date.setUTCSeconds(date.getUTCSeconds() + 15)
     const nextScheduled = date.toISOString();
 
     const data = {cardId: id, deckId: deckId, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
@@ -81,9 +85,14 @@ const Flashcards = () => {
 
   return (
     <div>
-      <Navigation/>
-      {currentCardIndex < cards.length && (
-        <Flashcard card={cards[currentCardIndex]} onNextCard={handleNextCard} handleClick={handleClick} isAnswerShown={isAnswerShown}/>
+      <Navigation />
+      {cards.length > 0 && (
+        <Flashcard
+          card={cards[currentCardIndex]}
+          onNextCard={handleNextCard}
+          handleClick={handleClick}
+          isAnswerShown={isAnswerShown}
+        />
       )}
     </div>
   );

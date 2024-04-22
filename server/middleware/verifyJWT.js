@@ -14,7 +14,11 @@ const verifyJWT = (req, res, next) => {
     jwt.verify(accesstoken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if(err){
         console.log("ERROR", err);
+        //possible fix to jwt expired error
+        res.cookie('refreshToken', '', { maxAge: 10 });
+        res.cookie('accessToken', '', { maxAge: 10 });
         console.log('err.message',err.message);
+
         return res.status(401).json({ error: 'Unauthorized' });
       }else{
         req.userId = decoded.userId;
