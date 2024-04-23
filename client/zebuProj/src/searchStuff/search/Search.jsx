@@ -6,7 +6,7 @@ import Card from '../card/Card'
 
 const Search = () => {
 
-  const [searchValue, setSearchValue] = useState('deck');
+  const [searchValue, setSearchValue] = useState('card');
   const [searchInput, setSearchInput] = useState('');
   const [userId, setUserId] = useState(null);
   const [deckId, setDeckId] = useState(null);
@@ -52,8 +52,7 @@ const Search = () => {
           'http://localhost:3000/api/user/flashcards',{
             ...config,
             params: {
-              id: userId,
-              deckId: deckId
+              id: userId
             }
           }
           
@@ -84,8 +83,8 @@ const Search = () => {
         <h1 className='search-text'>Search</h1>
         <div className='search-box-container'>
           <select name='search' onChange={(e) => setSearchValue(e.target.value)}>
-          <option value='deck'>Deck</option>
           <option value='card'>Card</option>
+          <option value='deck'>Deck</option>
           </select>
           <label htmlFor='searchBox'></label>
           <input className='search-box' id='searchBox' type='text' onChange={(e) => setSearchInput(e.target.value)}/>

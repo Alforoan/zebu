@@ -113,10 +113,9 @@ async function editFlashcardText(req,res) {
 
 async function getAllFlashcards(req, res) {
   try {
-    const { id, deckId } = req.query;
-    console.log('ID THEN DECK ID', id, deckId);
-    const flashcardsQuery = 'SELECT * FROM flashcards WHERE user_id = $1 AND deck_id = $2';
-    const flashcardsResult = await pool.query(flashcardsQuery, [id, deckId]);
+    const { id } = req.query;
+    const flashcardsQuery = 'SELECT * FROM flashcards WHERE user_id = $1';
+    const flashcardsResult = await pool.query(flashcardsQuery, [id]);
 
     if (flashcardsResult.rows.length === 0) {
       return res.status(404).json({ message: 'No flashcards exist' });
