@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Flashcard.css'
 
 const Flashcard = ({
@@ -8,8 +8,16 @@ const Flashcard = ({
   isAnswerShown,
   handleClick,
   setFontSize,
-  fontSize
+  fontSize,
+  setCardId,
+  id
 }) => {
+  
+  useEffect(() => {
+    setCardId(id)
+  }, [id])
+ 
+
   return (
     <div
       style={{

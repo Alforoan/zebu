@@ -119,11 +119,13 @@ const Flashcards = () => {
   const handleEdit = async() => {
    
     try {
-      const response = await axios.get('http://localhost:3000/api/user/edit', config);
+      const response = await axios.get('http://localhost:3000/api/user/edit', {
+        ...config,
+        params: {
+          id: cardId, 
+        },
+      });
       console.log('response after clicking edit btn',response);
-      const flashcardId = response?.flashcard?.id;
-      setCardId(flashcardId);
-      console.log({cardId});
       window.open(`/edit/${cardId}`, '_blank');
 
     } catch (error) {
@@ -169,6 +171,7 @@ const Flashcards = () => {
             setFontSize={setFontSize}
             fontSize={fontSize}
             setCardId={setCardId}
+            id={[cards[currentCardIndex].id][0]}
           />
         )
       ) : (

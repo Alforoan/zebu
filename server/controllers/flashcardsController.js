@@ -79,7 +79,7 @@ async function editFlashcard(req,res){
 
 async function editFlashcardInfo (req,res){
   try {
-    const id = 198;
+    const {id} = req.query;
     const flashcardQuery = 'SELECT * FROM flashcards WHERE id = $1'
     const flashcardQueryResult = await pool.query(flashcardQuery, [id]);
     const flashcard = flashcardQueryResult.rows[0];

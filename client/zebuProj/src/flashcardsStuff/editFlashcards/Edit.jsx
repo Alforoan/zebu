@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom';
 const Edit = () => {
 
   
-  const {cardId} = useParams();
+  const {id} = useParams();
 
 
   const handleUpdate = () => {
     console.log('scllksdf');
-    console.log({cardId});
+    console.log({id});
   }
 
   return (
