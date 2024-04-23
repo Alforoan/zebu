@@ -50,7 +50,7 @@ const Navigation = ({success, setSuccess}) => {
             <Link className='link' to='/add'>
               Add
             </Link>
-            <Link className='link' to='/'>
+            <Link className='link' to='/search'>
               Search
             </Link>
           </div>

@@ -10,6 +10,7 @@ import Modal from 'react-modal'
 import DeckPage from './deckstuff/deckpage/DeckPage'
 import Flashcards from './flashcardsStuff/flashcards/Flashcards'
 import Edit from './flashcardsStuff/editFlashcards/Edit'
+import Search from './search/Search'
 
 
 Modal.setAppElement('#root');
@@ -55,6 +56,14 @@ function App() {
           element={
             <ProtectedRoute path='/edit'>
               <Edit />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={`/search`}
+          element={
+            <ProtectedRoute path='/search'>
+              <Search/>
             </ProtectedRoute>
           }
         />
