@@ -36,7 +36,9 @@ const Search = () => {
     fetchData();
   },[])
 
-  const handleSearch = async() => {
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    console.log('test');
     if(!searchInput){
       console.log('something');
       return;
@@ -78,7 +80,7 @@ const Search = () => {
   return (
     <main>
       <Navigation />
-      <div className='search-container'>
+      <form className='search-container' onSubmit={handleSubmit}>
         <h1 className='search-text'>Search</h1>
         <select name='search' onChange={(e) => setSearchValue(e.target.value)}>
           <option value='deck'>Deck</option>
@@ -86,10 +88,10 @@ const Search = () => {
         </select>
         <label htmlFor='searchBox'></label>
         <input id='searchBox' type='text' onChange={(e) => setSearchInput(e.target.value)}/>
-        <button onClick={handleSearch}>Search</button>
+        <button>Search</button>
         {flashcards.length > 0 &&
           flashcards.map((card) => <Card key={card.id} card={card} />)}
-      </div>
+      </form>
       
     </main>
   );
