@@ -82,13 +82,16 @@ const Search = () => {
       <Navigation />
       <form className='search-container' onSubmit={handleSubmit}>
         <h1 className='search-text'>Search</h1>
-        <select name='search' onChange={(e) => setSearchValue(e.target.value)}>
+        <div className='search-box-container'>
+          <select name='search' onChange={(e) => setSearchValue(e.target.value)}>
           <option value='deck'>Deck</option>
           <option value='card'>Card</option>
-        </select>
-        <label htmlFor='searchBox'></label>
-        <input id='searchBox' type='text' onChange={(e) => setSearchInput(e.target.value)}/>
-        <button>Search</button>
+          </select>
+          <label htmlFor='searchBox'></label>
+          <input className='search-box' id='searchBox' type='text' onChange={(e) => setSearchInput(e.target.value)}/>
+          <button className='search-btn'>Search</button>
+        </div>
+        
         {flashcards.length > 0 &&
           flashcards.map((card) => <Card key={card.id} card={card} />)}
       </form>
