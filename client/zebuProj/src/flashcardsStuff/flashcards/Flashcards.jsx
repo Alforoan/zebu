@@ -125,7 +125,6 @@ const Flashcards = () => {
           id: cardId, 
         },
       });
-      console.log('response after clicking edit btn',response);
       window.open(`/edit/${cardId}`, '_blank');
 
     } catch (error) {

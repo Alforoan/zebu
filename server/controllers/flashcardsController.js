@@ -77,7 +77,7 @@ async function editFlashcard(req,res){
   
 }
 
-async function editFlashcardInfo (req,res){
+async function getFlashcardInfo (req,res){
   try {
     const {id} = req.query;
     const flashcardQuery = 'SELECT * FROM flashcards WHERE id = $1'
@@ -89,5 +89,9 @@ async function editFlashcardInfo (req,res){
   }
 }
 
+async function editFlashcardText(req,res) { 
+  
+}
 
-export { createFlashcard, getFlashcards, editFlashcard, editFlashcardInfo };
+
+export { createFlashcard, getFlashcards, editFlashcard, getFlashcardInfo, editFlashcardText };
