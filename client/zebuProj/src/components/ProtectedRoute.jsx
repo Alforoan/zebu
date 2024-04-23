@@ -1,11 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import IsLoggedInContext from '../context/IsLoggedInProvider'
-import { useNavigate,Navigate, Route } from 'react-router-dom';
+import { useNavigate,Navigate, Route, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
 const ProtectedRoute = ({children, path}) => {
   const navigate = useNavigate();
+  const {id} = useParams();
+
+  console.log('ID IN PROTECTED ROUTE ',id);
 
   const {isLoggedIn, setIsLoggedIn} = useContext(IsLoggedInContext);
   useEffect(() => {
@@ -23,7 +26,13 @@ const ProtectedRoute = ({children, path}) => {
 
         if (data === 'success') {
           setIsLoggedIn(true);
-          navigate(`${path}`);
+          if(id){
+            console.log(`id defined...${path}/${id}`);
+            navigate(`${path}/${id}`);
+          }else{
+            console.log(`id not defined...${path}`);
+            navigate(`${path}`);
+          }
         } else {
           console.log('cant access');
           setIsLoggedIn(false);
@@ -34,7 +43,7 @@ const ProtectedRoute = ({children, path}) => {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
 
   return (

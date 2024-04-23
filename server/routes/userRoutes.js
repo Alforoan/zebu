@@ -3,7 +3,7 @@ import { signUp } from '../controllers/signupController.js';
 import { login, logout } from '../controllers/authController.js'; 
 import { verifyJWT } from '../middleware/verifyJWT.js';
 import { createDeck, deleteDeck, renameDeck, showDecks } from '../controllers/decksController.js';
-import { createFlashcard, editFlashcard, getFlashcards } from '../controllers/flashcardsController.js';
+import { createFlashcard, editFlashcard, editFlashcardInfo, getFlashcards } from '../controllers/flashcardsController.js';
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.put('/decks/rename', renameDeck);
 router.post('/add',verifyJWT, createFlashcard);
 router.get('/flashcards/:deckId',verifyJWT, getFlashcards);
 router.put('/flashcards/:deckId', editFlashcard);
+router.get('/edit', editFlashcardInfo);
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {
 //   res.json({req});

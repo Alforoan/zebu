@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import './FlashcardPanel.css'
 
@@ -7,11 +8,12 @@ const FlashcardPanel = ({
   hard,
   handleEnlargeFont,
   handleReduceFont,
+  handleEdit
 }) => {
   return (
     <div className='container'>
       <div>
-        <button className='side-btn'>Edit</button>
+        <button className='side-btn' onClick={handleEdit}>Edit</button>
         <button className='side-btn plus' onClick={handleEnlargeFont}>+</button>
         <button className='side-btn minus' onClick={handleReduceFont}>-</button>
       </div>

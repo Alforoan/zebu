@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import IsLoggedInContext from '../../context/IsLoggedInProvider';
 import Flashcard from '../flashcard/Flashcard';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navigation from '../../navigation/Navigation';
 import FlashcardPanel from '../FlashcardPanel/FlashcardPanel';
+import Edit from '../editFlashcards/Edit';
 
 const Flashcards = () => {
 
@@ -17,8 +18,13 @@ const Flashcards = () => {
   const [medium, setMedium] = useState(0);
   const [hard, setHard] = useState(0);
   const [fontSize, setFontSize] = useState('28px');
+  const [cardId, setCardId] = useState(null);
+  const [isEditVisible, setIsEditVisible] = useState(false);
+  const [frontText, setFrontText] = useState('');
+  const [backText, setBackText] = useState('');
 
-  const {deckId} = useParams();
+  const {id} = useParams();
+  const navigate = useNavigate();
 
    const config = {
      headers: { 'Content-Type': 'application/json' },
@@ -30,9 +36,9 @@ const Flashcards = () => {
     const fetchData = async() => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/user/flashcards/${deckId}`,
+          `http://localhost:3000/api/user/flashcards/${id}`,
           {
-            params: { deckId: deckId },
+            params: { deckId: id },
             withCredentials: true, 
             headers: { 'Content-Type': 'application/json' },
           }
@@ -94,7 +100,7 @@ const Flashcards = () => {
     date.setUTCSeconds(date.getUTCSeconds() + timeIncrementSeconds)
     const nextScheduled = date.toISOString();
 
-    const data = {cardId: id, deckId: deckId, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
+    const data = {cardId: id, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
 
     try {
       const response = await axios.put(
@@ -110,8 +116,20 @@ const Flashcards = () => {
 
   };  
 
-  const handleEdit = () => {
+  const handleEdit = async() => {
+   
+    try {
+      const response = await axios.get('http://localhost:3000/api/user/edit', config);
+      console.log('response after clicking edit btn',response);
+      const flashcardId = response?.flashcard?.id;
+      setCardId(flashcardId);
+      console.log({cardId});
+      window.open(`/edit/${cardId}`, '_blank');
 
+    } catch (error) {
+      console.log('handle edit err');
+      console.log(error);
+    }
   }
 
   const handleEnlargeFont = () => {
@@ -139,6 +157,7 @@ const Flashcards = () => {
         hard={hard}
         handleEnlargeFont={handleEnlargeFont}
         handleReduceFont={handleReduceFont}
+        handleEdit={handleEdit}
       />
       {isCardExist ? (
         cards.length > 0 && (
@@ -149,6 +168,7 @@ const Flashcards = () => {
             isAnswerShown={isAnswerShown}
             setFontSize={setFontSize}
             fontSize={fontSize}
+            setCardId={setCardId}
           />
         )
       ) : (
@@ -157,7 +177,11 @@ const Flashcards = () => {
           <p>Add more cards or refresh the deck to view flashcards again!</p>
         </div>
       )}
+      {
+        isEditVisible ?  <Edit cardId={cardId} /> : ''
+      }
     </div>
+    
   );
 }
 

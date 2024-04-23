@@ -1,6 +1,6 @@
 import react from 'react'
 import Signup from './signup/Signup'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import Decks from './deckstuff/deckpage/DeckPage'
 import Login from './login/Login'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import Add from './add/Add'
 import Modal from 'react-modal'
 import DeckPage from './deckstuff/deckpage/DeckPage'
 import Flashcards from './flashcardsStuff/flashcards/Flashcards'
+import Edit from './flashcardsStuff/editFlashcards/Edit'
 
 
 Modal.setAppElement('#root');
@@ -42,10 +43,18 @@ function App() {
           }
         />
         <Route
-          path='/flashcards/:deckId'
+          path={`/flashcards/:id`}
           element={
-            <ProtectedRoute path='/flashcards/:deckId'>
+            <ProtectedRoute path='/flashcards'>
               <Flashcards />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={`/edit/:id`}
+          element={
+            <ProtectedRoute path='/edit'>
+              <Edit />
             </ProtectedRoute>
           }
         />

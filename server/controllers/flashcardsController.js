@@ -77,5 +77,17 @@ async function editFlashcard(req,res){
   
 }
 
+async function editFlashcardInfo (req,res){
+  try {
+    const id = 198;
+    const flashcardQuery = 'SELECT * FROM flashcards WHERE id = $1'
+    const flashcardQueryResult = await pool.query(flashcardQuery, [id]);
+    const flashcard = flashcardQueryResult.rows[0];
+    res.status(201).json({flashcard, message: 'success'});
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-export { createFlashcard, getFlashcards, editFlashcard };
+
+export { createFlashcard, getFlashcards, editFlashcard, editFlashcardInfo };
