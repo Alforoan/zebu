@@ -9,6 +9,7 @@ import {
   getFlashcardInfo,
   getFlashcards,
   editFlashcardText,
+  getAllFlashcards,
 } from '../controllers/flashcardsController.js';
 
 const router = express.Router();
@@ -27,9 +28,10 @@ router.put('/decks/rename', renameDeck);
 
 router.post('/add',verifyJWT, createFlashcard);
 router.get('/flashcards/:deckId',verifyJWT, getFlashcards);
-router.put('/flashcards/:deckId', editFlashcard);
-router.get('/edit', getFlashcardInfo);
-router.put('/edit', editFlashcardText);
+router.put('/flashcards/:deckId',verifyJWT, editFlashcard);
+router.get('/edit', verifyJWT, getFlashcardInfo);
+router.put('/edit', verifyJWT, editFlashcardText);
+router.get('/flashcards', getAllFlashcards);
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {
 //   res.json({req});

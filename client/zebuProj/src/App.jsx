@@ -10,7 +10,7 @@ import Modal from 'react-modal'
 import DeckPage from './deckstuff/deckpage/DeckPage'
 import Flashcards from './flashcardsStuff/flashcards/Flashcards'
 import Edit from './flashcardsStuff/editFlashcards/Edit'
-import Search from './search/Search'
+import Search from './searchStuff/search/Search'
 
 
 Modal.setAppElement('#root');

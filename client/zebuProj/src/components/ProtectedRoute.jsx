@@ -8,8 +8,6 @@ const ProtectedRoute = ({children, path}) => {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  console.log('ID IN PROTECTED ROUTE ',id);
-
   const {isLoggedIn, setIsLoggedIn} = useContext(IsLoggedInContext);
   useEffect(() => {
     const config = {
