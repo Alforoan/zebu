@@ -29,6 +29,7 @@ router.post('/add',verifyJWT, createFlashcard);
 router.get('/flashcards/:deckId',verifyJWT, getFlashcards);
 router.put('/flashcards/:deckId', editFlashcard);
 router.get('/edit', getFlashcardInfo);
+router.put('/edit', editFlashcardText);
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {
 //   res.json({req});

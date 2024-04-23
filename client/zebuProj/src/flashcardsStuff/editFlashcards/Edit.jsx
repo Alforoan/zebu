@@ -49,9 +49,14 @@ const Edit = () => {
   }, [])
   
 
-  const handleUpdate = () => {
-    console.log('scllksdf');
-    console.log({id});
+  const handleUpdate = async() => {
+    try {
+      const data = {front: frontText, back: backText, id:id}
+      const response = await axios.put('http://localhost:3000/api/user/edit', JSON.stringify(data), config);
+      console.log({response});
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
