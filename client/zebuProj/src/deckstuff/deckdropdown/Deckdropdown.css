@@ -5,6 +5,9 @@
   width: 100%;
   text-align: left;
   display: block;
+  font-size: 1.3rem;
+  padding: .35rem .5rem;
+  height: 50px;
 }
 
 .deck-btn:hover{
