@@ -2,7 +2,66 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   margin: auto;
   margin-top: 1rem;
+  max-width: 55vw;
+}
+
+.success-msg{
+  color:green;
+}
+
+.err-msg{
+  color:red;
+}
+
+.success-msg, .err-msg{
+  margin-top: 1rem;
+  font-size: 1.3rem;
+}
+
+.front-input, .back-input{
+  height: auto;
+  min-height: 34px;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.textarea{
+  width:400px;
+  height:auto;
+  min-height:20px;
+  border:1px solid lightgray;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-start; 
+  padding: .35rem .5rem;
+  border-radius: 6px;
+  transition: all .15s linear;
+  font-size: 1.5rem;
+}
+
+.textarea:focus{
+  box-shadow: 0 0 2px 3px rgba(0, 123, 255, 0.5);
+  border: 1px solid #007bff;
+  outline: none; 
+}
+
+.front-container, .back-container{
+  display:flex; 
+}
+
+.front-container{
+  margin-bottom: 1rem;
+}
+
+.front-container > p, .back-container > p{
+  margin-right: 1rem;
+}
+
+.update-btn{
+  width: 100px;
+  height: 40px;
 }

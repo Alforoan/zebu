@@ -104,7 +104,7 @@ async function editFlashcardText(req,res) {
     const flashcardResult = await pool.query(getFlashcardQuery, [id]);
     const flashcard = flashcardResult.rows[0];
     console.log({flashcard});
-    res.json({flashcard, message: 'hi there'})
+    res.status(200).json({flashcard, message: 'hi there'})
   } catch (error) {
     console.log(error);
     res.status(500).json('server error');
