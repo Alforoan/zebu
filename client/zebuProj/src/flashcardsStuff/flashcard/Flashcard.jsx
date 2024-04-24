@@ -61,6 +61,7 @@ const Flashcard = ({
                 marginTop: '2rem',
                 maxWidth: '65vw',
                 fontSize: `${fontSize}px`,
+                textAlign: 'center'
               }}
               className='front'
             >
