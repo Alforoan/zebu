@@ -9,7 +9,7 @@ import Edit from '../editFlashcards/Edit';
 
 const Flashcards = () => {
 
-  const { setDeckId } = useContext(IsLoggedInContext);
+  const { setPermDeckId } = useContext(IsLoggedInContext);
   const [cards, setCards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
@@ -33,6 +33,10 @@ const Flashcards = () => {
      headers: { 'Content-Type': 'application/json' },
      withCredentials: true,
    };
+
+  useEffect(() => {
+    setPermDeckId(id);
+  }, [id])
 
   useEffect(() => {
     
@@ -179,7 +183,7 @@ const Flashcards = () => {
 
   return (
     <div>
-      <Navigation />
+      <Navigation deckId={id}/>
       <FlashcardPanel
         easy={easy}
         medium={medium}

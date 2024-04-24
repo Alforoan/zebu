@@ -37,7 +37,7 @@ function App() {
           }
         />
         <Route
-          path='/add'
+          path={'/add/:id'}
           element={
             <ProtectedRoute path='/add'>
               <Add />

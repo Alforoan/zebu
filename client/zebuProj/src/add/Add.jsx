@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import Navigation from '../navigation/Navigation';
 import axios from 'axios';
 import Decks from '../deckstuff/decks/Decks';
 import DecksDropdown from '../deckstuff/decksdropdown/DecksDropdown';
 import './Add.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import IsLoggedInContext from '../context/IsLoggedInProvider';
 
 const Add = () => {
   
@@ -26,12 +28,25 @@ const Add = () => {
     withCredentials: true,
   };
 
+  const {permDeckId, setPermDeckId } = useContext(IsLoggedInContext);
+  const {id} = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchDecks = async() => {
       try {
         const response = await axios.get('http://localhost:3000/api/user/decks', config)
         console.log('possible response',response);
         const decks = response?.data?.data;
+        if(id){
+          decks.forEach(deck => {
+          if(deck.id === parseInt(id)){
+            setDeckName(deck.name);
+            return;
+          }
+        })
+        }
+        
         console.log({decks});
         setFilteredDecks(decks);
         setDecks(decks);
@@ -69,13 +84,26 @@ const Add = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window.refresh === 'function') {
+      window.refresh();
+    }
+  }, [permDeckId]);
+
+
   const handleDeckSelect = (selectedDeck) => {
     console.log({selectedDeck});
     inputRef.current.value = selectedDeck.name;
+    setPermDeckId(selectedDeck.id);
+    
+    console.log({permDeckId});
     setDeckId(selectedDeck.id);
     setDeckName(selectedDeck.name);
+    navigate(`/add/${selectedDeck.id}`);
     console.log('isonfocus inside deck select',isOnFocus);
   };
+
+
 
   const handleKeyDown = (e) => {
     if (!isOnFocus || filteredDecks.length === 0) return;
@@ -153,7 +181,7 @@ const Add = () => {
 
   return (
     <main style={{ height: '95vh' }}>
-      <Navigation />
+      <Navigation deckName={deckName}/>
       <div className='front-back-container'>
         <div className='deck-container'>
           <label htmlFor='name'>Deck </label>
