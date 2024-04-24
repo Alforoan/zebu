@@ -72,7 +72,6 @@ const Flashcards = () => {
           return now > nextScheduledTime;
         });
         setAvailableCount(filteredCards.length);
-        console.log({filteredCards});
         if(filteredCards.length > 0){
           setIsCardExist(true)
         }else{
@@ -89,15 +88,20 @@ const Flashcards = () => {
     fetchData();
   }, [currentCardIndex, easy, medium, hard])
 
+  const randomNumberGenerator = (arr) => {
+    const rand = Math.floor(Math.random() * arr.length);
+    return rand === 0 ? 0 : rand - 1;
+  };
+
+
   const handleNextCard = async(e, eachId) => {
-
-
-    
+    console.log({currentCardIndex});
+    const randomIndex = randomNumberGenerator(cards);
     setIsAnswerShown((prev) => !prev);
-    if(currentCardIndex === cards.length -1){
-      setCurrentCardIndex(0);
+    if(cards.length > 2){
+      setCurrentCardIndex(randomIndex);
     }else{
-      setCurrentCardIndex((prevIndex) => prevIndex + 1);
+      setCurrentCardIndex(0);
     }
     let difficulty = e.target.textContent;
     let timeIncrementSeconds;

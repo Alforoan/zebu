@@ -81,7 +81,6 @@ const Search = () => {
             card.front.toLowerCase().includes(searchInput.toLowerCase()) ||
             card.back.toLowerCase().includes(searchInput.toLowerCase())
           );
-          console.log({filteredCards});
           setFlashcards(filteredCards);
         }
       }
