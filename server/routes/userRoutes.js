@@ -24,14 +24,14 @@ router.get('/logout', logout);
 router.get('/decks', verifyJWT, showDecks);
 router.post('/decks',verifyJWT, createDeck);
 router.post('/decks/delete', verifyJWT, deleteDeck);
-router.put('/decks/rename', renameDeck);
+router.put('/decks/rename',verifyJWT, renameDeck);
 
 router.post('/add',verifyJWT, createFlashcard);
 router.get('/flashcards/:deckId',verifyJWT, getFlashcards);
 router.put('/flashcards/:deckId',verifyJWT, editFlashcard);
 router.get('/edit', verifyJWT, getFlashcardInfo);
 router.put('/edit', verifyJWT, editFlashcardText);
-router.get('/flashcards', getAllFlashcards);
+router.get('/flashcards',verifyJWT, getAllFlashcards);
 //router.get('/login', verifyJWT);
 // router.get('/decks', verifyJWT, (req, res) => {
 //   res.json({req});
