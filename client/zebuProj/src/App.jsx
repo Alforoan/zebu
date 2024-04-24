@@ -11,6 +11,7 @@ import DeckPage from './deckstuff/deckpage/DeckPage'
 import Flashcards from './flashcardsStuff/flashcards/Flashcards'
 import Edit from './flashcardsStuff/editFlashcards/Edit'
 import Search from './searchStuff/search/Search'
+import Error from './components/Error'
 
 
 Modal.setAppElement('#root');
@@ -74,6 +75,7 @@ function App() {
         /> */}
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='*' element={<Error/>}/>
       </Routes>
     </BrowserRouter>
   );
