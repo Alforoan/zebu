@@ -14,6 +14,7 @@ const Add = () => {
   const [backText, setBackText] = useState('');
   const [deckId, setDeckId] = useState(null);
   const frontRef = useRef(null);
+  const backRef = useRef(null);
   const inputRef = useRef(null);
   const config = {
     headers: { 'Content-Type': 'application/json' },
@@ -61,6 +62,8 @@ const Add = () => {
     const data = { deck: selectedDeckName, deckId: deckID, front: front, back: back };
     try {
       const response = await axios.post('http://localhost:3000/api/user/add', data, config);
+      frontRef.current.innerHTML = '';
+      backRef.current.innerHTML = '';
       setFrontText('');
       setBackText('');
     } catch (error) {
@@ -105,9 +108,12 @@ const Add = () => {
             /> */}
             <div className='front-container'>
               <p>Front</p>
-              <div ref={frontRef} className='textarea' contentEditable='true'>
-                {frontText}
-              </div>
+              <div
+                ref={frontRef}
+                className='textarea2'
+                contentEditable='true'
+                onInput={(e) => setFrontText(e.target.innerHTML)}
+              ></div>
             </div>
           </div>
           <div>
@@ -120,8 +126,13 @@ const Add = () => {
             /> */}
             <div className='back-container'>
               <p>Back</p>
-              <div className='textarea' contentEditable='true'>
-                {backText}
+              <div
+                ref={backRef}
+                className='textarea2'
+                contentEditable='true'
+                onInput={(e) => setBackText(e.target.innerHTML)}
+              >
+               
               </div>
             </div>
           </div>
