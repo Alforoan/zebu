@@ -9,6 +9,7 @@ const Add = () => {
   
   const [decks, setDecks] = useState([]);
   const [filteredDecks, setFilteredDecks] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isOnFocus, setIsOnFocus] = useState(false);
   const [deckName, setDeckName] = useState('');
   const [deckTitle, setDeckTitle] = useState('');
@@ -31,8 +32,8 @@ const Add = () => {
         console.log('possible response',response);
         const decks = response?.data?.data;
         console.log({decks});
-        
-          setDecks(decks);
+        setFilteredDecks(decks);
+        setDecks(decks);
       } catch (error) {
         console.log(error);
       }
@@ -60,14 +61,56 @@ const Add = () => {
     setErrMsg('');
   }, [frontText, backText])
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleDeckSelect = (selectedDeck) => {
+    console.log({selectedDeck});
+    inputRef.current.value = selectedDeck.name;
+    setDeckId(selectedDeck.id);
+    setDeckName(selectedDeck.name);
+    console.log('isonfocus inside deck select',isOnFocus);
+  };
+
+  const handleKeyDown = (e) => {
+    if (!isOnFocus || filteredDecks.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowUp':
+        e.preventDefault(); 
+        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        break;
+      case 'ArrowDown':
+        e.preventDefault(); 
+        setSelectedIndex((prevIndex) =>
+          Math.min(prevIndex + 1, filteredDecks.length - 1)
+        );
+        break;
+      case 'Enter':
+        if (selectedIndex !== -1) {
+          handleDeckSelect(filteredDecks[selectedIndex]);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+
   const handleChange = (e) => {
     let inputValue = e.target.value;
     setDeckTitle(inputValue);
     if(inputValue.length > 0){
       const filteredDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
       setFilteredDecks(filteredDecks);
+      setSelectedIndex(-1);
     }else{
       setFilteredDecks(decks);
+      setIsOnFocus(true);
     }
     
     
@@ -97,6 +140,12 @@ const Add = () => {
     
   }
 
+  const handleInputClick = () => {
+    setIsOnFocus(prev => !prev);
+  }
+
+
+
   return (
     <main style={{ height: '95vh' }}>
       <Navigation />
@@ -108,10 +157,10 @@ const Add = () => {
             className='deck-input'
             id='name'
             type='text'
-            onFocus={() => setIsOnFocus(true)}
             ref={inputRef}
             placeholder={deckName}
             onChange={handleChange}
+            onClick={handleInputClick}
           />
         </div>
         {isOnFocus ? (
@@ -120,6 +169,7 @@ const Add = () => {
             filteredDecks={filteredDecks}
             setDeckId={setDeckId}
             setDeckName={setDeckName}
+            handleDeckSelect={handleDeckSelect}
           />
         ) : (
           ''

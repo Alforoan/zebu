@@ -2,7 +2,7 @@
 import React from 'react'
 import './Deckdropdown.css'
 
-const Deckdropdown = ({deck,setDeckId, setDeckName}) => {
+const Deckdropdown = ({deck,setDeckId,handleDeckSelect, setDeckName}) => {
 
   
   
@@ -14,7 +14,7 @@ const Deckdropdown = ({deck,setDeckId, setDeckName}) => {
 
   return (
    
-    <button className='deck-btn' onClick={handleClick}>{deck.name}</button>
+    <button className='deck-btn' onClick={() => handleDeckSelect(deck)}>{deck.name}</button>
    
   );
 }
