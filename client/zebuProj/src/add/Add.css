@@ -1,0 +1,38 @@
+.front-back-container{
+  max-width: 55vw;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.deck-container{
+  margin-bottom: 1rem;
+}
+
+
+
+.deck-input{
+  margin-left: .8rem;
+  height: 50px;
+  width: 410px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  font-size: 1.3rem;
+  font-weight: 100;
+  text-indent: 6px;
+}
+
+.front-container, .back-container{
+  
+}
+
+.textarea{ 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  min-height: 50px; /* Adjust as needed */
+  min-width: 200px;
+}
+
+.add-btn{
+
+}

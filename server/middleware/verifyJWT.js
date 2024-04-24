@@ -8,9 +8,9 @@ config();
 
 const verifyJWT = (req, res, next) => {
   const accesstoken = req.cookies.accessToken;
-  console.log('ACCESS TOKEN',accesstoken);
+  //console.log('ACCESS TOKEN',accesstoken);
   if(accesstoken){
-    console.log("CHECKING ACCESS TOKEN",accesstoken);
+    //console.log("CHECKING ACCESS TOKEN",accesstoken);
     jwt.verify(accesstoken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if(err){
         console.log("ERROR", err);
