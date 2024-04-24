@@ -9,6 +9,7 @@ const Edit = () => {
   const [flashcard, setFlashcard] = useState(null);
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
+  const [editText, setEditText] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const frontRef = useRef(null);
@@ -51,27 +52,41 @@ const Edit = () => {
     frontRef.current.focus();
   }, [])
 
+  useEffect(() => {
+    setErrMsg('');
+  }, [editText]);
   
   useEffect(() => {
     style.current = (errMsg || successMsg) ? '-.5rem' : '1rem';
   }, [errMsg, successMsg])
 
   const handleUpdate = async() => {
-    try {
-      const data = {front: frontRef.current.textContent, back: backRef.current.textContent, id:id}
-      const response = await axios.put('http://localhost:3000/api/user/edit', JSON.stringify(data), config);
-      console.log({response});
-      if (response.status === 200) {
-        setSuccessMsg('Successfully updated!')
-        setTimeout(() => {
-          window.close(); 
-        }, 1500);
-        
-      }
-    } catch (error) {
-      console.log(error);
-      setErrMsg(error);
+    if (!frontRef.current.textContent || !backRef.current.textContent){
+      setErrMsg('Fill in both fields!');
+      return;
     }
+      try {
+        const data = {
+          front: frontRef.current.textContent,
+          back: backRef.current.textContent,
+          id: id,
+        };
+        const response = await axios.put(
+          'http://localhost:3000/api/user/edit',
+          JSON.stringify(data),
+          config
+        );
+        console.log({ response });
+        if (response.status === 200) {
+          setSuccessMsg('Successfully updated!');
+          setTimeout(() => {
+            window.close();
+          }, 1500);
+        }
+      } catch (error) {
+        console.log(error);
+        setErrMsg(error);
+      }
   }
 
   return (
@@ -85,6 +100,8 @@ const Edit = () => {
               ref={frontRef}
               className='textarea'
               contentEditable='true'
+              onInput={(e) => setEditText(e.target.textContent)}
+              suppressContentEditableWarning
             >
               {frontText}
             </div>
@@ -97,6 +114,8 @@ const Edit = () => {
               ref={backRef}
               className='textarea'
               contentEditable='true'
+              onInput={(e) => setEditText(e.target.textContent)}
+              suppressContentEditableWarning
             >
               {backText}
             </div>
@@ -107,7 +126,7 @@ const Edit = () => {
         <button
           className='update-btn'
           onClick={handleUpdate}
-          style={{ marginTop: `${style.current}` }}
+          style={{ marginTop: '1rem' }}
         >
           Update
         </button>
