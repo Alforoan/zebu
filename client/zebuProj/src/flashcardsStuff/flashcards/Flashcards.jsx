@@ -20,6 +20,7 @@ const Flashcards = () => {
   const [fontSize, setFontSize] = useState('28');
   const [cardId, setCardId] = useState(null);
   const [isEditVisible, setIsEditVisible] = useState(false);
+  const [reviewCount, setReviewCount] = useState(0);
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
 
@@ -65,7 +66,8 @@ const Flashcards = () => {
     fetchData();
   }, [currentCardIndex])
 
-  const handleNextCard = async(e, cardId) => {
+  const handleNextCard = async(e, eachId) => {
+
 
     
     setIsAnswerShown((prev) => !prev);
@@ -100,7 +102,7 @@ const Flashcards = () => {
     date.setUTCSeconds(date.getUTCSeconds() + timeIncrementSeconds)
     const nextScheduled = date.toISOString();
 
-    const data = {cardId: cardId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
+    const data = {cardId: eachId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
     console.log('something here');
     try {
       const response = await axios.put(
@@ -178,6 +180,7 @@ const Flashcards = () => {
             fontSize={fontSize}
             setCardId={setCardId}
             id={[cards[currentCardIndex].id][0]}
+            setReviewCount={setReviewCount}
           />
         )
       ) : (

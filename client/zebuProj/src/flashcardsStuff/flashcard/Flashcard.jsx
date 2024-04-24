@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import './Flashcard.css'
+import axios from 'axios';
 
 const Flashcard = ({
   card,
@@ -10,11 +11,30 @@ const Flashcard = ({
   setFontSize,
   fontSize,
   setCardId,
-  id
+  id,
+  setReviewCount
 }) => {
+
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
 
   useEffect(() => {
     setCardId(id)
+  }, [id])
+
+  useEffect(() => {
+    const fetchCard = async() => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/user/edit', {...config, params:{id: id}});
+        const times = response?.data?.flashcard?.times;
+        setReviewCount(times);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCard();
   }, [id])
  
 
