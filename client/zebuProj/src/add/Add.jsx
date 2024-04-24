@@ -36,18 +36,18 @@ const Add = () => {
     const fetchDecks = async() => {
       try {
         const response = await axios.get('http://localhost:3000/api/user/decks', config)
-        console.log('possible response',response);
+        //console.log('possible response',response);
         const decks = response?.data?.data;
         if(id){
           decks.forEach(deck => {
           if(deck.id === parseInt(id)){
+            setPermDeckId(id);
             setDeckName(deck.name);
             return;
           }
         })
         }
         
-        console.log({decks});
         setFilteredDecks(decks);
         setDecks(decks);
       } catch (error) {
@@ -84,11 +84,7 @@ const Add = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window.refresh === 'function') {
-      window.refresh();
-    }
-  }, [permDeckId]);
+  
 
 
   const handleDeckSelect = (selectedDeck) => {
@@ -153,10 +149,10 @@ const Add = () => {
       return;
     }
     const selectedDeckName = deckName;
-    const deckID = deckId;
+    console.log({selectedDeckName});
     const front = frontText;
     const back = backText;
-    const data = { deck: selectedDeckName, deckId: deckID, front: front, back: back };
+    const data = { deck: selectedDeckName, deckId:permDeckId, front: front, back: back };
     try {
       const response = await axios.post('http://localhost:3000/api/user/add', data, config);
       frontRef.current.innerHTML = '';
@@ -168,6 +164,7 @@ const Add = () => {
       setFrontText('');
       setBackText('');
     } catch (error) {
+      console.log('error is happening');
       console.log(error);
     }
     

@@ -27,7 +27,6 @@ const Deck = ({deck, handleDelete}) => {
   };
 
   const handleClick = () => {
-    setDeckId(deck.id);
     console.log("button clicked");
   }
 
