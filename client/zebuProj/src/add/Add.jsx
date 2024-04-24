@@ -17,6 +17,7 @@ const Add = () => {
   const [backText, setBackText] = useState('');
   const [deckId, setDeckId] = useState(null);
   const [errMsg, setErrMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const frontRef = useRef(null);
   const backRef = useRef(null);
   const inputRef = useRef(null);
@@ -132,6 +133,10 @@ const Add = () => {
       const response = await axios.post('http://localhost:3000/api/user/add', data, config);
       frontRef.current.innerHTML = '';
       backRef.current.innerHTML = '';
+      setSuccessMsg('Successfully added!')
+      setTimeout(() => {
+        setSuccessMsg('');
+      }, 1500);
       setFrontText('');
       setBackText('');
     } catch (error) {
@@ -199,6 +204,7 @@ const Add = () => {
             </div>
           </div>
           {errMsg && <p className='err-msg'>{errMsg}</p>}
+          {successMsg && <p className='success-msg'>{successMsg}</p>}
           <button className='add-btn'>Add</button>
         </form>
       </div>
