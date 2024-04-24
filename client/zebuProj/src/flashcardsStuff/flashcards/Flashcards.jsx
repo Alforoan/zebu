@@ -17,7 +17,7 @@ const Flashcards = () => {
   const [easy, setEasy] = useState(0);
   const [medium, setMedium] = useState(0);
   const [hard, setHard] = useState(0);
-  const [fontSize, setFontSize] = useState('28px');
+  const [fontSize, setFontSize] = useState('28');
   const [cardId, setCardId] = useState(null);
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [frontText, setFrontText] = useState('');
@@ -134,12 +134,19 @@ const Flashcards = () => {
   }
 
   const handleEnlargeFont = () => {
-    setFontSize((prev) => parseFloat(prev) + 8 + 'px');
-
+    if (parseInt(fontSize) < 100) {
+      setFontSize((prev) => parseInt(prev) + 10);
+    }else{
+      return;
+    }
   };
 
   const handleReduceFont = () => {
-     setFontSize((prev) => parseFloat(prev) - 8 + 'px');
+    if(parseInt(fontSize) > 20){
+      setFontSize((prev) => parseInt(prev) - 10);
+    }else{
+      return;
+    }
   };
 
 

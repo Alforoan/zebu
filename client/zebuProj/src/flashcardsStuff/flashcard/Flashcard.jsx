@@ -12,7 +12,7 @@ const Flashcard = ({
   setCardId,
   id
 }) => {
-  
+
   useEffect(() => {
     setCardId(id)
   }, [id])
@@ -33,7 +33,7 @@ const Flashcard = ({
             style={{
               marginTop: '2rem',
               maxWidth: '65vw',
-              fontSize: `${fontSize}`,
+              fontSize: `${fontSize}px`,
             }}
             className='front'
           >
@@ -60,7 +60,7 @@ const Flashcard = ({
               style={{
                 marginTop: '2rem',
                 maxWidth: '65vw',
-                fontSize: `${fontSize}`,
+                fontSize: `${fontSize}px`,
               }}
               className='front'
             >
@@ -68,7 +68,7 @@ const Flashcard = ({
             </p>
             <p
               className='back'
-              style={{ maxWidth: '65vw', fontSize: `${fontSize}` }}
+              style={{ maxWidth: '65vw', fontSize: `${fontSize}px` }}
             >
               {card.back}
             </p>
