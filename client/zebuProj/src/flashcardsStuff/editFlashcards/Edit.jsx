@@ -12,19 +12,14 @@ const Edit = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const frontRef = useRef(null);
+  const backRef = useRef(null);
   const style = useRef(null);
   const config = {
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
   };
 
-  const handleFrontChange = (e) => {
-    setFrontText(e.target.value);
-  }
 
-  const handleBackChange = (e) => {
-    setBackText(e.target.value);
-  };
 
   const {id} = useParams();
   useEffect(() => {
@@ -63,7 +58,7 @@ const Edit = () => {
 
   const handleUpdate = async() => {
     try {
-      const data = {front: frontText, back: backText, id:id}
+      const data = {front: frontRef.current.textContent, back: backRef.current.textContent, id:id}
       const response = await axios.put('http://localhost:3000/api/user/edit', JSON.stringify(data), config);
       console.log({response});
       if (response.status === 200) {
@@ -86,18 +81,36 @@ const Edit = () => {
         <div>
           <div className='front-container'>
             <p>Front</p>
-            <div ref={frontRef} className='textarea' contentEditable='true'>{frontText}</div>
+            <div
+              ref={frontRef}
+              className='textarea'
+              contentEditable='true'
+            >
+              {frontText}
+            </div>
           </div>
         </div>
         <div>
           <div className='back-container'>
             <p>Back</p>
-            <div className='textarea' contentEditable='true'>{backText}</div>
+            <div
+              ref={backRef}
+              className='textarea'
+              contentEditable='true'
+            >
+              {backText}
+            </div>
           </div>
         </div>
         {successMsg && <p className='success-msg'>{successMsg}</p>}
         {errMsg && <p className='err-msg'>{errMsg}</p>}
-        <button className='update-btn' onClick={handleUpdate} style={{marginTop:`${style.current}`}}>Update</button>
+        <button
+          className='update-btn'
+          onClick={handleUpdate}
+          style={{ marginTop: `${style.current}` }}
+        >
+          Update
+        </button>
       </main>
     </>
   );
