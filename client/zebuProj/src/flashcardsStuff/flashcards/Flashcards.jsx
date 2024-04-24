@@ -210,7 +210,7 @@ const Flashcards = () => {
         </div>
       )}
       {
-        noCardsMsg && <p style={{fontSize:'2rem', marginLeft:'10%', marginTop:'4rem'}}>{noCardsMsg}</p>
+        noCardsMsg && <p style={{fontSize:'2rem', marginLeft:'25%', marginTop:'4rem'}}>{noCardsMsg}</p>
       }
       {isEditVisible ? <Edit cardId={cardId} /> : ''}
     </div>
