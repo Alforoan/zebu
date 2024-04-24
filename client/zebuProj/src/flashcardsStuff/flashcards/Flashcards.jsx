@@ -14,12 +14,14 @@ const Flashcards = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [isCardExist, setIsCardExist] = useState(true);
+  const [noCardsMsg, setNoCardsMsg] = useState('');
   const [easy, setEasy] = useState(0);
   const [medium, setMedium] = useState(0);
   const [hard, setHard] = useState(0);
   const [fontSize, setFontSize] = useState('28');
   const [cardId, setCardId] = useState(null);
   const [isEditVisible, setIsEditVisible] = useState(false);
+  const [availableCount, setAvailableCount] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
@@ -44,8 +46,6 @@ const Flashcards = () => {
             headers: { 'Content-Type': 'application/json' },
           }
         );
-        
-       
         const now = new Date();
         const flashcards = response?.data?.flashcards;
         let easyCount = 0;
@@ -67,14 +67,18 @@ const Flashcards = () => {
           const nextScheduledTime = new Date(card.next_scheduled);
           return now > nextScheduledTime;
         });
+        setAvailableCount(filteredCards.length);
         console.log({filteredCards});
-        if(filteredCards.length > 1){
+        if(filteredCards.length > 0){
           setIsCardExist(true)
         }else{
           setIsCardExist(false);
         }
         setCards(filteredCards);
       } catch (error) {
+        if(error.response.status === 404){
+          setNoCardsMsg('No cards in this deck!');
+        }
         console.log(error);
       }
     }
@@ -183,6 +187,7 @@ const Flashcards = () => {
         handleEnlargeFont={handleEnlargeFont}
         handleReduceFont={handleReduceFont}
         handleEdit={handleEdit}
+        availableCount={availableCount}
       />
       {isCardExist ? (
         cards.length > 0 && (
@@ -194,7 +199,7 @@ const Flashcards = () => {
             setFontSize={setFontSize}
             fontSize={fontSize}
             setCardId={setCardId}
-            id={[cards[currentCardIndex].id][0]}
+            id={[cards[currentCardIndex]?.id]?.[0]}
             setReviewCount={setReviewCount}
           />
         )
@@ -205,10 +210,10 @@ const Flashcards = () => {
         </div>
       )}
       {
-        isEditVisible ?  <Edit cardId={cardId} /> : ''
+        noCardsMsg && <p style={{fontSize:'2rem', marginLeft:'10%', marginTop:'4rem'}}>{noCardsMsg}</p>
       }
+      {isEditVisible ? <Edit cardId={cardId} /> : ''}
     </div>
-    
   );
 }
 

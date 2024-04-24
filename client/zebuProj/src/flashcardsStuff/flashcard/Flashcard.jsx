@@ -57,7 +57,7 @@ const Flashcard = ({
             }}
             className='front'
           >
-            {card.front}
+            {card?.front}
           </p>
           <div
             style={{
@@ -85,13 +85,13 @@ const Flashcard = ({
               }}
               className='front'
             >
-              {card.front}
+              {card?.front}
             </p>
             <p
               className='back'
               style={{ maxWidth: '65vw', fontSize: `${fontSize}px` }}
             >
-              {card.back}
+              {card?.back}
             </p>
           </div>
           <div
@@ -114,7 +114,7 @@ const Flashcard = ({
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;10m</span>
                   <button
-                    onClick={(e) => onNextCard(e, card.id)}
+                    onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'
                   >
                     Easy
@@ -123,7 +123,7 @@ const Flashcard = ({
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;5m</span>
                   <button
-                    onClick={(e) => onNextCard(e, card.id)}
+                    onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'
                   >
                     Medium
@@ -132,7 +132,7 @@ const Flashcard = ({
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ textAlign: 'center' }}>&lt;1m</span>
                   <button
-                    onClick={(e) => onNextCard(e, card.id)}
+                    onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'
                   >
                     Hard

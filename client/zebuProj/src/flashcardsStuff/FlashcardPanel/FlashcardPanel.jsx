@@ -8,7 +8,8 @@ const FlashcardPanel = ({
   hard,
   handleEnlargeFont,
   handleReduceFont,
-  handleEdit
+  handleEdit,
+  availableCount
 }) => {
   return (
     <div className='container'>
@@ -16,6 +17,9 @@ const FlashcardPanel = ({
         <button className='side-btn' onClick={handleEdit}>Edit</button>
         <button className='side-btn plus' onClick={handleEnlargeFont}>+</button>
         <button className='side-btn minus' onClick={handleReduceFont}>-</button>
+      </div>
+      <div>
+        Available Card: {availableCount}
       </div>
       <div className='difficulty-container'>
         <p className='difficulty'>E: {easy}</p>
