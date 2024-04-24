@@ -8,8 +8,10 @@ import './Add.css'
 const Add = () => {
   
   const [decks, setDecks] = useState([]);
+  const [filteredDecks, setFilteredDecks] = useState([]);
   const [isOnFocus, setIsOnFocus] = useState(false);
   const [deckName, setDeckName] = useState('');
+  const [deckTitle, setDeckTitle] = useState('');
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
   const [deckId, setDeckId] = useState(null);
@@ -28,15 +30,15 @@ const Add = () => {
         const response = await axios.get('http://localhost:3000/api/user/decks', config)
         console.log('possible response',response);
         const decks = response?.data?.data;
-        setDecks(decks);
         console.log({decks});
-        setDeckName(decks[0].name);
+        
+          setDecks(decks);
       } catch (error) {
         console.log(error);
       }
     }
     fetchDecks();
-  }, [])
+  }, [deckName])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -58,6 +60,18 @@ const Add = () => {
     setErrMsg('');
   }, [frontText, backText])
 
+  const handleChange = (e) => {
+    let inputValue = e.target.value;
+    setDeckTitle(inputValue);
+    if(inputValue.length > 0){
+      const filteredDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
+      setFilteredDecks(filteredDecks);
+    }else{
+      setFilteredDecks(decks);
+    }
+    
+    
+  }
 
   const handleSubmit = async (e) => {
     
@@ -97,11 +111,13 @@ const Add = () => {
             onFocus={() => setIsOnFocus(true)}
             ref={inputRef}
             placeholder={deckName}
+            onChange={handleChange}
           />
         </div>
         {isOnFocus ? (
           <DecksDropdown
             decks={decks}
+            filteredDecks={filteredDecks}
             setDeckId={setDeckId}
             setDeckName={setDeckName}
           />
