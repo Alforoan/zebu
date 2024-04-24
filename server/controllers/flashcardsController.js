@@ -92,6 +92,7 @@ async function getFlashcardInfo (req,res){
 async function editFlashcardText(req,res) { 
   try {
     const {front, back, id} = req.body;
+    console.log({front, back, id});
     const flashcardQuery = `
       UPDATE flashcards 
       SET front = $1, 
@@ -103,7 +104,7 @@ async function editFlashcardText(req,res) {
     const getFlashcardQuery = 'SELECT * FROM flashcards WHERE id = $1';
     const flashcardResult = await pool.query(getFlashcardQuery, [id]);
     const flashcard = flashcardResult.rows[0];
-    console.log({flashcard});
+    console.log('flashcard from editflashcard',flashcard);
     res.status(200).json({flashcard, message: 'hi there'})
   } catch (error) {
     console.log(error);

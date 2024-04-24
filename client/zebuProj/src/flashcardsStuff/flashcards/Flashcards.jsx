@@ -65,9 +65,9 @@ const Flashcards = () => {
     fetchData();
   }, [currentCardIndex])
 
-  const handleNextCard = async(e, id) => {
+  const handleNextCard = async(e, cardId) => {
 
-
+    
     setIsAnswerShown((prev) => !prev);
     if(currentCardIndex === cards.length -1){
       setCurrentCardIndex(0);
@@ -100,8 +100,8 @@ const Flashcards = () => {
     date.setUTCSeconds(date.getUTCSeconds() + timeIncrementSeconds)
     const nextScheduled = date.toISOString();
 
-    const data = {cardId: id, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
-
+    const data = {cardId: cardId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
+    console.log('something here');
     try {
       const response = await axios.put(
         'http://localhost:3000/api/user/flashcards/:deckId',
