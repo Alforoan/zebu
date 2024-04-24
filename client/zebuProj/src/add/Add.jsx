@@ -13,6 +13,7 @@ const Add = () => {
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
   const [deckId, setDeckId] = useState(null);
+  const [errMsg, setErrMsg] = useState('');
   const frontRef = useRef(null);
   const backRef = useRef(null);
   const inputRef = useRef(null);
@@ -53,8 +54,18 @@ const Add = () => {
     frontRef.current.focus();
   }, [])
 
+  useEffect(() => {
+    setErrMsg('');
+  }, [frontText, backText])
+
+
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
+    if(!frontText || !backText){
+      setErrMsg('Fill out both fields');
+      return;
+    }
     const selectedDeckName = deckName;
     const deckID = deckId;
     const front = frontText;
@@ -99,13 +110,6 @@ const Add = () => {
         )}
         <form type='submit' onSubmit={handleSubmit}>
           <div>
-            {/* <label htmlFor='front'>Front </label>
-            <input
-              id='front'
-              type='text'
-              value={frontText}
-              onChange={(e) => setFrontText(e.target.value)}
-            /> */}
             <div className='front-container'>
               <p>Front</p>
               <div
@@ -117,13 +121,6 @@ const Add = () => {
             </div>
           </div>
           <div>
-            {/* <label htmlFor='back'>Back </label>
-            <input
-              id='back'
-              type='text'
-              value={backText}
-              onChange={(e) => setBackText(e.target.value)}
-            /> */}
             <div className='back-container'>
               <p>Back</p>
               <div
@@ -132,10 +129,10 @@ const Add = () => {
                 contentEditable='true'
                 onInput={(e) => setBackText(e.target.innerHTML)}
               >
-               
               </div>
             </div>
           </div>
+          {errMsg && <p className='err-msg'>{errMsg}</p>}
           <button className='add-btn'>Add</button>
         </form>
       </div>
