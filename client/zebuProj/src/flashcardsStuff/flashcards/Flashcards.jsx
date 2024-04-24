@@ -48,6 +48,21 @@ const Flashcards = () => {
        
         const now = new Date();
         const flashcards = response?.data?.flashcards;
+        let easyCount = 0;
+        let mediumCount = 0;
+        let hardCount = 0;
+        flashcards.forEach(flashcard => {
+          if(flashcard.status === 'Easy'){
+            easyCount++;
+          }else if (flashcard.status === 'Medium') {
+            mediumCount++;
+          }else{
+            hardCount++;
+          }
+        })
+        setEasy(easyCount);
+        setMedium(mediumCount);
+        setHard(hardCount);
         const filteredCards = flashcards.filter((card) => {
           const nextScheduledTime = new Date(card.next_scheduled);
           return now > nextScheduledTime;
@@ -64,7 +79,7 @@ const Flashcards = () => {
       }
     }
     fetchData();
-  }, [currentCardIndex])
+  }, [currentCardIndex, easy, medium, hard])
 
   const handleNextCard = async(e, eachId) => {
 
