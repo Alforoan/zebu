@@ -16,7 +16,10 @@ const Decks = ({ decks, setDecks }) => {
         const response = await axios.get('http://localhost:3000/api/user/decks', config);
         console.log("GETTING DECKS RESPONSE",response);
         const fetchedDecks = response?.data?.data;
-        setDecks(fetchedDecks);
+        const sortedDecks = fetchedDecks.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        setDecks(sortedDecks);
       } catch (error) {
         console.log(error);
       }
