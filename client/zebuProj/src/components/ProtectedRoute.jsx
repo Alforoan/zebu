@@ -26,7 +26,7 @@ const ProtectedRoute = ({children, path}) => {
           setIsLoggedIn(true);
           if(id){
             console.log(`id defined...${path}/${id}`);
-            navigate(`${path}/${id}`);
+            //navigate(`${path}/${id}`);
           }else{
             console.log(`id not defined...${path}`);
             navigate(`${path}`);

@@ -3,7 +3,7 @@
   margin-top: 1rem;
 }
 
-.delete-btn, .rename-btn{
+.delete-btn, .rename-btn, .refresh-btn{
   padding: 4px 6px;
   font-size: 12px;
   margin-left: 1rem;

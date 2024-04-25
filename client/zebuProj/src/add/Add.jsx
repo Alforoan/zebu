@@ -89,7 +89,7 @@ const Add = () => {
 
   const handleDeckSelect = (selectedDeck) => {
     console.log({selectedDeck});
-    inputRef.current.value = selectedDeck.name;
+    //inputRef.current.value = selectedDeck.name;
     setPermDeckId(selectedDeck.id);
     
     console.log({permDeckId});

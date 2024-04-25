@@ -12,6 +12,11 @@ const Deck = ({deck, handleDelete}) => {
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
 
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+
   const handleRename = async () => {
     try {
       await axios.put('http://localhost:3000/api/user/decks/rename', {
@@ -28,6 +33,16 @@ const Deck = ({deck, handleDelete}) => {
 
   const handleClick = () => {
     console.log("button clicked");
+  }
+
+  const handleRefresh = async(id) => {
+    try {
+
+      const response  = await axios.put('http://localhost:3000/api/user/decks/:deckId', JSON.stringify({deckId:id}) ,config);
+      console.log('response from refresh', response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -52,6 +67,9 @@ const Deck = ({deck, handleDelete}) => {
               {deck.name}
             </button>
           </Link>
+          <button className='refresh-btn' onClick={() => handleRefresh(deck.id)}>
+            Refresh
+          </button>
           <button className='rename-btn' onClick={() => setIsEditing(true)}>
             Rename
           </button>

@@ -2,7 +2,7 @@ import express from 'express';
 import { signUp } from '../controllers/signupController.js'; 
 import { login, logout } from '../controllers/authController.js'; 
 import { verifyJWT } from '../middleware/verifyJWT.js';
-import { createDeck, deleteDeck, renameDeck, showDecks } from '../controllers/decksController.js';
+import { createDeck, deleteDeck, editDeck, renameDeck, showDecks } from '../controllers/decksController.js';
 import {
   createFlashcard,
   editFlashcard,
@@ -25,6 +25,7 @@ router.get('/decks', verifyJWT, showDecks);
 router.post('/decks',verifyJWT, createDeck);
 router.post('/decks/delete', verifyJWT, deleteDeck);
 router.put('/decks/rename',verifyJWT, renameDeck);
+router.put('/decks/:deckId', verifyJWT, editDeck);
 
 router.post('/add',verifyJWT, createFlashcard);
 router.get('/flashcards/:deckId',verifyJWT, getFlashcards);
