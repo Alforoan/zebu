@@ -11,12 +11,17 @@ const Deck = ({ deck, handleDelete }) => {
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
 
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+
   const handleRename = async () => {
     try {
       await axios.put('http://localhost:3000/api/user/decks/rename', {
         id: deck.id,
         newName,
-      });
+      }, config);
 
       deck.name = newName;
       setIsEditing(false);

@@ -21,9 +21,10 @@ const Deck = ({deck, handleDelete}) => {
     try {
       await axios.put('http://localhost:3000/api/user/decks/rename', {
         id: deck.id,
-        newName,
-      });
-
+        newName: newName,
+      }, config);
+      console.log(deck.id);
+      console.log(newName);
       deck.name = newName;
       setIsEditing(false);
     } catch (error) {
