@@ -67,15 +67,17 @@ const Deck = ({deck, handleDelete}) => {
               {deck.name}
             </button>
           </Link>
-          <button className='refresh-btn' onClick={() => handleRefresh(deck.id)}>
-            Refresh
-          </button>
-          <button className='rename-btn' onClick={() => setIsEditing(true)}>
-            Rename
-          </button>
-          <button className='delete-btn' onClick={() => handleDelete(deck.id)}>
-            Delete
-          </button>
+          <div>
+            <button className='refresh-btn' onClick={() => handleRefresh(deck.id)}>
+              Refresh
+            </button>
+            <button className='rename-btn' onClick={() => setIsEditing(true)}>
+              Rename
+            </button>
+            <button className='delete-btn' onClick={() => handleDelete(deck.id)}>
+              Delete
+            </button>
+          </div>
         </>
       )}
     </div>

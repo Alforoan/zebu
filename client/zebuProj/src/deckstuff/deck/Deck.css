@@ -1,6 +1,8 @@
 
 .deck-container{
   margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .delete-btn, .rename-btn, .refresh-btn{

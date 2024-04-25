@@ -180,7 +180,7 @@ const Add = () => {
     <main style={{ height: '95vh' }}>
       <Navigation deckName={deckName}/>
       <div className='front-back-container'>
-        <div className='deck-container'>
+        <div className='deck-add-container'>
           <label htmlFor='name'>Deck </label>
           <input
             autoComplete='off'
