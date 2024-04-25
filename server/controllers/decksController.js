@@ -77,17 +77,18 @@ async function renameDeck(req,res){
   } 
 } 
 
-async function editDeck(req, res) {
-  // try {
-  //   const { deckId} = req.body;
-  //   const newTimes = 0;
-  //   const updateQuery = 'UPDATE decks SET times = $1 WHERE id = $2';
-  //   await pool.query(updateQuery, [newTimes, deckId]);
-  //   res.json({ message: 'Deck renamed successfully' });
-  // } catch (error) {
-  //   console.error('Error renaming deck:', error);
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
-} 
+async function refreshDeck(req,res){
+  try {
+    const { id } = req.body;
+    const newTimes = 0;
+    const updateQuery = 'UPDATE flashcards SET times = $1 WHERE deck_id = $2';
+    await pool.query(updateQuery, [newTimes, id]);
+    res.json({ message: 'Deck renamed successfully' });
+  } catch (error) {
+    console.error('Error renaming deck:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  } 
+}
 
-export {createDeck, showDecks, deleteDeck, renameDeck, editDeck};
+
+export {createDeck, showDecks, deleteDeck, renameDeck, refreshDeck};

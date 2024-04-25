@@ -37,8 +37,7 @@ const Deck = ({deck, handleDelete}) => {
 
   const handleRefresh = async(id) => {
     try {
-
-      const response  = await axios.put('http://localhost:3000/api/user/decks/:deckId', JSON.stringify({deckId:id}) ,config);
+      const response  = await axios.put(`http://localhost:3000/api/user/decks/${id}`, JSON.stringify({id:id}) ,config);
       console.log('response from refresh', response);
     } catch (error) {
       console.log(error);
