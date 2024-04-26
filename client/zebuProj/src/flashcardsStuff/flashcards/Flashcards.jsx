@@ -22,6 +22,7 @@ const Flashcards = () => {
   const [cardId, setCardId] = useState(null);
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [availableCount, setAvailableCount] = useState(0);
+  const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const [reviewCount, setReviewCount] = useState(0);
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
@@ -80,7 +81,14 @@ const Flashcards = () => {
         setCards(filteredCards);
       } catch (error) {
         if(error.response.status === 404){
-          setNoCardsMsg('No cards in this deck!');
+          setNoCardsMsg(
+            <span>
+              No cards in this deck!
+              <br />
+              Add more to the deck
+            </span>
+          );
+          setIsEditBtnDisabled(true);
         }
         console.log(error);
       }
@@ -196,6 +204,7 @@ const Flashcards = () => {
         handleReduceFont={handleReduceFont}
         handleEdit={handleEdit}
         availableCount={availableCount}
+        isEditBtnDisabled={isEditBtnDisabled}
       />
       {isCardExist ? (
         cards.length > 0 && (

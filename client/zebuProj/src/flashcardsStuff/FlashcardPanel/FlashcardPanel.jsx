@@ -9,12 +9,13 @@ const FlashcardPanel = ({
   handleEnlargeFont,
   handleReduceFont,
   handleEdit,
-  availableCount
+  availableCount,
+  isEditBtnDisabled
 }) => {
   return (
     <div className='container'>
       <div>
-        <button className='side-btn' onClick={handleEdit}>Edit</button>
+        <button disabled={isEditBtnDisabled} className='side-btn' onClick={handleEdit}>Edit</button>
         <button className='side-btn plus' onClick={handleEnlargeFont}>+</button>
         <button className='side-btn minus' onClick={handleReduceFont}>-</button>
       </div>

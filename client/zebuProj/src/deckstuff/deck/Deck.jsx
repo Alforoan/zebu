@@ -104,7 +104,7 @@ const Deck = ({deck,decks, setDecks}) => {
   const handleRefreshModal = (e, id) => {
     setPermDeckId({id});
     const answer = prompt('This will refresh all the cards, are you sure? \n Type Y(y) confirm')
-    if(answer.toLowerCase() === 'y'){
+    if(answer?.toLowerCase() === 'y'){
       handleConfirmRefresh();
     }
   };

@@ -24,11 +24,20 @@
   margin-right: .5rem;
 }
 
-.side-btn:hover{
+.side-btn:not(:disabled):hover {
   background: #007BFF;
   color: white;
   transition: all .15s ease-in;
 }
+
+.side-btn:disabled {
+  opacity: 0.4;
+  border: 1px solid black;
+  color: black;
+  font-weight: 400; 
+  cursor: not-allowed;
+}
+
 
 .difficulty-container{
   display: flex;
