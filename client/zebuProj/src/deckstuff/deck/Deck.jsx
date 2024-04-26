@@ -84,9 +84,10 @@ const Deck = ({deck,decks, setDecks}) => {
     }
   };
 
-  const handleRefresh = async(id) => {
+  const handleConfirmRefresh = async() => {
+    
     try {
-      const response  = await axios.put(`http://localhost:3000/api/user/decks/${id}`, JSON.stringify({id:id}) ,config);
+      const response  = await axios.put(`http://localhost:3000/api/user/decks/${permDeckId}`, JSON.stringify({id:permDeckId}) ,config);
       console.log('response from refresh', response);
     } catch (error) {
       console.log(error);
@@ -100,16 +101,24 @@ const Deck = ({deck,decks, setDecks}) => {
     setIsModalOpen(prev => !prev);
   }
 
+  const handleRefreshModal = (e, id) => {
+    setPermDeckId({id});
+    const answer = prompt('This will refresh all the cards, are you sure? \n Type Y(y) confirm')
+    if(answer.toLowerCase() === 'y'){
+      handleConfirmRefresh();
+    }
+  };
+
   return (
     <div className='deck-container'>
       {isEditing ? (
         <main className='rename-container'>
           <div>
             <input
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            className='edit-input'
-            ref={editRef}
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className='edit-input'
+              ref={editRef}
             />
           </div>
           
@@ -128,7 +137,7 @@ const Deck = ({deck,decks, setDecks}) => {
             <button
               title='Makes all cards available'
               className='refresh-btn'
-              onClick={() => handleRefresh(deck.id)}
+              onClick={() => handleRefreshModal()}
             >
               <LuRefreshCw />
             </button>
@@ -166,7 +175,7 @@ const Deck = ({deck,decks, setDecks}) => {
               className='delete-btn'
               onClick={(e) => handleDeleteModal(e, deck.id)}
             >
-              <img src='/images/delete.png' width='40px' height='40px'/>
+              <img src='/images/delete.png' width='40px' height='40px' />
             </button>
             <MyModal
               modalPosition={modalPosition}
