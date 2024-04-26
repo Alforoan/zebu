@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Deck from '../deck/Deck';
 import axios from 'axios';
 
-const Decks = ({ decks, setDecks }) => {
+const Decks = ({ decks, setDecks, inputValue }) => {
   
+
+  const [filteredDecks, setFilteredDecks] = useState([]);
+
   const config = {
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
@@ -20,12 +23,19 @@ const Decks = ({ decks, setDecks }) => {
           a.name.localeCompare(b.name)
         );
         setDecks(sortedDecks);
+        setFilteredDecks(sortedDecks);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, [])
+
+  useEffect(() => {
+    const newDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
+    setFilteredDecks(newDecks);
+    console.log({newDecks});
+  }, [inputValue])
 
   // const handleDelete = async(id) => {
     
@@ -46,9 +56,13 @@ const Decks = ({ decks, setDecks }) => {
 
   return (
     <div>
-      {decks.map((deck, index) => (
+      {
+        inputValue ? filteredDecks.map((deck, index) => (
         <Deck key={index} deck={deck} decks={decks} setDecks={setDecks}/>
-      ))}
+        )) :decks.map((deck, index) => (
+        <Deck key={index} deck={deck} decks={decks} setDecks={setDecks}/>
+      ))
+      }
     </div>
   );
 };

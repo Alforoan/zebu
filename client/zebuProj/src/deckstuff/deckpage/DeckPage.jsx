@@ -14,6 +14,7 @@ const DeckPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [decks, setDecks] = useState([]);
   const [deckName, setDeckName] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -31,7 +32,11 @@ const DeckPage = () => {
       <div className='deckPage-container'>
         <div className='deckTitle-container'>
           <h1>Decks</h1>
-          <button className='create-deck-btn' onClick={openModal}>Create Deck</button>
+          <div className='search-create-container'>
+            <label htmlFor="search-deck"></label>
+            <input type="text" id='search-deck' placeholder='Search Deck' onChange={(e) => setInputValue(e.target.value)} value={inputValue} className='search-deck'/>
+            <button className='create-deck-btn' onClick={openModal}>Create Deck</button>
+          </div>
         </div>
         <Modal
           isOpen={modalIsOpen}
@@ -40,7 +45,7 @@ const DeckPage = () => {
         >
           <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName}/>
         </Modal>
-        <Decks decks={decks} setDecks={setDecks}/>
+        <Decks decks={decks} setDecks={setDecks} inputValue={inputValue}/>
       </div>
     </div>
   );
