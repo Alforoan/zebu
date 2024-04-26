@@ -4,11 +4,21 @@ import Modal from 'react-modal';
 
 
 const MyModal = ({ isOpen, closeModal, modalPosition, handleConfirmDelete }) => {
+  
+  const distanceToBottom = window.innerHeight - modalPosition?.top;
+  let adjustedTop = modalPosition?.top + 30;
+  const threshold = 200; 
+  const amountToSubtract = 115;
 
+  if (distanceToBottom < threshold) {
+    adjustedTop = modalPosition?.top - amountToSubtract;
+  }else{
+    adjustedTop;
+  }
 
   const modalContentStyles = {
     position: 'absolute',
-    top: `${modalPosition?.top + 30}px`,
+    top: `${adjustedTop}px`,
     left: `${modalPosition?.left - 100}px`,
     backgroundColor: 'white',
     paddingTop: '0',
@@ -21,7 +31,6 @@ const MyModal = ({ isOpen, closeModal, modalPosition, handleConfirmDelete }) => 
     width: '130px',
     height: '80px',
     overflow: 'hidden',
-
   };
 
   return (
@@ -30,9 +39,11 @@ const MyModal = ({ isOpen, closeModal, modalPosition, handleConfirmDelete }) => 
       onRequestClose={closeModal}
       style={{ content: modalContentStyles }}
     >
-      <h3 style={{textAlign:'center'}}>You sure?</h3>
-      <div style={{display: 'flex'}}>
-        <button style={{marginRight:'11px'}} onClick={handleConfirmDelete}>Yes</button>
+      <h3 style={{ textAlign: 'center' }}>You sure?</h3>
+      <div style={{ display: 'flex' }}>
+        <button style={{ marginRight: '11px' }} onClick={handleConfirmDelete}>
+          Yes
+        </button>
         <button onClick={closeModal}>No</button>
       </div>
     </Modal>
