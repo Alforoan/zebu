@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import './CreateDeck.css'
 import axios from 'axios';
 
-const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) => {
+const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName, setIsDeckAdded}) => {
 
   const [errMsg, setErrMsg] = useState('');
 
@@ -19,7 +19,14 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
       const response = await axios.post('http://localhost:3000/api/user/decks', JSON.stringify(name), config);
       console.log('NEW DECK', response);
       setDecks(prev => [...prev, name]);
-      } 
+      setIsDeckAdded(true);
+      setTimeout(() => {
+        setIsDeckAdded(false);
+      }, 1000);
+      }else{
+        setErrMsg('Fill in the field!');
+        return;
+      }
       
       setDeckName('');
       setModalIsOpen(false);
@@ -33,20 +40,20 @@ const CreateDeck = ({setModalIsOpen, decks, setDecks, setDeckName, deckName}) =>
   
 
   return (
-    <div>
-      <div>
-        <label htmlFor='name'>Name: </label>
-        <input id='name' type='text' value={deckName} onChange={(e) => {
+    <div className='create-deck-container'>
+      <div style={{marginBottom:'1rem'}}>
+        <label className='deck-label' htmlFor='name'>Name: </label>
+        <input className='deck-input-box' id='name' type='text' value={deckName} onChange={(e) => {
           setErrMsg('');
           setDeckName(e.target.value)
           }}/>
       </div>
       {
-        errMsg ? <p className='err-msg'>{errMsg}</p> : ''
+        errMsg ? <p className='err-msg2'>{errMsg}</p> : ''
       }
-      <div>
-        <button onClick={() => handleAdd()}>OK</button>
-        <button onClick={() => {setDeckName(''); setModalIsOpen(false);}}>Cancel</button>
+      <div className='buttons-container'>
+        <button onClick={() => handleAdd()} className='ok-btn'>OK</button>
+        <button onClick={() => {setDeckName(''); setModalIsOpen(false);}} className='cancel-btn2'>Cancel</button>
       </div>
     </div>
   );

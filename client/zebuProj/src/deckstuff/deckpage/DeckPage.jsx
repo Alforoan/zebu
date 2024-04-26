@@ -15,6 +15,7 @@ const DeckPage = () => {
   const [decks, setDecks] = useState([]);
   const [deckName, setDeckName] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [isDeckAdded, setIsDeckAdded] = useState(false);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -22,6 +23,21 @@ const DeckPage = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+
+  const modalContentStyles = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+    marginBottom: '20px',
+    width: '400px',
+    height: '200px',
+    overflow: 'hidden',
   };
 
 
@@ -39,13 +55,14 @@ const DeckPage = () => {
           </div>
         </div>
         <Modal
+        style={{content: modalContentStyles}}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           contentLabel='Create Deck Modal'
         >
-          <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName}/>
+          <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName} setIsDeckAdded={setIsDeckAdded}/>
         </Modal>
-        <Decks decks={decks} setDecks={setDecks} inputValue={inputValue}/>
+        <Decks decks={decks} setDecks={setDecks} inputValue={inputValue} isDeckAdded={isDeckAdded}/>
       </div>
     </div>
   );

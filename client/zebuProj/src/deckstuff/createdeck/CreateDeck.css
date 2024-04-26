@@ -1,3 +1,56 @@
-.err-msg{
+.err-msg2{
   color: red;
+  margin-top: 0rem;
+  font-size: 1.3rem;
+}
+
+.create-deck-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: auto;
+  height: 100%;
+}
+
+.deck-input-box{
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  outline: none;
+  height: 30px;
+  font-size: 1.2rem;
+  width: 180px;
+  text-indent: 3px;
+}
+
+.deck-label{
+  font-size: 1.3rem;
+}
+
+.ok-btn{
+  margin-right: 1rem;
+  border: 1px solid #007BFF;
+}
+
+.ok-btn:hover{
+  background: white;
+  color: black;
+  border: 1px solid #007BFF;
+  transition: all .2s linear;
+}
+
+.cancel-btn2{
+  height: 37px;
+  width: 85px;
+  background: white;
+  color: black;
+  border: 1px solid #007BFF;
+}
+
+.cancel-btn2:hover{
+  border: 1px solid red;
+  background: red;
+  transition: all .2s linear;
+  color: white;
 }

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import Deck from '../deck/Deck';
 import axios from 'axios';
 
-const Decks = ({ decks, setDecks, inputValue }) => {
+const Decks = ({ decks, setDecks, inputValue, isDeckAdded }) => {
   
 
   const [filteredDecks, setFilteredDecks] = useState([]);
@@ -29,7 +29,7 @@ const Decks = ({ decks, setDecks, inputValue }) => {
       }
     }
     fetchData();
-  }, [])
+  }, [isDeckAdded])
 
   useEffect(() => {
     const newDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
