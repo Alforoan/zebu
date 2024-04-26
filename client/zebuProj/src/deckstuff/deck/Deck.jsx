@@ -103,14 +103,17 @@ const Deck = ({deck,decks, setDecks}) => {
   return (
     <div className='deck-container'>
       {isEditing ? (
-        <>
-          <input
+        <main className='rename-container'>
+          <div>
+            <input
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             className='edit-input'
             ref={editRef}
-          />
-          <div>
+            />
+          </div>
+          
+          <div className='save-cancel-container'>
             <button onClick={handleRename} className='save-btn'>
               Save
             </button>
@@ -118,33 +121,42 @@ const Deck = ({deck,decks, setDecks}) => {
               Cancel
             </button>
           </div>
-        </>
+        </main>
       ) : (
         <>
-          <Link to={`/flashcards/${deck.id}`}>
-            <button
-              style={{
-                backgroundColor: 'transparent',
-                color: '#1F51FF',
-                padding: '0px 2px',
-                fontSize: '1rem',
-              }}
-              onClick={handleClick}
-            >
-              {deck.name}
-            </button>
-          </Link>
-          <div className='button-container'>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <button
               title='Makes all cards available'
               className='refresh-btn'
               onClick={() => handleRefresh(deck.id)}
             >
-              <LuRefreshCw/>
+              <LuRefreshCw />
             </button>
+            <Link to={`/flashcards/${deck.id}`}>
+              <button
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#1F51FF',
+                  padding: '0px 2px',
+                  fontSize: '1.2rem',
+                }}
+                onClick={handleClick}
+              >
+                {deck.name}
+              </button>
+            </Link>
+          </div>
+          <div className='button-container'>
+            {/* <button
+              title='Makes all cards available'
+              className='refresh-btn'
+              onClick={() => handleRefresh(deck.id)}
+            >
+              <LuRefreshCw/>
+            </button> */}
             <button
               title='Rename the deck'
-              className='rename-btn'
+              className='rename-btn button-89'
               onClick={() => setIsEditing(true)}
             >
               Rename
@@ -154,7 +166,7 @@ const Deck = ({deck,decks, setDecks}) => {
               className='delete-btn'
               onClick={(e) => handleDeleteModal(e, deck.id)}
             >
-              Delete
+              <img src='/images/delete.png' width='40px' height='40px'/>
             </button>
             <MyModal
               modalPosition={modalPosition}

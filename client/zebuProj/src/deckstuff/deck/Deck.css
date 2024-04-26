@@ -1,11 +1,10 @@
 
 .deck-container{
-  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid lightgray;
-  padding-bottom: .5rem;
-  margin-bottom: 1.5rem;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
 }
 
 .delete-btn, .rename-btn, .refresh-btn{
@@ -21,6 +20,8 @@
   display: flex;
   align-content: center;
   font-size: 1rem;
+  margin-right: .5rem;
+  margin-left: 0.2rem;
 }
 
 .refresh-btn:hover{
@@ -50,24 +51,65 @@
 }
 
 .delete-btn{
-  background: #FF5733;
+  background: white;
+  padding: 0;
+  margin-right: .5rem;
 }
 
 .edit-input{
   border-radius: 5px;
-  outline: none;
   border: 1px solid lightgray;
-  font-size: 1.2rem
-}
-
-.save-btn, .cancel-btn{
-  height: 25px;
-  padding: 4px 6px;
-  width: 60px;
+  font-size: 1.2rem;
+  margin-bottom: 0rem;
+  outline: none;
+  height: 35px;
+  text-indent: 5px;
 }
 
 .save-btn{
   margin-right: 1rem;
+  color:#1083FF;
+  background: white;
+  border: 1px solid #007BFF;
+  padding: 6px 8px;
+  height: 40px;
+  width: 70px;
+}
+
+.cancel-btn{
+  margin-right: .5rem;
+  color:#1083FF;
+  background: white;
+  border: 1px solid #007BFF;
+  padding: 6px 8px;
+  height: 40px;
+  width: 70px;
+}
+
+.save-btn:hover{
+  background: #007BFF;
+  color: white;
+  transition: all .2s linear;
+}
+
+.cancel-btn:hover{
+  background: #FF5F5F;
+  color: white;
+  transition: all .2s linear;
+  border: 1px solid red;
+}
+
+.save-cancel-container{
+  display: flex;
+  align-content: center;
+}
+
+.rename-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  width: 100%;
 }
 
 .modal {
@@ -94,5 +136,39 @@
   text-align: center;
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+
+.button-89 {
+  --b: 3px;   
+  --s: .45em; 
+  --color: #373B44;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 14px;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-89:hover,
+.button-89:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+.button-89:active {
+  background: var(--color);
+  color: #fff;
 }
 
