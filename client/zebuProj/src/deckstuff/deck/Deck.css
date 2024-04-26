@@ -14,6 +14,37 @@
   margin-left: 1rem;
 }
 
+.refresh-btn{
+  color: black;
+  background-color: white;
+  padding: 2px 2px;
+  display: flex;
+  align-content: center;
+  font-size: 1rem;
+}
+
+.refresh-btn:hover{
+   animation: rotate .4s linear;
+   background-color: white;
+}
+
+.button-container{
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); 
+  }
+  to {
+    transform: rotate(360deg); 
+  }
+}
+
 .rename-btn{
   background: #0818A8;
 }

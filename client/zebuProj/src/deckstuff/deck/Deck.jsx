@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import IsLoggedInContext from '../../context/IsLoggedInProvider';
 import Modal from 'react-modal';
 import MyModal from '../../components/Modal';
+import { LuRefreshCw } from 'react-icons/lu';
 
 const Deck = ({deck,decks, setDecks}) => {
 
@@ -133,17 +134,23 @@ const Deck = ({deck,decks, setDecks}) => {
               {deck.name}
             </button>
           </Link>
-          <div>
+          <div className='button-container'>
             <button
+              title='Makes all cards available'
               className='refresh-btn'
               onClick={() => handleRefresh(deck.id)}
             >
-              Refresh
+              <LuRefreshCw/>
             </button>
-            <button className='rename-btn' onClick={() => setIsEditing(true)}>
+            <button
+              title='Rename the deck'
+              className='rename-btn'
+              onClick={() => setIsEditing(true)}
+            >
               Rename
             </button>
             <button
+              title='Delete the deck'
               className='delete-btn'
               onClick={(e) => handleDeleteModal(e, deck.id)}
             >
