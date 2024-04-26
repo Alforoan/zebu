@@ -56,6 +56,11 @@
   margin-right: .5rem;
 }
 
+.delete-btn:hover {
+  transform: rotate(45deg);
+  transition: all .2s linear;
+}
+
 .edit-input{
   border-radius: 5px;
   border: 1px solid lightgray;
