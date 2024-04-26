@@ -1,6 +1,8 @@
 .search-container{
   margin-top: 1rem;
   margin-left: .5rem;
+  width: 55vw;
+  margin: auto;
 }
 
 .search-text{
@@ -14,6 +16,7 @@
   border-radius: 4px;
   margin-right: .5rem;
   font-size: 1rem;
+  margin-left: .1rem;
 }
 
 select{
@@ -30,5 +33,8 @@ select{
 
 .search-box-container{
   display:flex;
+  justify-content: center;
   align-items: center;
+  margin: auto;
+  width: 40vw;
 }

@@ -96,16 +96,18 @@ const Search = () => {
     <main>
       <Navigation />
       <form className='search-container' onSubmit={handleSubmit}>
-        <h1 className='search-text'>Search</h1>
         <div className='search-box-container'>
-          <select
+          {/* <select
             name='search'
             onChange={(e) => setSearchValue(e.target.value)}
           >
             <option value='card'>Card</option>
             <option value='deck'>Deck</option>
-          </select>
-          <label htmlFor='searchBox'></label>
+          </select> */}
+          
+        
+         
+          <label htmlFor='searchBox'><h2>Search Cards: </h2></label>
           <input
             className='search-box'
             id='searchBox'
