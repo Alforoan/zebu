@@ -27,27 +27,27 @@ const Decks = ({ decks, setDecks }) => {
     fetchData();
   }, [])
 
-  const handleDelete = async(id) => {
+  // const handleDelete = async(id) => {
     
-    try {
-      const deckToDelete = decks.find((deck) => deck.id === id);
-      console.log({deckToDelete});
-      const deckName = deckToDelete?.name;
-       const response = await axios.post('http://localhost:3000/api/user/decks/delete', { name: deckName }, config)
-       console.log(response.data.message);
-       setDecks((prevDecks) => prevDecks.filter((deck) => deck.id !== id));
-    } catch (error) {
-      console.log(error);
-    }
+  //   try {
+  //     const deckToDelete = decks.find((deck) => deck.id === id);
+  //     console.log({deckToDelete});
+  //     const deckName = deckToDelete?.name;
+  //      const response = await axios.post('http://localhost:3000/api/user/decks/delete', { name: deckName }, config)
+  //      console.log(response.data.message);
+  //      setDecks((prevDecks) => prevDecks.filter((deck) => deck.id !== id));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
     
     
-  }
+  // }
 
 
   return (
     <div>
       {decks.map((deck, index) => (
-        <Deck key={index} deck={deck} handleDelete={handleDelete}/>
+        <Deck key={index} deck={deck} decks={decks} setDecks={setDecks}/>
       ))}
     </div>
   );

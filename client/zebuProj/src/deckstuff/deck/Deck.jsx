@@ -4,14 +4,18 @@ import './Deck.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import IsLoggedInContext from '../../context/IsLoggedInProvider';
+import Modal from 'react-modal';
+import MyModal from '../../components/Modal';
 
-const Deck = ({deck, handleDelete}) => {
+const Deck = ({deck,decks, setDecks}) => {
 
-  const { deckId, setDeckId } = useContext(IsLoggedInContext);
+  const { permDeckId, setPermDeckId } = useContext(IsLoggedInContext);
 
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
   const editRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState(null);
 
   const config = {
     headers: { 'Content-Type': 'application/json' },
@@ -38,6 +42,10 @@ const Deck = ({deck, handleDelete}) => {
       console.log(error);
     }
   };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -57,6 +65,24 @@ const Deck = ({deck, handleDelete}) => {
     console.log("button clicked");
   }
 
+  const handleConfirmDelete = async () => {
+    setIsModalOpen(false);
+    try {
+      const deckToDelete = decks.find((deck) => deck.id === permDeckId);
+      console.log({ deckToDelete });
+      const deckName = deckToDelete?.name;
+      const response = await axios.post(
+        'http://localhost:3000/api/user/decks/delete',
+        { name: deckName },
+        config
+      );
+      console.log(response.data.message);
+      setDecks((prevDecks) => prevDecks.filter((deck) => deck.id !== permDeckId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleRefresh = async(id) => {
     try {
       const response  = await axios.put(`http://localhost:3000/api/user/decks/${id}`, JSON.stringify({id:id}) ,config);
@@ -66,14 +92,30 @@ const Deck = ({deck, handleDelete}) => {
     }
   }
 
+  const handleDeleteModal = (e,id) => {
+    const btnPosition = e.target.getBoundingClientRect();
+    setModalPosition(btnPosition);
+    setPermDeckId(id);
+    setIsModalOpen(prev => !prev);
+  }
+
   return (
     <div className='deck-container'>
       {isEditing ? (
         <>
-          <input value={newName} onChange={(e) => setNewName(e.target.value)} className='edit-input' ref={editRef}/>
+          <input
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            className='edit-input'
+            ref={editRef}
+          />
           <div>
-            <button onClick={handleRename} className='save-btn'>Save</button>
-            <button onClick={() => setIsEditing(false)} className='cancel-btn'>Cancel</button>
+            <button onClick={handleRename} className='save-btn'>
+              Save
+            </button>
+            <button onClick={() => setIsEditing(false)} className='cancel-btn'>
+              Cancel
+            </button>
           </div>
         </>
       ) : (
@@ -103,10 +145,16 @@ const Deck = ({deck, handleDelete}) => {
             </button>
             <button
               className='delete-btn'
-              onClick={() => handleDelete(deck.id)}
+              onClick={(e) => handleDeleteModal(e, deck.id)}
             >
               Delete
             </button>
+            <MyModal
+              modalPosition={modalPosition}
+              isOpen={isModalOpen}
+              closeModal={handleCloseModal}
+              handleConfirmDelete={handleConfirmDelete}
+            />
           </div>
         </>
       )}

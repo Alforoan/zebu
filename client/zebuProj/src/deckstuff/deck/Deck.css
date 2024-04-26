@@ -38,3 +38,30 @@
 .save-btn{
   margin-right: 1rem;
 }
+
+.modal {
+  background-color: white;
+  padding-top: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+}
+
+.modal-content {
+  background-color: rgba(255, 255, 255, 0.4); 
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal h3 {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
