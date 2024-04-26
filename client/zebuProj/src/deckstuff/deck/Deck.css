@@ -29,3 +29,12 @@
   font-size: 1.2rem
 }
 
+.save-btn, .cancel-btn{
+  height: 25px;
+  padding: 4px 6px;
+  width: 60px;
+}
+
+.save-btn{
+  margin-right: 1rem;
+}

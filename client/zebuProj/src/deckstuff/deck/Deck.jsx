@@ -71,8 +71,10 @@ const Deck = ({deck, handleDelete}) => {
       {isEditing ? (
         <>
           <input value={newName} onChange={(e) => setNewName(e.target.value)} className='edit-input' ref={editRef}/>
-          <button onClick={handleRename}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
+          <div>
+            <button onClick={handleRename} className='save-btn'>Save</button>
+            <button onClick={() => setIsEditing(false)} className='cancel-btn'>Cancel</button>
+          </div>
         </>
       ) : (
         <>
