@@ -49,7 +49,7 @@ const Deck = ({deck, handleDelete}) => {
     <div className='deck-container'>
       {isEditing ? (
         <>
-          <input value={newName} onChange={(e) => setNewName(e.target.value)} />
+          <input value={newName} onChange={(e) => setNewName(e.target.value)} className='edit-input'/>
           <button onClick={handleRename}>Save</button>
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         </>
@@ -59,8 +59,9 @@ const Deck = ({deck, handleDelete}) => {
             <button
               style={{
                 backgroundColor: 'transparent',
-                color: 'lightblue',
+                color: '#1F51FF',
                 padding: '0px 2px',
+                fontSize: '1rem',
               }}
               onClick={handleClick}
             >
@@ -68,13 +69,19 @@ const Deck = ({deck, handleDelete}) => {
             </button>
           </Link>
           <div>
-            <button className='refresh-btn' onClick={() => handleRefresh(deck.id)}>
+            <button
+              className='refresh-btn'
+              onClick={() => handleRefresh(deck.id)}
+            >
               Refresh
             </button>
             <button className='rename-btn' onClick={() => setIsEditing(true)}>
               Rename
             </button>
-            <button className='delete-btn' onClick={() => handleDelete(deck.id)}>
+            <button
+              className='delete-btn'
+              onClick={() => handleDelete(deck.id)}
+            >
               Delete
             </button>
           </div>
