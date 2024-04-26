@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import './Deck.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -11,11 +11,18 @@ const Deck = ({deck, handleDelete}) => {
 
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
+  const editRef = useRef(null);
 
   const config = {
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
   };
+
+  useEffect(() => {
+    if(isEditing){
+      editRef.current.focus();
+    }
+  }, [isEditing])
 
   const handleRename = async () => {
     try {
@@ -31,6 +38,20 @@ const Deck = ({deck, handleDelete}) => {
       console.log(error);
     }
   };
+  
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && isEditing) {
+        setIsEditing(false);
+      }else if(event.key === 'Enter' && isEditing){
+        handleRename();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isEditing, newName]);
 
   const handleClick = () => {
     console.log("button clicked");
@@ -49,7 +70,7 @@ const Deck = ({deck, handleDelete}) => {
     <div className='deck-container'>
       {isEditing ? (
         <>
-          <input value={newName} onChange={(e) => setNewName(e.target.value)} className='edit-input'/>
+          <input value={newName} onChange={(e) => setNewName(e.target.value)} className='edit-input' ref={editRef}/>
           <button onClick={handleRename}>Save</button>
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         </>
