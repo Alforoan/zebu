@@ -14,5 +14,7 @@
 }
 
 .create-deck-btn{
-  height: 40px;
+  height: 35px;
+  width: 100px;
+  padding: 6px 8px;
 }
