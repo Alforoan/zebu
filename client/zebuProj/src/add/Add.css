@@ -1,7 +1,12 @@
 .front-back-container{
   max-width: 55vw;
   margin: auto;
-  margin-top: 1rem;
+  
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
 }
 
 .deck-add-container{
@@ -65,4 +70,10 @@
 .success-msg{
   color: green;
   margin-bottom: 0rem;
+}
+
+.deck-add-container > label,
+.front-container > p,
+.back-container > p {
+  font-size: 1rem;
 }

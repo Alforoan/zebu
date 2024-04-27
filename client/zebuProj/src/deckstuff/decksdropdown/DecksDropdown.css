@@ -1,12 +1,13 @@
 .decks-container{
   z-index: 5;
-  border: 1px solid black;
+  border: 1px solid lightgray;
   position: absolute;
   background-color: white;
   border-radius: 4px;
   overflow-y: auto;
   height: 200px;
   margin-left: 3.2rem;
-  margin-top: -.5rem;
+  margin-top: 3.6rem;
   width: 414px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
 }
