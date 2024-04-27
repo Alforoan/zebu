@@ -192,6 +192,7 @@ const Add = () => {
             placeholder={deckName}
             onChange={handleChange}
             onClick={handleInputClick}
+            onBlur={() => setIsOnFocus(false)}
           />
         </div>
         {isOnFocus ? (
