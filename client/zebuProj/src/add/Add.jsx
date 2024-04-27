@@ -130,6 +130,7 @@ const Add = () => {
     let inputValue = e.target.value;
     setDeckTitle(inputValue);
     if(inputValue.length > 0){
+      setIsOnFocus(true);
       const filteredDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
       setFilteredDecks(filteredDecks);
       setSelectedIndex(-1);
