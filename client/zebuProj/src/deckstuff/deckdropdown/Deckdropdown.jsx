@@ -1,21 +1,30 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Deckdropdown.css'
 
-const Deckdropdown = ({deck,setDeckId,handleDeckSelect, setDeckName}) => {
+const Deckdropdown = ({deck,setDeckId,handleDeckSelect, isSelected, isSelectedArrow}) => {
 
   
   
-  const handleClick = (e) => {
-    
-    setDeckId(deck.id);
-    setDeckName(e.target.textContent);
-  };
+
+  
 
   return (
-   
-    <button className='deck-btn' onClick={() => handleDeckSelect(deck)}>{deck.name}</button>
-   
+    <button
+      className='deck-btn'
+      style={{
+        backgroundColor: isSelected
+          ? '#30C9FF'
+          : isSelectedArrow
+          ? '#D0E9FF'
+          : '',
+      }}
+      onClick={() => {
+        handleDeckSelect(deck);
+      }}
+    >
+      {deck.name}
+    </button>
   );
 }
 

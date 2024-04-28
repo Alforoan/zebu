@@ -11,7 +11,8 @@ const Add = () => {
   
   const [decks, setDecks] = useState([]);
   const [filteredDecks, setFilteredDecks] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndexArrowKeys, setSelectedIndexArrowKeys] = useState(-1);
   const [isOnFocus, setIsOnFocus] = useState(false);
   const [deckName, setDeckName] = useState('');
   const [deckTitle, setDeckTitle] = useState('');
@@ -47,8 +48,11 @@ const Add = () => {
           }
         })
         }
-        
-        setFilteredDecks(decks);
+      
+        const sortedDecks = decks.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        setFilteredDecks(sortedDecks);
         setDecks(decks);
       } catch (error) {
         console.log(error);
@@ -82,43 +86,70 @@ const Add = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [isOnFocus, selectedIndexArrowKeys]);
 
-  
+  useEffect(() => {
+    filteredDecks.map((deck, index) => {
+      if(deck.id === parseInt(id)){
+        setSelectedIndex(index);
+      }})
+  }, [filteredDecks])
 
+  useEffect(() => {
+    
+  }, [filteredDecks, selectedIndexArrowKeys]);
+
+  useEffect(() => {
+    if(!isOnFocus){
+      setSelectedIndexArrowKeys(-1);
+    }else{
+      setSelectedIndexArrowKeys(selectedIndex);
+    }
+  }, [isOnFocus, selectedIndex])
 
   const handleDeckSelect = (selectedDeck) => {
-    console.log({selectedDeck});
     inputRef.current.value = '';
     setPermDeckId(selectedDeck.id);
-    
-    console.log({permDeckId});
     setDeckId(selectedDeck.id);
     setDeckName(selectedDeck.name);
     navigate(`/add/${selectedDeck.id}`);
-    console.log('isonfocus inside deck select',isOnFocus);
+    filteredDecks.map((deck, index) => {
+      if(selectedDeck.id === deck.id){
+        setSelectedIndex(index);
+        return;
+      }
+    })
   };
+
+  let max = filteredDecks.length;
 
 
 
   const handleKeyDown = (e) => {
-    if (!isOnFocus || filteredDecks.length === 0) return;
+    if (!isOnFocus) {
+      return;
+    }
 
     switch (e.key) {
       case 'ArrowUp':
-        e.preventDefault(); 
-        setSelectedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        e.preventDefault();
+        setSelectedIndexArrowKeys((prevIndex) =>
+          prevIndex === 0 ? max - 1 : prevIndex - 1
+        );
+        console.log({ selectedIndexArrowKeys });
         break;
       case 'ArrowDown':
-        e.preventDefault(); 
-        setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, filteredDecks.length - 1)
+        e.preventDefault();
+        setSelectedIndexArrowKeys((prevIndex) =>
+          prevIndex === max - 1 ? 0 : prevIndex + 1
         );
+        console.log({selectedIndexArrowKeys});
         break;
       case 'Enter':
-        if (selectedIndex !== -1) {
-          handleDeckSelect(filteredDecks[selectedIndex]);
-        }
+        console.log({selectedIndexArrowKeys});
+        console.log('deck at entered index', filteredDecks[selectedIndexArrowKeys]);
+        handleDeckSelect(filteredDecks[selectedIndexArrowKeys]);
+        setIsOnFocus(false);
         break;
       default:
         break;
@@ -133,7 +164,7 @@ const Add = () => {
       setIsOnFocus(true);
       const filteredDecks = decks.filter(deck => deck.name.toLowerCase().includes(inputValue.toLowerCase()));
       setFilteredDecks(filteredDecks);
-      setSelectedIndex(-1);
+      setSelectedIndex(0);
     }else{
       setFilteredDecks(decks);
       setIsOnFocus(true);
@@ -150,7 +181,6 @@ const Add = () => {
       return;
     }
     const selectedDeckName = deckName;
-    console.log({selectedDeckName});
     const front = frontText;
     const back = backText;
     const data = { deck: selectedDeckName, deckId:permDeckId, front: front, back: back };
@@ -192,16 +222,19 @@ const Add = () => {
             placeholder={deckName}
             onChange={handleChange}
             onClick={handleInputClick}
-            onBlur={() => setIsOnFocus(false)}
           />
         </div>
         {isOnFocus ? (
           <DecksDropdown
             decks={decks}
             filteredDecks={filteredDecks}
+            setFilteredDecks={setFilteredDecks}
             setDeckId={setDeckId}
             setDeckName={setDeckName}
             handleDeckSelect={handleDeckSelect}
+            selectedIndex={selectedIndex}
+            selectedIndexArrowKeys={selectedIndexArrowKeys}
+            isOnFocus={isOnFocus}
           />
         ) : (
           ''
