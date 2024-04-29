@@ -247,7 +247,7 @@ const Add = () => {
                 ref={frontRef}
                 className='textarea2'
                 contentEditable='true'
-                onInput={(e) => setFrontText(e.target.innerHTML)}
+                onInput={(e) => setFrontText(e.target.innerText)}
               ></div>
             </div>
           </div>
@@ -258,7 +258,7 @@ const Add = () => {
                 ref={backRef}
                 className='textarea2'
                 contentEditable='true'
-                onInput={(e) => setBackText(e.target.innerHTML)}
+                onInput={(e) => setBackText(e.target.innerText)}
               >
               </div>
             </div>
