@@ -1,7 +1,7 @@
 .search-container{
   margin-top: 1rem;
   margin-left: .5rem;
-  width: 55vw;
+  width: 65vw;
   margin: auto;
 }
 
@@ -17,6 +17,7 @@
   margin-right: .5rem;
   font-size: 1rem;
   margin-left: .1rem;
+  text-indent: 3px;
 }
 
 select{
@@ -36,5 +37,5 @@ select{
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 40vw;
+  width: 50vw;
 }
