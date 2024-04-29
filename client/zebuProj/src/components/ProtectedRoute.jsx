@@ -41,6 +41,9 @@ const ProtectedRoute = ({children, path}) => {
       }
     };
     fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 5000);
   }, [id]);
 
 
