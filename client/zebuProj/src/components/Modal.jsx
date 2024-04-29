@@ -6,9 +6,9 @@ import Modal from 'react-modal';
 const MyModal = ({ isOpen, closeModal, modalPosition, handleConfirmDelete }) => {
   
   const distanceToBottom = window.innerHeight - modalPosition?.top;
-  let adjustedTop = modalPosition?.top + 45;
+  let adjustedTop = modalPosition?.top + 50;
   const threshold = 200; 
-  const amountToSubtract = 115;
+  const amountToSubtract = 100;
 
   if (distanceToBottom < threshold) {
     adjustedTop = modalPosition?.top - amountToSubtract;
@@ -19,7 +19,7 @@ const MyModal = ({ isOpen, closeModal, modalPosition, handleConfirmDelete }) => 
   const modalContentStyles = {
     position: 'absolute',
     top: `${adjustedTop}px`,
-    left: `${modalPosition?.left - 115}px`,
+    left: `${modalPosition?.left - 110}px`,
     backgroundColor: 'white',
     paddingTop: '0',
     paddingLeft: '10px',

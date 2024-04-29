@@ -93,6 +93,7 @@ const Flashcards = () => {
         console.log(error);
       }
     }
+    fetchData();
     setInterval(() => {
       fetchData();
     }, 1000);
