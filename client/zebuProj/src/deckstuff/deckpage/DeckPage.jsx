@@ -62,7 +62,7 @@ const DeckPage = () => {
         >
           <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName} setIsDeckAdded={setIsDeckAdded} modalIsOpen={modalIsOpen}/>
         </Modal>
-        <Decks decks={decks} setDecks={setDecks} inputValue={inputValue} isDeckAdded={isDeckAdded}/>
+        <Decks decks={decks} setDecks={setDecks} inputValue={inputValue} isDeckAdded={isDeckAdded} modalIsOpen={modalIsOpen}/>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import Deck from '../deck/Deck';
 import axios from 'axios';
 
-const Decks = ({ decks, setDecks, inputValue, isDeckAdded }) => {
+const Decks = ({ decks, setDecks, inputValue, isDeckAdded, modalIsOpen }) => {
   
 
   const [filteredDecks, setFilteredDecks] = useState([]);
@@ -36,6 +36,8 @@ const Decks = ({ decks, setDecks, inputValue, isDeckAdded }) => {
     console.log({newDecks});
   }, [inputValue])
 
+
+
   // const handleDelete = async(id) => {
     
   //   try {
@@ -55,13 +57,25 @@ const Decks = ({ decks, setDecks, inputValue, isDeckAdded }) => {
 
   return (
     <div>
-      {
-        inputValue ? filteredDecks.map((deck, index) => (
-        <Deck key={index} deck={deck} decks={decks} setDecks={setDecks}/>
-        )) :decks.map((deck, index) => (
-        <Deck key={index} deck={deck} decks={decks} setDecks={setDecks}/>
-      ))
-      }
+      {inputValue
+        ? filteredDecks.map((deck, index) => (
+            <Deck
+              key={index}
+              deck={deck}
+              decks={decks}
+              setDecks={setDecks}
+              modalIsOpen={modalIsOpen}
+            />
+          ))
+        : decks.map((deck, index) => (
+            <Deck
+              key={index}
+              deck={deck}
+              decks={decks}
+              setDecks={setDecks}
+              modalIsOpen={modalIsOpen}
+            />
+          ))}
     </div>
   );
 };

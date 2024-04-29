@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 import MyModal from '../../components/Modal';
 import { LuRefreshCw } from 'react-icons/lu';
 
-const Deck = ({deck,decks, setDecks}) => {
+const Deck = ({deck,decks, setDecks, modalIsOpen}) => {
 
   const { permDeckId, setPermDeckId } = useContext(IsLoggedInContext);
 
@@ -63,6 +63,19 @@ const Deck = ({deck,decks, setDecks}) => {
     };
   }, [isEditing, newName]);
 
+  useEffect(() => {
+    console.log('trash modal',isModalOpen);
+    console.log({isEditing});
+    console.log('create deck',modalIsOpen);
+    if(isModalOpen){
+      setIsEditing(false);
+    }
+    if(modalIsOpen){
+      setIsEditing(false);
+    }
+    
+  }, [modalIsOpen,isEditing, isModalOpen]);
+
   const handleClick = () => {
     console.log("button clicked");
   }
@@ -104,7 +117,8 @@ const Deck = ({deck,decks, setDecks}) => {
     const btnPosition = e.target.getBoundingClientRect();
     setModalPosition(btnPosition);
     setPermDeckId(id);
-    setIsModalOpen(prev => !prev);
+    setIsModalOpen(true);
+    setIsEditing(false);
   }
 
   const handleRefreshModal = (id) => {
