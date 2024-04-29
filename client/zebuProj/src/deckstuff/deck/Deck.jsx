@@ -115,6 +115,13 @@ const Deck = ({deck,decks, setDecks}) => {
     }
   };
 
+
+  const handleEdit = (e) => {
+    const deckName = e.currentTarget.parentElement.previousSibling.innerText;
+    setNewName(deckName);
+    setIsEditing(true);
+  }
+
   return (
     <div className='deck-container'>
       {isEditing ? (
@@ -173,7 +180,7 @@ const Deck = ({deck,decks, setDecks}) => {
             <button
               title='Rename the deck'
               className='rename-btn button-89'
-              onClick={() => setIsEditing(true)}
+              onClick={(e) => handleEdit(e)}
             >
               Rename
             </button>

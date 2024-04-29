@@ -17,7 +17,6 @@ const Decks = ({ decks, setDecks, inputValue, isDeckAdded }) => {
     const fetchData = async() => {
       try {
         const response = await axios.get('http://localhost:3000/api/user/decks', config);
-        console.log("GETTING DECKS RESPONSE",response);
         const fetchedDecks = response?.data?.data;
         const sortedDecks = fetchedDecks.sort((a, b) =>
           a.name.localeCompare(b.name)

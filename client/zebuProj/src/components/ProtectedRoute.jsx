@@ -28,7 +28,7 @@ const ProtectedRoute = ({children, path}) => {
             console.log(`id defined...${path}/${id}`);
             //navigate(`${path}/${id}`);
           }else{
-            console.log(`id not defined...${path}`);
+            //console.log(`id not defined...${path}`);
             navigate(`${path}`);
           }
         } else {
