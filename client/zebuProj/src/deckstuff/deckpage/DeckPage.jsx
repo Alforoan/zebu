@@ -60,7 +60,7 @@ const DeckPage = () => {
           onRequestClose={closeModal}
           contentLabel='Create Deck Modal'
         >
-          <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName} setIsDeckAdded={setIsDeckAdded}/>
+          <CreateDeck setModalIsOpen={setModalIsOpen} decks={decks} setDecks={setDecks} setDeckName={setDeckName} deckName={deckName} setIsDeckAdded={setIsDeckAdded} modalIsOpen={modalIsOpen}/>
         </Modal>
         <Decks decks={decks} setDecks={setDecks} inputValue={inputValue} isDeckAdded={isDeckAdded}/>
       </div>
