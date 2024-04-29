@@ -93,7 +93,10 @@ const Flashcards = () => {
         console.log(error);
       }
     }
-    fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 1000);
+    
   }, [currentCardIndex, easy, medium, hard])
 
   const randomNumberGenerator = (arr) => {
@@ -221,9 +224,9 @@ const Flashcards = () => {
           />
         )
       ) : (
-        <div>
-          <h2>Congratulations!</h2>
-          <p>Add more cards or refresh the deck to view flashcards again!</p>
+        <div style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'1rem'}}>
+          <h2 style={{fontSize:'2rem'}}>Congratulations!</h2>
+          <p style={{fontSize:'1.5rem'}}>Add more cards or refresh the deck to view flashcards again!</p>
         </div>
       )}
       {

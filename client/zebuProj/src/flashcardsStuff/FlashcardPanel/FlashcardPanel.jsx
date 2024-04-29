@@ -15,7 +15,7 @@ const FlashcardPanel = ({
   return (
     <div className='container'>
       <div>
-        <button disabled={isEditBtnDisabled} className='side-btn' onClick={handleEdit}>Edit</button>
+        <button disabled={isEditBtnDisabled || availableCount === 0} className='side-btn' onClick={handleEdit}>Edit</button>
         <button className='side-btn plus' onClick={handleEnlargeFont}>+</button>
         <button className='side-btn minus' onClick={handleReduceFont}>-</button>
       </div>
