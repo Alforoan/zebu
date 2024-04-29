@@ -81,12 +81,12 @@ const Flashcard = ({
                 marginTop: '2rem',
                 maxWidth: '65vw',
                 fontSize: `${fontSize}px`,
-                textAlign: 'center'
               }}
               className='front'
             >
               {card?.front}
             </p>
+            <div className='line'></div> 
             <p
               className='back'
               style={{ maxWidth: '65vw', fontSize: `${fontSize}px` }}

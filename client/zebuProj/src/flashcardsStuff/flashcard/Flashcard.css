@@ -5,4 +5,11 @@
 
 .front, .back{
   font-size: 2rem;
+  text-align: center;
+}
+
+.line{
+  border-bottom: 1px solid lightgray;
+  margin-top: 2rem;
+  margin-bottom: -1rem;
 }
