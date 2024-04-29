@@ -35,6 +35,10 @@
   align-items: center;
 }
 
+.refresh-msg{
+  color: green;
+  margin-left: 1rem;
+}
 
 
 @keyframes rotate {

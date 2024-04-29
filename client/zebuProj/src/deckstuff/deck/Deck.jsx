@@ -14,6 +14,7 @@ const Deck = ({deck,decks, setDecks}) => {
 
   const [newName, setNewName] = useState(deck.name);
   const [isEditing, setIsEditing] = useState(false);
+  const [refreshMsg, setRefreshMsg] = useState('');
   const editRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState(null);
@@ -88,7 +89,12 @@ const Deck = ({deck,decks, setDecks}) => {
     
     try {
       const response  = await axios.put(`http://localhost:3000/api/user/decks/${permDeckId}`, JSON.stringify({id:permDeckId}) ,config);
-      console.log('response from refresh', response);
+      if(response.status === 200){
+        setRefreshMsg('Deck refreshed successfully!');
+        setTimeout(() => {
+          setRefreshMsg('');
+        }, 1500);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -101,8 +107,8 @@ const Deck = ({deck,decks, setDecks}) => {
     setIsModalOpen(prev => !prev);
   }
 
-  const handleRefreshModal = (e, id) => {
-    setPermDeckId({id});
+  const handleRefreshModal = (id) => {
+    setPermDeckId(id);
     const answer = prompt('This will refresh all the cards, are you sure? \n Type Y(y) confirm')
     if(answer?.toLowerCase() === 'y'){
       handleConfirmRefresh();
@@ -137,7 +143,7 @@ const Deck = ({deck,decks, setDecks}) => {
             <button
               title='Makes all cards available'
               className='refresh-btn'
-              onClick={() => handleRefreshModal()}
+              onClick={() => handleRefreshModal(deck.id)}
             >
               <LuRefreshCw />
             </button>
@@ -154,6 +160,7 @@ const Deck = ({deck,decks, setDecks}) => {
                 {deck.name}
               </button>
             </Link>
+            <p className='refresh-msg'>{refreshMsg}</p>
           </div>
           <div className='button-container'>
             {/* <button
