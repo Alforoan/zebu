@@ -12,7 +12,12 @@ const Flashcard = ({
   fontSize,
   setCardId,
   id,
-  setReviewCount
+  setReviewCount,
+  setPrevDifficulty,
+  cardTimeEasy,
+  cardTimeMedium,
+  cardTimeHard,
+  reviewCount
 }) => {
 
   const config = {
@@ -29,6 +34,12 @@ const Flashcard = ({
       try {
         const response = await axios.get('http://localhost:3000/api/user/edit', {...config, params:{id: id}});
         const times = response?.data?.flashcard?.times;
+        const status = response?.data?.flashcard?.status;
+        
+        if(status !== null){
+          setPrevDifficulty(status);
+        }
+
         setReviewCount(times);
       } catch (error) {
         console.log(error);
@@ -37,7 +48,8 @@ const Flashcard = ({
     fetchCard();
   }, [id])
  
-
+  console.log({cardTimeEasy});
+  
   return (
     <div
       style={{
@@ -86,7 +98,7 @@ const Flashcard = ({
             >
               {card?.front}
             </p>
-            <div className='line'></div> 
+            <div className='line'></div>
             <p
               className='back'
               style={{ maxWidth: '65vw', fontSize: `${fontSize}px` }}
@@ -112,7 +124,9 @@ const Flashcard = ({
             <div>
               <div style={{ display: 'flex', marginTop: '1rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ textAlign: 'center' }}>&lt;10m</span>
+                  <span style={{ textAlign: 'center' }}>
+                    &lt;{reviewCount === 0 ? '10m' : cardTimeEasy}
+                  </span>
                   <button
                     onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'
@@ -121,7 +135,9 @@ const Flashcard = ({
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ textAlign: 'center' }}>&lt;5m</span>
+                  <span style={{ textAlign: 'center' }}>
+                    &lt;{reviewCount === 0 ? '3m' : cardTimeMedium}
+                  </span>
                   <button
                     onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'
@@ -130,7 +146,9 @@ const Flashcard = ({
                   </button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ textAlign: 'center' }}>&lt;1m</span>
+                  <span style={{ textAlign: 'center' }}>
+                    &lt;{reviewCount === 0 ? '1m' : cardTimeHard}
+                  </span>
                   <button
                     onClick={(e) => onNextCard(e, card?.id)}
                     className='difficulty-btn'

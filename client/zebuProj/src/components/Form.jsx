@@ -273,7 +273,7 @@ const Form = ({route, method}) => {
               {errorMessage}
             </p>
           ) : (
-            <p className='success-msg'>{successMessage}</p>
+            <p className='success-msg' style={{marginBottom:'1rem'}}>{successMessage}</p>
           )}
           {method !== 'login' ? (
             <div style={{ display: 'flex' }}>

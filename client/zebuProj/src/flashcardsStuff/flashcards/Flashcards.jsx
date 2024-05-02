@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navigation from '../../navigation/Navigation';
 import FlashcardPanel from '../FlashcardPanel/FlashcardPanel';
 import Edit from '../editFlashcards/Edit';
+import { calculateNextScheduledTime } from '../../components/spacedRepetition';
 
 const Flashcards = () => {
 
@@ -24,6 +25,10 @@ const Flashcards = () => {
   const [availableCount, setAvailableCount] = useState(0);
   const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const [reviewCount, setReviewCount] = useState(0);
+  const [prevDifficulty, setPrevDifficulty] = useState(null);
+  const [cardTimeEasy, setCardTimeEasy] = useState('');
+  const [cardTimeMedium, setCardTimeMedium] = useState('');
+  const [cardTimeHard, setCardTimeHard] = useState('');
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
 
@@ -107,7 +112,7 @@ const Flashcards = () => {
 
 
   const handleNextCard = async(e, eachId) => {
-    console.log({currentCardIndex});
+
     const randomIndex = randomNumberGenerator(cards);
     setIsAnswerShown((prev) => !prev);
     if(cards.length > 2){
@@ -116,30 +121,23 @@ const Flashcards = () => {
       setCurrentCardIndex(0);
     }
     let difficulty = e.target.textContent;
-    let timeIncrementSeconds;
-
-    switch (difficulty) {
-      case 'Easy':
-        timeIncrementSeconds = 15;
-        setEasy((prev) => prev + 1);
-        break;
-      case 'Medium':
-        timeIncrementSeconds = 30; 
-        setMedium((prev) => prev + 1);
-        break;
-      case 'Hard':
-        timeIncrementSeconds = 45; 
-        setHard((prev) => prev + 1);
-        break
-      default:
-        return;
-    }
-
-
-    const timeNowInUtc = new Date().toISOString();
-    const date = new Date(timeNowInUtc);
-    date.setUTCSeconds(date.getUTCSeconds() + timeIncrementSeconds)
-    const nextScheduled = date.toISOString();
+    const {
+      nextScheduled,
+      timeIncrementSeconds,
+      timeNowInUtc,
+      finalTimeStringEasy,
+      finalTimeStringMedium,
+      finalTimeStringHard} = calculateNextScheduledTime(
+      difficulty,
+      setEasy,
+      setMedium,
+      setHard,
+      prevDifficulty,
+      reviewCount
+    );
+    setCardTimeEasy(finalTimeStringEasy);
+    setCardTimeMedium(finalTimeStringMedium);
+    setCardTimeHard(finalTimeStringHard);
 
     const data = {cardId: eachId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
     console.log('something here');
@@ -222,6 +220,11 @@ const Flashcards = () => {
             setCardId={setCardId}
             id={[cards[currentCardIndex]?.id]?.[0]}
             setReviewCount={setReviewCount}
+            setPrevDifficulty={setPrevDifficulty}
+            cardTimeEasy={cardTimeEasy}
+            cardTimeMedium={cardTimeMedium}
+            cardTimeHard={cardTimeHard}
+            reviewCount={reviewCount}
           />
         )
       ) : (
