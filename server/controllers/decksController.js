@@ -82,7 +82,7 @@ async function refreshDeck(req,res){
     const { id } = req.body;
     const newTimes = 0;
     const updateQuery =
-      'UPDATE flashcards SET times = $1, next_scheduled = current_timestamp WHERE deck_id = $2';
+      'UPDATE flashcards SET times = $1, easy = 0, medium = 0, hard = 0, status = null, next_scheduled = current_timestamp WHERE deck_id = $2';
     await pool.query(updateQuery, [newTimes, id]);
     res.json({ message: 'Deck renamed successfully' });
   } catch (error) {

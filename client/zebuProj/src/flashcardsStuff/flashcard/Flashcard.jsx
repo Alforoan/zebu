@@ -17,7 +17,14 @@ const Flashcard = ({
   cardTimeEasy,
   cardTimeMedium,
   cardTimeHard,
-  reviewCount
+  reviewCount,
+  nextTime,
+  setCardTimeEasy,
+  setCardTimeMedium,
+  setCardTimeHard,
+  setCardTimeEasySeconds,
+  setCardTimeMediumSeconds,
+  setCardTimeHardSeconds,
 }) => {
 
   const config = {
@@ -28,6 +35,20 @@ const Flashcard = ({
   useEffect(() => {
     setCardId(id)
   }, [id])
+  function roundToNearestMinute(minutes) {
+    return Math.round(minutes);
+  }
+
+  function roundToTenthHour(minutes) {
+    if (minutes >= 60) {
+      return Math.round(minutes / 6) / 10;
+    }
+    return Math.round((minutes / 60) * 10) / 10;
+  }
+
+  function roundToTenthDay(minutes) {
+    return Math.round((minutes / (24 * 60)) * 10) / 10;
+  }
 
   useEffect(() => {
     const fetchCard = async() => {
@@ -35,11 +56,90 @@ const Flashcard = ({
         const response = await axios.get('http://localhost:3000/api/user/edit', {...config, params:{id: id}});
         const times = response?.data?.flashcard?.times;
         const status = response?.data?.flashcard?.status;
+        let easyTime = response?.data?.flashcard?.easy;
+        let mediumTime = response?.data?.flashcard?.medium;
+        let hardTime = response?.data?.flashcard?.hard;
         
+        if(easyTime === null || easyTime === 0){
+          easyTime = 600;
+  
+        }
+        if (mediumTime === null || mediumTime === 0) {
+          mediumTime = 180;
+        }
+        if (hardTime === null || hardTime === 0) {
+          hardTime = 60;
+        }
+        console.log({easyTime, mediumTime, hardTime});
+        setCardTimeEasySeconds(easyTime); 
+        setCardTimeMediumSeconds(mediumTime);
+        setCardTimeHardSeconds(hardTime);
+
+        const totalMinutesEasy = easyTime / 60;
+        const totalMinutesMedium = mediumTime / 60;
+        const totalMinutesHard = hardTime / 60;
+
+        let finalTimeEasy;
+        let finalTimeStringEasy = '';
+
+        let finalTimeMedium;
+        let finalTimeStringMedium = '';
+
+        let finalTimeHard;
+        let finalTimeStringHard = '';
+
+        if (totalMinutesEasy < 60) {
+          finalTimeEasy = roundToNearestMinute(totalMinutesEasy);
+          if (finalTimeEasy < 1) {
+            finalTimeStringEasy = `1m`;
+          }else{
+            finalTimeStringEasy = `${finalTimeEasy}m`;
+          }
+        } else if (totalMinutesEasy >= 60 && totalMinutesEasy < 1440) {
+          finalTimeEasy = roundToTenthHour(totalMinutesEasy);
+          finalTimeStringEasy = `${finalTimeEasy}hr`;
+        } else if (totalMinutesEasy >= 1440) {
+          finalTimeEasy = roundToTenthDay(totalMinutesEasy);
+          finalTimeStringEasy = `${finalTimeEasy}d`;
+        }
+
+        if (totalMinutesMedium < 60) {
+          finalTimeMedium = roundToNearestMinute(totalMinutesMedium);
+          if (finalTimeMedium < 1) {
+            finalTimeStringMedium = `1m`;
+          } else {
+            finalTimeStringMedium = `${finalTimeMedium}m`;
+          }
+        } else if (totalMinutesMedium >= 60 && totalMinutesMedium < 1440) {
+          finalTimeMedium = roundToTenthHour(totalMinutesMedium);
+          finalTimeStringMedium = `${finalTimeMedium}hr`;
+        } else if (totalMinutesMedium >= 1440) {
+          finalTimeMedium = roundToTenthDay(totalMinutesMedium);
+          finalTimeStringMedium = `${finalTimeMedium}d`;
+        }
+
+        if (totalMinutesHard < 60) {
+          finalTimeHard = roundToNearestMinute(totalMinutesHard);
+          if (finalTimeHard < 1) {
+            finalTimeStringHard = `1m`;
+          } else {
+            finalTimeStringHard = `${finalTimeHard}m`;
+          }
+        } else if (totalMinutesHard >= 60 && totalMinutesHard < 1440) {
+          finalTimeHard = roundToTenthHour(totalMinutesHard);
+          finalTimeStringHard = `${finalTimeHard}hr`;
+        } else if (totalMinutesHard >= 1440) {
+          finalTimeHard = roundToTenthDay(totalMinutesHard);
+          finalTimeStringHard = `${finalTimeHard}d`;
+        }
+
         if(status !== null){
           setPrevDifficulty(status);
         }
-
+        
+        setCardTimeEasy(finalTimeStringEasy)
+        setCardTimeMedium(finalTimeStringMedium)
+        setCardTimeHard(finalTimeStringHard)
         setReviewCount(times);
       } catch (error) {
         console.log(error);
@@ -47,9 +147,11 @@ const Flashcard = ({
     };
     fetchCard();
   }, [id])
- 
+
+  //console.log({reviewCount});
+  //console.log({nextTime});
+  console.log({reviewCount});
   console.log({cardTimeEasy});
-  
   return (
     <div
       style={{

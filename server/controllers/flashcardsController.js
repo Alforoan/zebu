@@ -52,7 +52,7 @@ async function getFlashcards(req,res){
 
 async function editFlashcard(req,res){
   try {
-    const {cardId, deckId, lastAnswered, nextScheduled, status} = req.body;
+    const {cardId, deckId, lastAnswered, nextScheduled, status, easy ,medium, hard} = req.body;
     const flashcardQuery = 'SELECT * FROM flashcards WHERE deck_id = $1 AND id = $2';
     const flashcardResult = await pool.query(flashcardQuery, [deckId, cardId]);
     const flashcard = flashcardResult.rows[0];
@@ -62,10 +62,13 @@ async function editFlashcard(req,res){
         SET times = times + 1,
             last_answered = $1,
             next_scheduled = $2,
-            status = $3
-        WHERE id = $4 AND deck_id = $5
+            status = $3,
+            easy = $4,
+            medium = $5,
+            hard = $6
+        WHERE id = $7 AND deck_id = $8
       `;
-      await pool.query(updateQuery, [lastAnswered, nextScheduled, status, cardId, deckId])
+      await pool.query(updateQuery, [lastAnswered, nextScheduled, status, easy, medium, hard, cardId, deckId])
       res.json({message: ' Flashcard updated successfully'});
     }else{
       res.status(404).json({error: 'Flashcard not found'});

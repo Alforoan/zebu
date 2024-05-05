@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navigation from '../../navigation/Navigation';
 import FlashcardPanel from '../FlashcardPanel/FlashcardPanel';
 import Edit from '../editFlashcards/Edit';
-import { calculateNextScheduledTime } from '../../components/spacedRepetition';
 
 const Flashcards = () => {
 
@@ -29,6 +28,10 @@ const Flashcards = () => {
   const [cardTimeEasy, setCardTimeEasy] = useState('');
   const [cardTimeMedium, setCardTimeMedium] = useState('');
   const [cardTimeHard, setCardTimeHard] = useState('');
+  const [cardTimeEasySeconds, setCardTimeEasySeconds] = useState(600);
+  const [cardTimeMediumSeconds, setCardTimeMediumSeconds] = useState(180);
+  const [cardTimeHardSeconds, setCardTimeHardSeconds] = useState(60);
+  const [nextTime, setNextTime] = useState(null);
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
 
@@ -121,26 +124,118 @@ const Flashcards = () => {
       setCurrentCardIndex(0);
     }
     let difficulty = e.target.textContent;
-    const {
-      nextScheduled,
-      timeIncrementSeconds,
-      timeNowInUtc,
-      finalTimeStringEasy,
-      finalTimeStringMedium,
-      finalTimeStringHard} = calculateNextScheduledTime(
-      difficulty,
-      setEasy,
-      setMedium,
-      setHard,
-      prevDifficulty,
-      reviewCount
-    );
-    setCardTimeEasy(finalTimeStringEasy);
-    setCardTimeMedium(finalTimeStringMedium);
-    setCardTimeHard(finalTimeStringHard);
+    console.log('something first');
+    let easyTime = cardTimeEasySeconds;
+    let mediumTime = cardTimeMediumSeconds;
+    let hardTime = cardTimeHardSeconds;
+    if (difficulty === 'Easy' && reviewCount === 0 && prevDifficulty === null) {
+      //cardTimeEasy = 10 * 60; // 10 minutes
+      easyTime = 600;
+      setCardTimeEasySeconds(easyTime);
+      setEasy((prev) => prev + 1);
+    } else if (
+      difficulty === 'Medium' &&
+      reviewCount === 0 &&
+      prevDifficulty === null
+    ) {
+      //cardTimeMedium = 3 * 60; // 3 minutes
+      mediumTime = 180;
+      setCardTimeMediumSeconds(mediumTime);
+      setMedium((prev) => prev + 1);
+    } else if (
+      difficulty === 'Hard' &&
+      reviewCount === 0 &&
+      prevDifficulty === null
+    ) {
+      hardTime = 60;
+      //cardTimeHard = 60; // 1 minute
+      setCardTimeHardSeconds(hardTime);
+      setHard((prev) => prev + 1);
+    }
+  
+    else if (prevDifficulty === 'Easy' && reviewCount >= 0) {
+      if (difficulty === 'Easy') {
+        easyTime *= 3;
+        mediumTime *= 3;
+        hardTime *= 3;
+        setEasy((prev) => prev + 1);
+      } else if (difficulty === 'Medium') {
+        easyTime *= 0.6;
+        mediumTime *= 0.6;
+        hardTime *= 0.6;
+        setMedium((prev) => prev + 1);
+      } else if (difficulty === 'Hard') {
+        easyTime *= 0.2;
+        mediumTime *= 0.2;
+        hardTime *= 0.2;
+        setHard((prev) => prev + 1);
+      }
+    } else if (prevDifficulty === 'Medium' && reviewCount >= 0) {
+      if (difficulty === 'Easy') {
+        easyTime *= 1.5;
+        mediumTime *= 1.5;
+        hardTime *= 1.5;
+        setEasy((prev) => prev + 1);
+      } else if (difficulty === 'Medium') {
+        mediumTime *= 1.1;
+        easyTime *= 1.1;
+        hardTime *= 1.1;
+        setMedium((prev) => prev + 1);
+      } else if (difficulty === 'Hard') {
+        hardTime *= 0.3;
+        mediumTime *= 0.3;
+        easyTime *= 0.3;
+        setHard((prev) => prev + 1);
+      }
+    } else if (prevDifficulty === 'Hard' && reviewCount >= 0) {
+      if (difficulty === 'Easy') {
+        easyTime *= 1.8;
+        mediumTime *= 1.8;
+        hardTime *= 1.8;
+        setEasy((prev) => prev + 1);
+      } else if (difficulty === 'Medium') {
+        mediumTime *= 1.2;
+        easyTime *= 1.2;
+        hardTime *= 1.2;
+        setMedium((prev) => prev + 1);
+      } else if (difficulty === 'Hard') {
+        hardTime *= 0.5;
+        mediumTime *= 0.5;
+        easyTime *= 0.5;
+        setHard((prev) => prev + 1);
+      }
+    }
 
-    const data = {cardId: eachId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty }
-    console.log('something here');
+
+    let minEasyTime = Math.ceil(Math.min(easyTime, 604800));
+    let minMediumTime = Math.ceil(Math.min(mediumTime, 604800));
+    let minHardTime = Math.ceil(Math.min(hardTime, 604800));
+    
+    console.log({minEasyTime, minMediumTime, minHardTime});
+
+    setCardTimeEasySeconds(minEasyTime);
+    setCardTimeMediumSeconds(minMediumTime);
+    setCardTimeHardSeconds(minHardTime);
+
+    const timeNowInUtc = new Date().toISOString();
+    console.log({timeNowInUtc});
+    const date = new Date(timeNowInUtc);
+    console.log({date});
+    if (difficulty === 'Easy') {
+      console.log('easy has been clicked');
+      console.log({cardTimeEasy});
+      date.setUTCSeconds(date.getUTCSeconds() + minEasyTime);
+      console.log({ cardTimeEasy });
+    } else if (difficulty === 'Medium') {
+      date.setUTCSeconds(date.getUTCSeconds() + minMediumTime);
+    } else {
+      date.setUTCSeconds(date.getUTCSeconds() + minHardTime);
+    }
+    
+    const nextScheduled = date?.toISOString();
+    setNextTime(nextScheduled);
+   
+    const data = {cardId: eachId, deckId: id, lastAnswered: timeNowInUtc, nextScheduled: nextScheduled, status: difficulty, easy: minEasyTime, medium: minMediumTime, hard: minHardTime }
     try {
       const response = await axios.put(
         'http://localhost:3000/api/user/flashcards/:deckId',
@@ -151,7 +246,6 @@ const Flashcards = () => {
     } catch (error) {
       console.log(error);
     }
-
 
   };  
 
@@ -211,6 +305,7 @@ const Flashcards = () => {
       {isCardExist ? (
         cards.length > 0 && (
           <Flashcard
+            nextTime={nextTime}
             card={cards[currentCardIndex]}
             onNextCard={handleNextCard}
             handleClick={handleClick}
@@ -221,21 +316,38 @@ const Flashcards = () => {
             id={[cards[currentCardIndex]?.id]?.[0]}
             setReviewCount={setReviewCount}
             setPrevDifficulty={setPrevDifficulty}
+            setCardTimeEasy={setCardTimeEasy}
+            setCardTimeMedium={setCardTimeMedium}
+            setCardTimeHard={setCardTimeHard}
             cardTimeEasy={cardTimeEasy}
             cardTimeMedium={cardTimeMedium}
             cardTimeHard={cardTimeHard}
+            setCardTimeEasySeconds={setCardTimeEasySeconds}
+            setCardTimeMediumSeconds={setCardTimeMediumSeconds}
+            setCardTimeHardSeconds={setCardTimeHardSeconds}
             reviewCount={reviewCount}
           />
         )
       ) : (
-        <div style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'1rem'}}>
-          <h2 style={{fontSize:'2rem'}}>Congratulations!</h2>
-          <p style={{fontSize:'1.5rem'}}>Add more cards or refresh the deck to view flashcards again!</p>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '1rem',
+          }}
+        >
+          <h2 style={{ fontSize: '2rem' }}>Congratulations!</h2>
+          <p style={{ fontSize: '1.5rem' }}>
+            Add more cards or refresh the deck to view flashcards again!
+          </p>
         </div>
       )}
-      {
-        noCardsMsg && <p style={{fontSize:'2rem', marginLeft:'25%', marginTop:'4rem'}}>{noCardsMsg}</p>
-      }
+      {noCardsMsg && (
+        <p style={{ fontSize: '2rem', marginLeft: '25%', marginTop: '4rem' }}>
+          {noCardsMsg}
+        </p>
+      )}
       {isEditVisible ? <Edit cardId={cardId} /> : ''}
     </div>
   );
